@@ -1,0 +1,28 @@
+---
+export const prerender = false;
+
+import BuilderDirectoryCard from '@/components/directory/BuilderDirectoryCard.astro';
+import { supabase } from '@/lib/supabase';
+import type { AllBuilder } from '@/types/all-builders';
+
+const limit = 50;
+const offset = parseInt(Astro.url.searchParams.get('offset') || '0', 10);
+
+const { data: buildersData, error } = await supabase.rpc('get_verified_founders', {
+  p_limit: limit,
+  p_offset: offset
+});
+
+if (error) {
+  console.error('Failed to fetch builders:', error.message);
+}
+
+const builders = (buildersData ?? []) as AllBuilder[];
+const hasMore = builders.length === limit;
+---
+
+{builders.map((builder) => (
+  <BuilderDirectoryCard {...builder} />
+))}
+
+{!hasMore && <div id="end-of-builders" class="hidden"></div>}

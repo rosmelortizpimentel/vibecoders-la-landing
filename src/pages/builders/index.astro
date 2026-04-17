@@ -4,14 +4,20 @@ import BuilderDirectoryCard from '@/components/directory/BuilderDirectoryCard.as
 import { supabase } from '@/lib/supabase';
 import type { AllBuilder } from '@/types/all-builders';
 
-// Fetch verified builders from Supabase (reusing the same RPC as landing)
-const { data: buildersData, error } = await supabase.rpc('get_verified_founders');
+const limit = 50;
+
+// Fetch verified builders from Supabase
+const { data: buildersData, error } = await supabase.rpc('get_verified_founders', {
+  p_limit: limit,
+  p_offset: 0
+});
 
 if (error) {
   console.error('Failed to fetch builders:', error.message);
 }
 
 const builders = (buildersData ?? []) as AllBuilder[];
+const hasMore = builders.length === limit;
 
 const breadcrumbs = [
   { label: 'Inicio', href: '/' },
@@ -25,7 +31,7 @@ const breadcrumbs = [
   breadcrumbs={breadcrumbs}
 >
   <!-- Grid -->
-  <div class="flex flex-col gap-6">
+  <div id="builders-container" class="flex flex-col gap-6">
     {builders.map((builder) => (
       <BuilderDirectoryCard {...builder} />
     ))}
@@ -35,4 +41,57 @@ const breadcrumbs = [
   {builders.length === 0 && (
     <p class="text-center text-text-muted py-12">No hay builders aún.</p>
   )}
+
+  <!-- Load more -->
+  {hasMore && (
+    <div class="flex justify-center mt-12">
+      <button
+        id="load-more-btn"
+        data-offset={limit}
+        class="bg-brand-black text-brand-white px-6 py-3 font-bold text-sm hover:opacity-70 transition-opacity cursor-pointer border border-brand-black"
+      >
+        Cargar más builders
+      </button>
+    </div>
+  )}
+
+  <script is:inline>
+    const btn = document.getElementById('load-more-btn');
+    const container = document.getElementById('builders-container');
+
+    if (btn && container) {
+      btn.addEventListener('click', async () => {
+        const offset = parseInt(btn.getAttribute('data-offset'), 10);
+        btn.textContent = 'Cargando...';
+        btn.disabled = true;
+
+        try {
+          const res = await fetch(`/api/builders?offset=${offset}`);
+          if (!res.ok) throw new Error('Error al cargar');
+          const html = await res.text();
+          
+          if (html.trim() !== '') {
+            container.insertAdjacentHTML('beforeend', html);
+            
+            // Check if end reached (via the injected marker from API)
+            const endMarker = document.getElementById('end-of-builders');
+            if (endMarker) {
+              btn.remove();
+              endMarker.remove(); // clean up
+            } else {
+              btn.setAttribute('data-offset', offset + 50);
+              btn.textContent = 'Cargar más builders';
+              btn.disabled = false;
+            }
+          } else {
+            btn.remove();
+          }
+        } catch (e) {
+          console.error(e);
+          btn.textContent = 'Cargar más builders';
+          btn.disabled = false;
+        }
+      });
+    }
+  </script>
 </DirectoryLayout>
