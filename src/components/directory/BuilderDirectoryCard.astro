@@ -48,11 +48,13 @@ function formatLocation(rawCity?: string | null) {
 const locationLabel = formatLocation(city);
 ---
 
-<a
-  href={`/builders/${username}`}
-  class="flex flex-col md:flex-row items-stretch bg-brand-white border border-brand-black p-6 md:p-8 hover:shadow-soft transition-shadow no-underline gap-6 md:gap-8"
+<div
+  class="relative flex flex-col md:flex-row items-stretch bg-brand-white border border-brand-black p-6 md:p-8 hover:shadow-soft transition-shadow gap-6 md:gap-8 group"
 >
-  <div class="w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden bg-[#3D5AFE] flex items-center justify-center shrink-0">
+  <!-- Full card click overlay (z-10) -->
+  <a href={`/builders/${username}`} class="absolute inset-0 z-10" aria-label={`Ver perfil de ${display_name}`}></a>
+
+  <div class="relative z-20 w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden bg-[#3D5AFE] flex items-center justify-center shrink-0">
     {avatar_url ? (
       <img
         src={avatar_url}
@@ -80,7 +82,7 @@ const locationLabel = formatLocation(city);
         )}
       </div>
 
-      <div class="shrink-0 flex items-center gap-4">
+      <div class="relative z-20 shrink-0 flex items-center gap-4">
         {social_links && Object.keys(social_links).length > 0 && (
           <SocialLinks socials={social_links} class="text-brand-black" />
         )}
@@ -105,4 +107,4 @@ const locationLabel = formatLocation(city);
       </span>
     </div>
   </div>
-</a>
+</div>
