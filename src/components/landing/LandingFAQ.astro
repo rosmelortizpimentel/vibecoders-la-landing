@@ -1,0 +1,72 @@
+---
+import SectionWrapper from '@/components/landing/SectionWrapper.astro';
+
+const faqs = [
+  {
+    question: '¿Es gratis unirse?',
+    answer:
+      'Sí. Unirte a la comunidad y crear tu perfil es completamente gratis. Puedes conectar con otros builders, explorar apps y acceder al contenido sin pagar nada.',
+  },
+  {
+    question: '¿Qué es el plan Builder Pro?',
+    answer:
+      'Un plan opcional para builders que quieren gestionar sus apps de forma profesional: roadmap público con dominio propio, squad de beta testers, analytics detallados y más.',
+    link: { label: 'Ver planes →', href: '/planes' },
+  },
+  {
+    question: '¿Necesito saber programar?',
+    answer:
+      'No. VibeCoders es para personas que construyen productos con herramientas de IA como Lovable, Cursor, Bolt o Claude Code. Si usas alguna de estas herramientas, este es tu lugar.',
+  },
+  {
+    question: '¿En qué se diferencia de Product Hunt o Indie Hackers?',
+    answer:
+      'VibeCoders es en español, enfocado en LATAM y España, y pensado para builders que usan IA para construir. No es solo un directorio: es una comunidad con herramientas integradas para gestionar el ciclo de vida de tu producto.',
+  },
+  {
+    question: '¿Cómo empiezo?',
+    answer:
+      'Crea tu cuenta gratis, arma tu perfil y registra tu primera app. Así de simple.',
+    link: { label: 'Unirme a la comunidad →', href: 'https://app.vibecoders.la/signup?ref=faq' },
+  },
+];
+---
+
+<SectionWrapper variant="light" id="faq">
+  <div class="max-w-2xl mx-auto">
+    <!-- Heading -->
+    <div class="text-center mb-12">
+      <h2 class="text-[32px] md:text-[40px] font-bold leading-[0.95] text-brand-black">
+        Preguntas frecuentes
+      </h2>
+    </div>
+
+    <!-- FAQ items -->
+    <div class="flex flex-col gap-0">
+      {faqs.map((faq, index) => (
+        <details
+          class="border-b border-border group"
+          open={index === 0}
+        >
+          <summary class="flex items-center justify-between gap-4 py-5 cursor-pointer list-none">
+            <span class="font-bold text-base text-brand-black">{faq.question}</span>
+            <span class="text-brand-black font-bold text-xl shrink-0 group-open:rotate-45 transition-transform">+</span>
+          </summary>
+          <div class="pb-5 pr-8">
+            <p class="text-sm leading-relaxed" style="color: #444444;">
+              {faq.answer}
+            </p>
+            {faq.link && (
+              <a
+                href={faq.link.href}
+                class="text-sm font-bold text-brand-black hover:text-brand-blue transition-colors no-underline mt-2 inline-block"
+              >
+                {faq.link.label}
+              </a>
+            )}
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</SectionWrapper>

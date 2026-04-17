@@ -1,0 +1,42 @@
+---
+import DirectoryLayout from '@/layouts/DirectoryLayout.astro';
+import ModuleCard from '@/components/learn/ModuleCard.astro';
+import { getCollection } from 'astro:content';
+
+const breadcrumbs = [
+  { label: 'Inicio', href: '/' },
+  { label: 'Aprende' },
+];
+
+const allModules = await getCollection('learn', ({ data }) => data.draft !== true);
+
+const sortedModules = allModules.sort(
+  (a, b) => a.data.moduleNumber - b.data.moduleNumber
+);
+---
+
+<DirectoryLayout
+  title="Aprende"
+  description="Módulos prácticos para dominar el vibe coding desde cero. Sin experiencia técnica previa requerida."
+  breadcrumbs={breadcrumbs}
+>
+  {sortedModules.length === 0 ? (
+    <div class="bg-surface-silver p-12 text-center">
+      <p class="text-sm" style="color: #888888;">Próximamente: módulos de aprendizaje.</p>
+    </div>
+  ) : (
+    <div class="flex flex-col gap-4">
+      {sortedModules.map((module) => (
+        <ModuleCard
+          moduleNumber={module.data.moduleNumber}
+          title={module.data.title}
+          description={module.data.description}
+          durationMinutes={module.data.durationMinutes}
+          prerequisites={module.data.prerequisites}
+          outcomes={module.data.outcomes}
+          slug={module.id}
+        />
+      ))}
+    </div>
+  )}
+</DirectoryLayout>

@@ -1,0 +1,92 @@
+---
+import CTAButton from '@/components/ui/CTAButton.astro';
+import { platformCTA } from '@/lib/urls';
+
+const ctaFree = platformCTA('planes-free');
+const ctaPro = platformCTA('planes-pro', '/choose-plan');
+
+interface Feature {
+  label: string;
+  free: boolean | string;
+  pro: boolean | string;
+}
+
+const features: Feature[] = [
+  { label: 'Perfil público de builder', free: true, pro: true },
+  { label: 'Apps publicadas', free: 'Hasta 2', pro: 'Ilimitadas' },
+  { label: 'Acceso a charlas grabadas', free: true, pro: true },
+  { label: 'Directorio de builders', free: true, pro: true },
+  { label: 'Newsletter semanal', free: true, pro: true },
+  { label: 'Badge Pro en tu perfil', free: false, pro: true },
+  { label: 'Acceso anticipado a nuevas charlas', free: false, pro: true },
+  { label: 'Canal privado de builders Pro', free: false, pro: true },
+  { label: 'Soporte prioritario', free: false, pro: true },
+  { label: 'Mención en newsletter mensual', free: false, pro: true },
+];
+
+function renderValue(val: boolean | string): string {
+  if (val === true) return '✓';
+  if (val === false) return '—';
+  return val;
+}
+
+function valueClass(val: boolean | string): string {
+  if (val === true) return 'text-brand-black font-bold';
+  if (val === false) return 'text-border';
+  return 'text-brand-black font-bold';
+}
+---
+
+<div class="overflow-x-auto">
+  <table class="w-full border-collapse">
+    <!-- Header -->
+    <thead>
+      <tr>
+        <th class="text-left py-4 px-6 text-sm font-bold uppercase tracking-wider text-brand-black border-b-2 border-brand-black">
+          Característica
+        </th>
+        <th class="py-4 px-6 text-center text-sm font-bold uppercase tracking-wider text-brand-black border-b-2 border-brand-black">
+          Free
+          <div class="text-[24px] font-bold leading-tight mt-1">Gratis</div>
+          <div class="text-xs font-normal" style="color: #888888;">Para siempre</div>
+        </th>
+        <th class="py-4 px-6 text-center text-sm font-bold uppercase tracking-wider text-brand-black border-b-2 border-brand-yellow bg-brand-yellow/10">
+          Pro
+          <div class="text-[24px] font-bold leading-tight mt-1">$29.90</div>
+          <div class="text-xs font-normal" style="color: #888888;">por año</div>
+        </th>
+      </tr>
+    </thead>
+
+    <!-- Rows -->
+    <tbody>
+      {features.map((feature, index) => (
+        <tr class={index % 2 === 0 ? 'bg-brand-white' : 'bg-surface-silver/30'}>
+          <td class="py-3 px-6 text-sm text-brand-black border-b border-border">
+            {feature.label}
+          </td>
+          <td class={`py-3 px-6 text-center text-sm border-b border-border ${valueClass(feature.free)}`}>
+            {renderValue(feature.free)}
+          </td>
+          <td class={`py-3 px-6 text-center text-sm border-b border-border bg-brand-yellow/5 ${valueClass(feature.pro)}`}>
+            {renderValue(feature.pro)}
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+<!-- CTA row -->
+<div class="flex flex-col md:flex-row gap-4 mt-8 justify-center">
+  <CTAButton
+    variant="ghost"
+    href={ctaFree}
+    label="Empezar gratis"
+  />
+  <CTAButton
+    variant="super-primary"
+    href={ctaPro}
+    label="Ser Pro — $29.90/año"
+  />
+</div>

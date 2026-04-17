@@ -1,0 +1,37 @@
+---
+interface Props {
+  terms: string[];
+  currentSlug: string;
+}
+
+const { terms, currentSlug } = Astro.props;
+
+function toSlug(term: string): string {
+  return term
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/[^a-z0-9-]/g, '');
+}
+
+const filteredTerms = terms.filter((t) => toSlug(t) !== currentSlug);
+---
+
+{filteredTerms.length > 0 && (
+  <div class="mt-8 pt-8 border-t border-border">
+    <h3 class="font-bold text-sm uppercase tracking-wider text-brand-black mb-4">
+      Términos relacionados
+    </h3>
+    <div class="flex flex-wrap gap-3">
+      {filteredTerms.map((term) => (
+        <a
+          href={`/glosario/${toSlug(term)}`}
+          class="text-sm font-bold text-brand-black border border-brand-black px-3 py-1 hover:bg-brand-black hover:text-brand-white transition-colors no-underline rounded-none"
+        >
+          {term}
+        </a>
+      ))}
+    </div>
+  </div>
+)}

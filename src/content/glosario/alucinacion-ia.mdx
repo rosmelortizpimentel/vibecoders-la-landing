@@ -1,0 +1,15 @@
+---
+term: "Alucinación IA"
+shortDefinition: "Fenómeno donde un modelo de lenguaje genera información falsa o incorrecta con total confianza, sin señalar que está inventando datos que no tiene."
+category: "ai-fundamentals"
+relatedTerms: ["LLM", "RAG", "Prompt Engineering", "Fine-tuning"]
+draft: false
+---
+
+La **alucinación** en IA es el término que describe cuando un modelo de lenguaje genera información que parece confiable y bien fundamentada, pero que en realidad es incorrecta o directamente inventada. El modelo no "sabe" que está equivocado: lo afirma con la misma confianza que usa para información verdadera.
+
+Las alucinaciones ocurren porque los LLMs no tienen acceso a una base de hechos verificables: generan texto basándose en patrones estadísticos aprendidos durante el entrenamiento. Cuando se les pregunta sobre algo que está fuera de su conocimiento o que requiere información muy específica y reciente, el modelo puede "completar" el patrón con información plausible pero falsa.
+
+Para los builders, las alucinaciones son especialmente problemáticas en código: un modelo puede generar código que usa APIs inexistentes, que llama a funciones con parámetros incorrectos, o que implementa algoritmos con bugs sutiles que parecen correctos. La regla práctica es nunca confiar en código generado por IA sin revisarlo y, preferiblemente, probarlo. Las herramientas como Cursor y Claude Code mitigan parcialmente este problema al tener acceso al contexto real del proyecto, pero no lo eliminan completamente.
+
+La arquitectura RAG es una de las principales técnicas para reducir alucinaciones en sistemas de información: al proporcionar al modelo datos reales y verificados en su contexto, se reduce la necesidad de que "invente" información.

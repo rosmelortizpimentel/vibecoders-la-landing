@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  /* ─── Typography ─────────────────────────────────────────────────────────── */
+  --font-sans: 'Space Grotesk', sans-serif;
+
+  /* ─── Brand Colors ───────────────────────────────────────────────────────── */
+  --color-brand-yellow: #EFDF00;
+  --color-brand-yellow-soft: #F8EB4C;
+  --color-brand-black: #000000;
+  --color-brand-white: #FFFFFF;
+  --color-brand-blue: #1883FD;
+
+  /* ─── Surface Colors ─────────────────────────────────────────────────────── */
+  --color-surface-charcoal: #222222;
+  --color-surface-silver: #F2F2F2;
+
+  /* ─── Neutral / Text ─────────────────────────────────────────────────────── */
+  --color-text-muted: #D9D9D6;
+  --color-border: #D1D1D1;
+
+  /* ─── Semantic ───────────────────────────────────────────────────────────── */
+  --color-success: #8DC572;
+  --color-error: #BE6464;
+  --color-warning: #F0AD4E;
+  --color-info: #337AB7;
+
+  /* ─── Shadow Scale (Renault 6-level system) ──────────────────────────────── */
+  --shadow-soft: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  --shadow-medium: 0px 0px 18px rgba(0, 0, 0, 0.2);
+  --shadow-layered: 0px 2px 4px rgba(0, 0, 0, 0), 0px 7px 14px rgba(50, 50, 93, 0.1);
+  --shadow-deep: 0px 40px 80px rgba(0, 0, 0, 0.15);
+  --shadow-directional: 5px 5px 8px rgba(0, 0, 0, 0.2);
+  --shadow-ambient: 0px 0px 12px 2px rgb(199, 197, 199);
+}
+
+/* ─── Base Reset ─────────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff;
+  color: #000000;
+}
+
+/* ─── Global button reset — ZERO border-radius (Renault system, non-negotiable) */
+button,
+[role="button"],
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+.btn {
+  border-radius: 0px !important;
+}
+
+/* ─── Pill shape ONLY for search inputs ──────────────────────────────────────── */
+input[type="search"],
+.input-pill {
+  border-radius: 50px;
+}

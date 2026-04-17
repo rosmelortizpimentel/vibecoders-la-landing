@@ -1,0 +1,32 @@
+---
+interface Props {
+  variant: 'super-primary' | 'primary' | 'ghost';
+  onDark?: boolean;
+  href: string;
+  label: string;
+  class?: string;
+}
+
+const { variant, onDark = false, href, label, class: className = '' } = Astro.props;
+
+const baseClasses =
+  'font-bold text-sm px-[15px] py-[10px] min-w-[160px] inline-block text-center no-underline transition-all rounded-none';
+
+const variantClasses: Record<string, string> = {
+  'super-primary':
+    'bg-brand-yellow text-brand-black hover:bg-brand-yellow-soft',
+  'primary': onDark
+    ? 'bg-brand-white text-brand-black hover:opacity-70'
+    : 'bg-brand-black text-brand-white hover:opacity-70',
+  'ghost': onDark
+    ? 'bg-transparent border border-brand-white text-brand-white hover:opacity-70'
+    : 'bg-transparent border border-brand-black text-brand-black hover:opacity-70',
+};
+---
+
+<a
+  href={href}
+  class={`${baseClasses} ${variantClasses[variant]} ${className}`}
+>
+  {label}
+</a>

@@ -1,0 +1,77 @@
+---
+interface Props {
+  name: string;
+  tagline: string;
+  category: string;
+  pricing: string;
+  rating?: number;
+  logo: string;
+  slug: string;
+}
+
+const { name, tagline, category, pricing, rating, logo, slug } = Astro.props;
+
+const pricingColors: Record<string, string> = {
+  free: 'bg-surface-silver text-brand-black',
+  freemium: 'bg-surface-charcoal text-brand-white',
+  paid: 'bg-brand-black text-brand-white',
+  trial: 'bg-surface-silver text-brand-black',
+};
+
+const categoryLabel: Record<string, string> = {
+  'ai-code-editor': 'Editor IA',
+  'no-code-builder': 'No-code',
+  'design-tool': 'Diseño',
+  'backend-as-service': 'Backend',
+  'agent-framework': 'Agentes',
+  'deployment': 'Deploy',
+  'other': 'Otro',
+};
+
+const pricingLabel: Record<string, string> = {
+  free: 'Gratis',
+  freemium: 'Freemium',
+  paid: 'Pago',
+  trial: 'Prueba',
+};
+
+const ratingStars = rating ? Math.round(rating) : 0;
+---
+
+<a
+  href={`/tools/${slug}`}
+  class="group block bg-brand-white border border-border p-6 hover:border-brand-black transition-colors no-underline"
+>
+  <!-- Logo + name row -->
+  <div class="flex items-center gap-3 mb-4">
+    <div class="w-12 h-12 shrink-0 overflow-hidden bg-surface-silver flex items-center justify-center">
+      <img src={logo} alt={`Logo de ${name}`} width="48" height="48" class="w-full h-full object-cover" />
+    </div>
+    <div>
+      <h3 class="font-bold text-[18px] leading-tight text-brand-black group-hover:opacity-70 transition-opacity">
+        {name}
+      </h3>
+      {rating && (
+        <div class="flex items-center gap-0.5 mt-0.5">
+          {Array.from({ length: 5 }, (_, i) => (
+            <span class={`text-xs ${i < ratingStars ? 'text-brand-yellow' : 'text-border'}`}>★</span>
+          ))}
+          <span class="text-xs ml-1" style="color: #888888;">{rating.toFixed(1)}</span>
+        </div>
+      )}
+    </div>
+  </div>
+
+  <!-- Tagline -->
+  <p class="text-sm leading-relaxed mb-4" style="color: #888888;">{tagline}</p>
+
+  <!-- Badges -->
+  <div class="flex flex-wrap gap-2">
+    <span class="text-xs font-bold uppercase tracking-wider px-2 py-0.5 bg-surface-silver text-brand-black rounded-none">
+      {categoryLabel[category] ?? category}
+    </span>
+    <span class={`text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded-none ${pricingColors[pricing] ?? 'bg-surface-silver text-brand-black'}`}>
+      {pricingLabel[pricing] ?? pricing}
+    </span>
+  </div>
+</a>

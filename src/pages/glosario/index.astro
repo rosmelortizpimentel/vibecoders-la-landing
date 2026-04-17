@@ -1,0 +1,40 @@
+---
+import DirectoryLayout from '@/layouts/DirectoryLayout.astro';
+import GlosarioCard from '@/components/editorial/GlosarioCard.astro';
+import { getCollection } from 'astro:content';
+
+const breadcrumbs = [
+  { label: 'Inicio', href: '/' },
+  { label: 'Glosario' },
+];
+
+const allTerms = await getCollection('glosario', ({ data }) => data.draft !== true);
+
+const sortedTerms = allTerms.sort((a, b) =>
+  a.data.term.localeCompare(b.data.term, 'es')
+);
+---
+
+<DirectoryLayout
+  title="Glosario"
+  description="Definiciones claras de los términos más importantes del ecosistema Vibe Coding, IA y desarrollo de productos digitales."
+  breadcrumbs={breadcrumbs}
+>
+  {sortedTerms.length === 0 ? (
+    <div class="bg-surface-silver p-12 text-center">
+      <p class="text-sm" style="color: #888888;">Próximamente: definiciones del glosario de Vibe Coding.</p>
+    </div>
+  ) : (
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {sortedTerms.map((term) => (
+        <GlosarioCard
+          term={term.data.term}
+          slug={term.id}
+          acronym={term.data.acronym}
+          shortDefinition={term.data.shortDefinition}
+          category={term.data.category}
+        />
+      ))}
+    </div>
+  )}
+</DirectoryLayout>

@@ -1,0 +1,13 @@
+---
+term: "Ventana de Contexto"
+shortDefinition: "La cantidad máxima de texto (medida en tokens) que un modelo de IA puede procesar y considerar en una sola interacción. Define cuánta información puede tener en cuenta simultáneamente."
+category: "ai-fundamentals"
+relatedTerms: ["Token", "LLM", "RAG", "Prompt Engineering"]
+draft: false
+---
+
+La **ventana de contexto** (context window) es el límite de tokens que un modelo de lenguaje puede procesar en una sola interacción. Todo el texto dentro de esa ventana —incluyendo la conversación previa, las instrucciones del sistema, los documentos de referencia y la pregunta actual— debe caber dentro de ese límite.
+
+La evolución de las ventanas de contexto ha sido uno de los avances más significativos en los LLMs modernos. Los primeros modelos tenían ventanas de 4.000 tokens (aproximadamente 3.000 palabras). Los modelos actuales más avanzados tienen ventanas de 1 millón de tokens o más, lo que equivale a processar varios libros completos en una sola sesión.
+
+Para los builders, la ventana de contexto tiene implicaciones prácticas importantes. Primero, determina cuánto contexto del proyecto puedes incluir en tus prompts: proyectos más grandes pueden necesitar estrategias de fragmentación. Segundo, conversaciones largas con un asistente de IA eventualmente empiezan a "olvidar" las primeras partes de la conversación cuando se supera el límite. Tercero, las herramientas como Claude Code aprovechan ventanas grandes para leer proyectos completos antes de implementar cambios, lo que reduce significativamente los errores por falta de contexto.

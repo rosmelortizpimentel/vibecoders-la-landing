@@ -1,0 +1,104 @@
+---
+title: "Prompts básicos para Lovable"
+description: "Colección de prompts probados para las situaciones más comunes en Lovable: crear formularios, configurar autenticación, conectar Supabase y manejar errores frecuentes."
+type: "prompt"
+tags: ["lovable", "prompts", "autenticacion", "formularios", "supabase"]
+compatibleTools: ["lovable"]
+difficulty: "beginner"
+publishedAt: 2026-01-15
+author:
+  name: "VibeCoders"
+  username: "vibecoders"
+draft: false
+---
+
+## Cómo usar esta colección
+
+Estos prompts están diseñados para copiar y adaptar directamente en Lovable. Cada uno incluye placeholders entre corchetes que debes reemplazar con los detalles de tu proyecto.
+
+Están organizados por situación. Busca la que corresponde a lo que necesitas hacer en este momento.
+
+---
+
+## Prompts de inicio
+
+### Crear una app desde cero
+
+```
+Crea una aplicación web para [descripción del producto en 1-2 oraciones].
+
+Los usuarios deben poder:
+1. [Funcionalidad principal]
+2. [Segunda funcionalidad]
+3. [Tercera funcionalidad]
+
+Estilo visual: [minimalista / moderno / corporativo]. Paleta de colores: [colores o referencias].
+
+No incluir en esta versión: [lista de funcionalidades excluidas].
+```
+
+### Agregar una pantalla nueva
+
+```
+Agrega una pantalla de [nombre de la pantalla] al proyecto. Esta pantalla debe mostrar [qué se muestra] y permitir al usuario [qué acciones puede hacer]. Mantén el mismo estilo visual que el resto de la aplicación.
+```
+
+---
+
+## Prompts de autenticación
+
+### Configurar login y registro
+
+```
+Configura autenticación de usuarios con Supabase Auth. Los usuarios deben poder registrarse con email y contraseña, iniciar sesión y cerrar sesión. Agrega las páginas de Login y Registro con el mismo estilo visual del proyecto. Protege todas las rutas que requieren usuario autenticado.
+```
+
+### Agregar login con Google
+
+```
+Agrega la opción de "Iniciar sesión con Google" en las páginas de Login y Registro. Mantén el botón con el estilo visual del proyecto. Asegúrate de que el callback de autenticación redirige correctamente a la pantalla principal de la aplicación.
+```
+
+---
+
+## Prompts de formularios
+
+### Formulario con validación
+
+```
+Crea un formulario para [propósito del formulario] con los campos: [lista de campos con tipo: texto, email, número, selector, etc.]. Incluye validación en el cliente para campos obligatorios y formato correcto de email. Muestra mensajes de error claros en rojo debajo de cada campo con problema. Al enviar correctamente, muestra una confirmación y [acción posterior: redirige a X / limpia el formulario / etc.].
+```
+
+---
+
+## Prompts de corrección
+
+### Corregir un error específico
+
+```
+En la pantalla de [nombre de la pantalla], cuando el usuario [acción que causa el error], ocurre el siguiente problema: [descripción exacta del problema]. El comportamiento esperado es: [qué debería pasar]. Por favor, corrige solo este problema sin modificar otras partes de la aplicación.
+```
+
+### Revertir un cambio
+
+```
+El último cambio introdujo un problema en [parte de la aplicación]. Por favor, revierte únicamente los cambios en [archivo o componente específico] al estado anterior, manteniendo el resto de los cambios recientes.
+```
+
+---
+
+## Prompts de estilo
+
+### Ajustar un componente visual
+
+```
+En el componente [nombre del componente], ajusta el estilo de la siguiente manera: [descripción detallada del cambio visual]. No cambies la funcionalidad, solo el aspecto visual.
+```
+
+---
+
+## Consejos para mejores resultados
+
+- **Sé específico sobre lo que NO cambiar**: si solo quieres modificar un componente, dilo explícitamente.
+- **Un problema por prompt**: no intentes corregir varios problemas en el mismo mensaje.
+- **Describe el comportamiento actual Y el esperado**: da contexto suficiente para que Lovable entienda qué está mal y qué se espera.

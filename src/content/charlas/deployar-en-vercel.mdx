@@ -1,0 +1,54 @@
+---
+sessionNumber: 4
+title: "Deploy en Vercel: de localhost a producción en minutos"
+tagline: "Estrategias probadas para deployar tus aplicaciones en Vercel de forma correcta: preview deployments, variables de entorno, dominios y monitoreo básico."
+speaker:
+  name: "Diego Ramírez"
+  role: "DevOps Engineer & Builder"
+  bio: "Ingeniero de infraestructura especializado en plataformas cloud. Ha ayudado a más de 30 startups a configurar su pipeline de deployment. Actualmente también construye sus propios productos SaaS."
+recordedAt: 2025-12-22
+durationMinutes: 40
+videoEmbedId: "dQw4w9WgXcQ"
+videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+topics: ["vercel", "deploy", "devops", "ci-cd", "produccion"]
+resources:
+  - label: "Vercel Documentation"
+    url: "https://vercel.com/docs"
+    type: "article"
+  - label: "Vercel CLI"
+    url: "https://vercel.com/docs/cli"
+    type: "tool"
+timestamps:
+  - seconds: 0
+    label: "Por qué Vercel es la mejor opción para builders"
+  - seconds: 480
+    label: "Configuración inicial: conectar repo, primer deploy"
+  - seconds: 960
+    label: "Variables de entorno: desarrollo vs producción"
+  - seconds: 1440
+    label: "Preview deployments y su valor para el testing"
+  - seconds: 1920
+    label: "Dominios custom y configuración DNS"
+  - seconds: 2280
+    label: "Monitoreo básico y alertas"
+featured: false
+draft: false
+---
+
+Diego Ramírez abrió su charla con una estadística que golpeó al público: el 40% de los proyectos que los builders presentan en la comunidad no están en producción porque "no saben cómo deployar". Eso es tiempo y potencial desperdiciado que se puede solucionar en una tarde.
+
+## Por qué Vercel para builders
+
+Vercel resuelve el problema del deployment de aplicaciones web modernas mejor que cualquier alternativa para el segmento indie builder. No necesitas configurar nginx, no necesitas entender docker por defecto, no necesitas administrar un servidor. Conectas tu repositorio de GitHub y Vercel se encarga del resto.
+
+El free tier es generoso: proyectos ilimitados, 100GB de bandwidth al mes, y preview deployments automáticos para cada pull request o branch. Para un MVP o proyecto en etapa temprana, eso es más que suficiente.
+
+## El patrón que más personas hacen mal
+
+Variables de entorno. Diego mostró el error más común: commitear el archivo `.env` al repositorio con claves de API en texto plano. Ese error puede resultar en facturas enormes de servicios cloud o en datos de usuarios comprometidos.
+
+La solución correcta: usar el panel de Vercel para configurar las variables de entorno por ambiente (development, preview, production) y nunca commitear secrets al repositorio. Si ya lo hiciste, hay que regenerar las claves y hacer un limpiado del historial de git.
+
+## Preview deployments: el feature subestimado
+
+El feature que más cambió el workflow de Diego fue los preview deployments automáticos. Cada branch tiene su propia URL con el build completo. Esto significa que puedes compartir un link con usuarios para obtener feedback antes de mergear a main. Es testing de producto gratuito y automatizado.

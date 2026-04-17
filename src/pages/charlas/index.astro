@@ -1,0 +1,44 @@
+---
+import DirectoryLayout from '@/layouts/DirectoryLayout.astro';
+import CharlaCard from '@/components/editorial/CharlaCard.astro';
+import { getCollection } from 'astro:content';
+
+const breadcrumbs = [
+  { label: 'Inicio', href: '/' },
+  { label: 'Charlas' },
+];
+
+const allCharlas = await getCollection('charlas', ({ data }) => data.draft !== true);
+
+const sortedCharlas = allCharlas.sort(
+  (a, b) => b.data.sessionNumber - a.data.sessionNumber
+);
+---
+
+<DirectoryLayout
+  title="Charlas en vivo"
+  description="Sesiones en vivo con builders, founders y expertos del ecosistema Vibe Coding. Aprende de quienes ya construyeron lo que tú quieres construir."
+  breadcrumbs={breadcrumbs}
+>
+  {sortedCharlas.length === 0 ? (
+    <div class="bg-surface-silver p-12 text-center">
+      <p class="text-sm" style="color: #888888;">Próximamente: sesiones en vivo con la comunidad.</p>
+    </div>
+  ) : (
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {sortedCharlas.map((charla) => (
+        <CharlaCard
+          title={charla.data.title}
+          slug={charla.id}
+          sessionNumber={charla.data.sessionNumber}
+          speaker={charla.data.speaker}
+          tagline={charla.data.tagline}
+          topics={charla.data.topics}
+          thumbnail={charla.data.thumbnail}
+          recordedAt={charla.data.recordedAt}
+          durationMinutes={charla.data.durationMinutes}
+        />
+      ))}
+    </div>
+  )}
+</DirectoryLayout>

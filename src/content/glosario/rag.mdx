@@ -1,0 +1,14 @@
+---
+term: "Retrieval-Augmented Generation"
+acronym: "RAG"
+shortDefinition: "Técnica que combina la recuperación de información de una base de conocimiento con la generación de texto de un LLM para producir respuestas más precisas y actualizadas."
+category: "ai-fundamentals"
+relatedTerms: ["LLM", "Embeddings", "Agente IA", "Fine-tuning"]
+draft: false
+---
+
+**RAG (Retrieval-Augmented Generation)** es una arquitectura de IA que resuelve uno de los problemas fundamentales de los LLMs: el conocimiento desactualizado. Los modelos de lenguaje tienen una fecha de corte de entrenamiento y no conocen información posterior a esa fecha. RAG soluciona esto conectando el modelo con una base de conocimiento externa que se consulta en tiempo real.
+
+El proceso funciona en dos pasos: primero, la consulta del usuario se convierte en un vector de embeddings y se buscan los fragmentos de información más relevantes en la base de conocimiento. Segundo, esos fragmentos se incluyen en el contexto del modelo junto con la consulta original, y el LLM genera una respuesta basándose en ambos.
+
+Para los builders, RAG es relevante para construir aplicaciones como chatbots de soporte con acceso a la documentación del producto, asistentes que pueden responder sobre el contenido específico de una empresa, o herramientas de búsqueda semántica. Supabase tiene soporte nativo para RAG através de pgvector, lo que facilita su implementación sin infraestructura adicional.

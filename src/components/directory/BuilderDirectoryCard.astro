@@ -1,0 +1,60 @@
+---
+import Badge from '@/components/ui/Badge.astro';
+import type { AllBuilder } from '@/types/all-builders';
+
+type Props = AllBuilder;
+
+const { username, display_name, avatar_url, tagline, city, is_verified, apps_count } = Astro.props;
+
+const initial = display_name.charAt(0).toUpperCase();
+---
+
+<a
+  href={`/builders/${username}`}
+  class="block bg-surface-silver border border-border p-6 rounded-none hover:shadow-soft transition-shadow no-underline"
+>
+  <!-- Avatar + Name row -->
+  <div class="flex items-center gap-4 mb-4">
+    <div class="w-16 h-16 rounded-full overflow-hidden bg-surface-charcoal flex items-center justify-center shrink-0">
+      {avatar_url ? (
+        <img
+          src={avatar_url}
+          alt={display_name}
+          width="64"
+          height="64"
+          class="w-full h-full object-cover"
+          loading="lazy"
+        />
+      ) : (
+        <span class="text-brand-white font-bold text-xl">{initial}</span>
+      )}
+    </div>
+
+    <div class="min-w-0">
+      <p class="font-bold text-lg text-brand-black leading-tight truncate">{display_name}</p>
+      <p class="text-sm mt-0.5 line-clamp-2 leading-relaxed" style="color: #888888;">{tagline ?? ''}</p>
+    </div>
+  </div>
+
+  <!-- Location + Verified row -->
+  <div class="flex items-center justify-between gap-2 mb-4">
+    {city && (
+      <p class="text-sm text-brand-black">
+        {city}
+      </p>
+    )}
+    {is_verified && (
+      <span class="text-xs font-bold uppercase tracking-wider px-2 py-0.5 bg-brand-black text-brand-white inline-block">
+        Verified
+      </span>
+    )}
+  </div>
+
+  <!-- Apps count -->
+  <div class="flex items-center gap-4 pt-3 border-t border-border">
+    <div class="text-center">
+      <p class="text-sm font-bold text-brand-black">{apps_count}</p>
+      <p class="text-xs" style="color: #888888;">apps</p>
+    </div>
+  </div>
+</a>

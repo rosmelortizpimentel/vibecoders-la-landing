@@ -1,0 +1,277 @@
+[
+  {
+    "slug": "facturai",
+    "name": "FacturAI",
+    "tagline": "Facturas inteligentes para freelancers hispanohablantes.",
+    "logoUrl": "https://placehold.co/64x64/EFDF00/000000?text=F",
+    "url": "https://facturai.app",
+    "builder": {
+      "username": "martinl",
+      "name": "Martín López",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/1?v=4"
+    },
+    "category": {
+      "slug": "fintech",
+      "label": "Fintech"
+    },
+    "status": "launched",
+    "techStack": [
+      { "slug": "nextjs", "label": "Next.js" },
+      { "slug": "supabase", "label": "Supabase" },
+      { "slug": "stripe", "label": "Stripe" }
+    ],
+    "metrics": {
+      "likes": 87,
+      "clicks": 1240
+    },
+    "isVerified": true,
+    "launchedAt": "2026-02-14T00:00:00Z",
+    "description": "FacturAI es la solución de facturación más rápida del ecosistema hispanohablante. Genera facturas profesionales en segundos usando IA: describe el trabajo que hiciste y el sistema extrae automáticamente cliente, monto, ítems y condiciones de pago.\n\nDiseñada para freelancers que no quieren perder tiempo con administración. Compatible con los formatos fiscales de Argentina, México, Chile, Colombia y España. Integración directa con Stripe para cobros inmediatos.",
+    "screenshots": [],
+    "hoursBuilding": 340,
+    "hoursIdeation": 20,
+    "betaActive": false,
+    "partnershipOpen": "Buscamos integradores contables en México y Argentina",
+    "publicRoadmapUrl": "https://facturai.app/roadmap"
+  },
+  {
+    "slug": "landin-ai",
+    "name": "Landin.ai",
+    "tagline": "Landing pages que convierten, generadas en minutos con IA.",
+    "logoUrl": "https://placehold.co/64x64/1883FD/FFFFFF?text=L",
+    "url": "https://landin.ai",
+    "builder": {
+      "username": "sofiad",
+      "name": "Sofía Díaz",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/2?v=4"
+    },
+    "category": {
+      "slug": "marketing",
+      "label": "Marketing"
+    },
+    "status": "beta",
+    "techStack": [
+      { "slug": "astro", "label": "Astro" },
+      { "slug": "openai", "label": "OpenAI" },
+      { "slug": "vercel", "label": "Vercel" }
+    ],
+    "metrics": {
+      "likes": 45,
+      "clicks": 730
+    },
+    "isVerified": false,
+    "description": "Landin.ai transforma tu idea en una landing page de alta conversión en menos de 3 minutos. Solo describes tu producto, tu audiencia y el tono de voz que querés, y la IA genera el copy, el layout y las secciones clave.\n\nActualmente en beta con más de 200 early adopters. El output es código Astro listo para deployar en Vercel o Netlify. Optimizado para conversión con estructura probada: hero, problema, solución, social proof y CTA.",
+    "screenshots": [],
+    "hoursBuilding": 180,
+    "betaActive": true,
+    "coFounders": [
+      {
+        "username": "martinl",
+        "name": "Martín López",
+        "role": "Advisor técnico"
+      }
+    ]
+  },
+  {
+    "slug": "standupbot",
+    "name": "StandupBot",
+    "tagline": "Daily standups asíncronos con resúmenes IA para tu equipo.",
+    "logoUrl": "https://placehold.co/64x64/222222/FFFFFF?text=S",
+    "url": "https://standupbot.io",
+    "builder": {
+      "username": "carlosr",
+      "name": "Carlos Rodríguez",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/3?v=4"
+    },
+    "category": {
+      "slug": "productividad",
+      "label": "Productividad"
+    },
+    "status": "launched",
+    "techStack": [
+      { "slug": "remix", "label": "Remix" },
+      { "slug": "supabase", "label": "Supabase" },
+      { "slug": "openai", "label": "OpenAI" }
+    ],
+    "metrics": {
+      "likes": 113,
+      "clicks": 2180
+    },
+    "isVerified": true,
+    "launchedAt": "2026-03-01T00:00:00Z",
+    "description": "StandupBot elimina las reuniones de standup en tiempo real. Cada miembro del equipo responde tres preguntas asíncronamente — qué hice, qué voy a hacer, qué me bloquea — y la IA genera un resumen ejecutivo diario para el equipo y el management.\n\nIntegración con Slack y Discord. Soporta equipos distribuidos en múltiples zonas horarias. Los datos históricos alimentan dashboards de productividad y detección temprana de blockers.",
+    "screenshots": [],
+    "hoursBuilding": 420,
+    "hoursIdeation": 40,
+    "betaActive": false,
+    "publicRoadmapUrl": "https://standupbot.io/roadmap"
+  },
+  {
+    "slug": "copywiz",
+    "name": "CopyWiz",
+    "tagline": "Copy de marketing que convierte, generado por IA en segundos.",
+    "logoUrl": "https://placehold.co/64x64/8DC572/000000?text=C",
+    "url": "https://copywiz.app",
+    "builder": {
+      "username": "valentinag",
+      "name": "Valentina García",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/4?v=4"
+    },
+    "category": {
+      "slug": "marketing",
+      "label": "Marketing"
+    },
+    "status": "launched",
+    "techStack": [
+      { "slug": "nextjs", "label": "Next.js" },
+      { "slug": "anthropic", "label": "Claude" },
+      { "slug": "stripe", "label": "Stripe" }
+    ],
+    "metrics": {
+      "likes": 204,
+      "clicks": 3120
+    },
+    "isVerified": true,
+    "launchedAt": "2026-03-10T00:00:00Z",
+    "description": "CopyWiz es el copiloto de marketing para equipos y solopreneurs que necesitan copy de alta calidad sin contratar un copywriter senior. Soporta más de 40 formatos: emails, ads de Facebook/Instagram, posts de LinkedIn, descripciones de producto, y mucho más.\n\nEntrenado con los mejores frameworks de copywriting (PAS, AIDA, StoryBrand) y adaptado al contexto hispanohablante. Los usuarios reportan un aumento promedio de 34% en click-through rates versus su copy anterior.",
+    "screenshots": [],
+    "hoursBuilding": 510,
+    "hoursIdeation": 35,
+    "betaActive": false,
+    "partnershipOpen": "Buscamos agencias de marketing para programa de revendedores"
+  },
+  {
+    "slug": "fitlog-ai",
+    "name": "FitLog AI",
+    "tagline": "Tu entrenador personal IA que aprende de tu cuerpo.",
+    "logoUrl": "https://placehold.co/64x64/337AB7/FFFFFF?text=F",
+    "url": "https://fitlog.ai",
+    "builder": {
+      "username": "andresp",
+      "name": "Andrés Paredes",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/7?v=4"
+    },
+    "category": {
+      "slug": "salud",
+      "label": "Salud"
+    },
+    "status": "beta",
+    "techStack": [
+      { "slug": "expo", "label": "Expo" },
+      { "slug": "openai", "label": "OpenAI" },
+      { "slug": "supabase", "label": "Supabase" }
+    ],
+    "metrics": {
+      "likes": 67,
+      "clicks": 890
+    },
+    "isVerified": false,
+    "description": "FitLog AI es un entrenador personal en tu bolsillo que aprende de tus hábitos, limitaciones físicas y objetivos para generar planes de entrenamiento adaptativos. No es una app de ejercicios genérica — aprende de vos.\n\nDiseñada pensando en la realidad latinoamericana: funciona offline, consume poco dato, y tiene planes adaptados a quien no tiene acceso a un gimnasio equipado. La IA ajusta la rutina semana a semana según tu progreso real.",
+    "screenshots": [],
+    "hoursBuilding": 260,
+    "betaActive": true
+  },
+  {
+    "slug": "docuflow",
+    "name": "DocuFlow",
+    "tagline": "Automatización de documentos con IA para equipos legales.",
+    "logoUrl": "https://placehold.co/64x64/F2F2F2/000000?text=D",
+    "url": "https://docuflow.app",
+    "builder": {
+      "username": "marianaj",
+      "name": "Mariana Jiménez",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/8?v=4"
+    },
+    "category": {
+      "slug": "productividad",
+      "label": "Productividad"
+    },
+    "status": "building",
+    "techStack": [
+      { "slug": "nextjs", "label": "Next.js" },
+      { "slug": "anthropic", "label": "Claude" },
+      { "slug": "supabase", "label": "Supabase" }
+    ],
+    "metrics": {
+      "likes": 38,
+      "clicks": 450
+    },
+    "isVerified": false,
+    "description": "DocuFlow automatiza el 80% del trabajo repetitivo en estudios jurídicos y equipos legales corporativos. Genera contratos, acuerdos de confidencialidad, poderes notariales y más desde plantillas inteligentes que se adaptan al contexto.\n\nEn construcción activa. La IA entiende el marco legal de Argentina, México y España. Integra con firma digital y gestión documental. La primera versión pública está proyectada para mayo 2026.",
+    "screenshots": [],
+    "hoursBuilding": 95,
+    "betaActive": false,
+    "coFounders": [
+      {
+        "username": "luciab",
+        "name": "Lucía Bentancur",
+        "role": "Co-founder & Data Lead"
+      }
+    ],
+    "partnershipOpen": "Buscamos estudios jurídicos para pilotos pagos"
+  },
+  {
+    "slug": "resumeai",
+    "name": "ResumeAI",
+    "tagline": "CVs que pasan el filtro ATS y consiguen entrevistas.",
+    "logoUrl": "https://placehold.co/64x64/000000/EFDF00?text=R",
+    "url": "https://resumeai.app",
+    "builder": {
+      "username": "rafaelc",
+      "name": "Rafael Costa",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/9?v=4"
+    },
+    "category": {
+      "slug": "rrhh",
+      "label": "RRHH"
+    },
+    "status": "beta",
+    "techStack": [
+      { "slug": "nextjs", "label": "Next.js" },
+      { "slug": "anthropic", "label": "Claude" },
+      { "slug": "vercel", "label": "Vercel" }
+    ],
+    "metrics": {
+      "likes": 52,
+      "clicks": 620
+    },
+    "isVerified": false,
+    "description": "ResumeAI genera CVs optimizados para pasar los filtros ATS (Applicant Tracking Systems) que usan el 95% de las grandes empresas. Pegás tu experiencia en texto libre y la IA formatea, prioriza y optimiza con las keywords correctas para el puesto que buscás.\n\nCompatible con formatos de LATAM y España. Genera versiones en español e inglés. Más de 300 usuarios en beta reportan 2x más respuestas de recruiters usando ResumeAI versus sus CVs anteriores.",
+    "screenshots": [],
+    "hoursBuilding": 150,
+    "hoursIdeation": 15,
+    "betaActive": true,
+    "publicRoadmapUrl": "https://resumeai.app/roadmap"
+  },
+  {
+    "slug": "claseia",
+    "name": "ClaseIA",
+    "tagline": "Clases personalizadas con IA para estudiantes de toda Latinoamérica.",
+    "logoUrl": "https://placehold.co/64x64/337AB7/FFFFFF?text=C",
+    "url": "https://claseia.app",
+    "builder": {
+      "username": "isabellav",
+      "name": "Isabella Vargas",
+      "avatarUrl": "https://avatars.githubusercontent.com/u/10?v=4"
+    },
+    "category": {
+      "slug": "educacion",
+      "label": "Educación"
+    },
+    "status": "building",
+    "techStack": [
+      { "slug": "nextjs", "label": "Next.js" },
+      { "slug": "openai", "label": "OpenAI" },
+      { "slug": "supabase", "label": "Supabase" }
+    ],
+    "metrics": {
+      "likes": 19,
+      "clicks": 180
+    },
+    "isVerified": false,
+    "description": "ClaseIA es una plataforma de aprendizaje adaptativo que personaliza cada clase según el nivel, ritmo y estilo de aprendizaje del estudiante. Construida por una maestra que entendió que la IA puede hacer lo que ningún sistema educativo tradicional pudo: personalizar a escala.\n\nCubre matemáticas, ciencias y lengua para niveles primaria y secundaria. La IA detecta las brechas de conocimiento y genera ejercicios específicos para cerrarlas. Pensada para estudiantes con conectividad limitada.",
+    "screenshots": [],
+    "hoursBuilding": 80,
+    "betaActive": false
+  }
+]

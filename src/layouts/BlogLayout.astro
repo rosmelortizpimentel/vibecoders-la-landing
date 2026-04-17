@@ -1,0 +1,123 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/directory/Breadcrumbs.astro';
+import TagList from '@/components/editorial/TagList.astro';
+import CTAButton from '@/components/ui/CTAButton.astro';
+import { platformCTA } from '@/lib/urls';
+
+interface Author {
+  name: string;
+  username: string;
+  avatarUrl?: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  author: Author;
+  publishedAt: Date;
+  tags: string[];
+  cluster: string;
+  readingTime?: number;
+  cover?: string;
+}
+
+const { title, description, author, publishedAt, tags, cluster, readingTime, cover } = Astro.props;
+
+const formattedDate = publishedAt.toLocaleDateString('es-ES', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+
+const initial = author.name.charAt(0).toUpperCase();
+
+const breadcrumbs = [
+  { label: 'Inicio', href: '/' },
+  { label: 'Blog', href: '/blog' },
+  { label: title },
+];
+---
+
+<BaseLayout title={`${title} | Blog | VibeCoders`} description={description}>
+  <!-- Breadcrumbs -->
+  <div class="bg-brand-white max-w-[1440px] mx-auto px-6 pt-6">
+    <Breadcrumbs items={breadcrumbs} />
+  </div>
+
+  <!-- Dark Hero -->
+  <section class="bg-brand-black py-12 md:py-20">
+    <div class="max-w-[800px] mx-auto px-6">
+      <!-- Cluster badge -->
+      <div class="mb-6">
+        <span class="text-xs font-bold uppercase tracking-wider px-2 py-0.5 bg-surface-charcoal text-brand-white rounded-none">
+          {cluster}
+        </span>
+      </div>
+
+      <!-- Title -->
+      <h1 class="font-bold text-[32px] md:text-[56px] leading-[0.95] text-brand-white mb-6">
+        {title}
+      </h1>
+
+      <!-- Description -->
+      <p class="text-base md:text-lg leading-relaxed mb-8" style="color: #D9D9D6;">
+        {description}
+      </p>
+
+      <!-- Author row -->
+      <div class="flex items-center gap-3 pb-8 border-b border-surface-charcoal">
+        <div class="w-8 h-8 rounded-full bg-surface-charcoal flex items-center justify-center shrink-0 overflow-hidden">
+          {author.avatarUrl ? (
+            <img src={author.avatarUrl} alt={author.name} width="32" height="32" class="w-full h-full object-cover" />
+          ) : (
+            <span class="text-brand-white text-sm font-bold">{initial}</span>
+          )}
+        </div>
+        <div>
+          <p class="text-sm font-bold text-brand-white">{author.name}</p>
+          <p class="text-xs" style="color: #888888;">
+            {formattedDate}
+            {readingTime && ` · ${readingTime} min de lectura`}
+          </p>
+        </div>
+      </div>
+
+      <!-- Tags -->
+      {tags.length > 0 && (
+        <div class="mt-6">
+          <TagList tags={tags} />
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- Light Content -->
+  <section class="bg-brand-white py-12">
+    <div class="max-w-[800px] mx-auto px-6">
+      <!-- Cover image (if present) -->
+      {cover && (
+        <div class="mb-8 h-64 overflow-hidden">
+          <img src={cover} alt={title} class="w-full h-full object-cover" />
+        </div>
+      )}
+
+      <!-- MDX content -->
+      <article class="prose prose-lg max-w-none prose-headings:text-brand-black prose-headings:font-bold prose-a:text-brand-blue prose-a:no-underline hover:prose-a:underline prose-strong:text-brand-black prose-code:bg-surface-silver prose-code:text-brand-black prose-code:rounded-none prose-pre:rounded-none">
+        <slot />
+      </article>
+
+      <!-- CTA -->
+      <div class="mt-16 pt-8 border-t border-border text-center">
+        <p class="text-sm font-bold text-brand-black mb-4 uppercase tracking-wider">
+          ¿Quieres aprender más con la comunidad?
+        </p>
+        <CTAButton
+          variant="primary"
+          href={platformCTA('blog-post')}
+          label="Únete a VibeCoders"
+        />
+      </div>
+    </div>
+  </section>
+</BaseLayout>

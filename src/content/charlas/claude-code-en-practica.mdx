@@ -1,0 +1,59 @@
+---
+sessionNumber: 6
+title: "Claude Code en la práctica: el agente de desarrollo más poderoso del mercado"
+tagline: "Una exploración profunda de Claude Code de Anthropic: cómo usarlo para tareas complejas de desarrollo, sus capacidades agenticas, y los patrones que funcionan mejor."
+speaker:
+  name: "Pol Baladas"
+  role: "AI Engineer & Developer Advocate"
+  bio: "Ingeniero especializado en herramientas de desarrollo con IA. Ha trabajado con los principales modelos de lenguaje en producción y comparte lo que aprende con la comunidad developer."
+  websiteUrl: "https://polbaladas.dev"
+recordedAt: 2026-01-26
+durationMinutes: 62
+videoEmbedId: "dQw4w9WgXcQ"
+videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+topics: ["claude-code", "ia", "agentes", "anthropic", "desarrollo"]
+resources:
+  - label: "Claude Code documentación oficial"
+    url: "https://docs.anthropic.com/claude-code"
+    type: "article"
+  - label: "Anthropic: Model Context Protocol"
+    url: "https://modelcontextprotocol.io"
+    type: "article"
+timestamps:
+  - seconds: 0
+    label: "¿Qué hace diferente a Claude Code?"
+  - seconds: 720
+    label: "Instalación y configuración inicial"
+  - seconds: 1440
+    label: "Capacidades agenticas: qué puede hacer solo"
+  - seconds: 2280
+    label: "AGENTS.md y memoria del proyecto"
+  - seconds: 3120
+    label: "MCP: extendiendo las capacidades del agente"
+  - seconds: 3600
+    label: "Casos de uso avanzados y limitaciones"
+featured: false
+draft: false
+---
+
+Claude Code representa un salto cualitativo respecto a los asistentes de código anteriores. No es solo un completador de código: es un agente que puede ejecutar comandos, leer y escribir archivos, y mantener contexto sobre proyectos completos durante sesiones extendidas. Pol Baladas llegó con ejemplos en vivo que dejaron al público impresionado.
+
+## Lo que diferencia a Claude Code
+
+La diferencia fundamental está en las capacidades agenticas. Claude Code puede ejecutar tests, leer el output de la terminal, ver qué archivos existen en el proyecto, y tomar decisiones basadas en todo ese contexto. No solo escribe código: comprende el estado actual del sistema y trabaja hacia un objetivo.
+
+Durante la demo en vivo, Pol le pidió a Claude Code que "implementara la autenticación con Supabase en este proyecto Astro". Sin más instrucciones, el agente leyó los archivos existentes, identificó la estructura del proyecto, instaló las dependencias necesarias, creó los archivos correspondientes, y ejecutó el check de TypeScript para verificar que todo compilaba. Todo solo.
+
+## AGENTS.md: la memoria del proyecto
+
+Uno de los patrones más poderosos que Pol compartió es el uso de un archivo `AGENTS.md` en la raíz del proyecto. Este archivo le dice al agente cómo es el proyecto, qué convenciones usa, qué no debe hacer, y cómo está estructurado el código.
+
+Con un buen `AGENTS.md`, Claude Code genera código coherente con el estilo del proyecto desde el primer prompt, sin necesitar repetir el contexto en cada sesión.
+
+## MCP: el protocolo que expande todo
+
+El Model Context Protocol (MCP) permite conectar Claude Code con herramientas externas: bases de datos, APIs, sistemas de archivos, servicios web. Pol mostró una integración con Supabase via MCP que permite al agente inspeccionar el schema de la base de datos y generar migraciones correctas sin salir de Claude Code.
+
+## Las limitaciones honestas
+
+Pol cerró con algo raro en las charlas de herramientas: hablar honestamente de las limitaciones. Claude Code falla en tareas que requieren contexto visual (no puede ver screenshots), en proyectos con más de ~500 archivos sin estructura clara, y cuando las instrucciones son ambiguas. El operador humano sigue siendo esencial para definir qué se quiere, no solo pedirle al agente que "lo arregle todo".

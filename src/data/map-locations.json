@@ -1,0 +1,142 @@
+[
+  {
+    "countryCode": "AR",
+    "country": "Argentina",
+    "latitude": -34.6037,
+    "longitude": -58.3816,
+    "builderCount": 38,
+    "topBuilders": [
+      {
+        "username": "martinl",
+        "name": "Martín López",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/1?v=4"
+      }
+    ]
+  },
+  {
+    "countryCode": "MX",
+    "country": "México",
+    "latitude": 19.4326,
+    "longitude": -99.1332,
+    "builderCount": 31,
+    "topBuilders": [
+      {
+        "username": "sofiad",
+        "name": "Sofía Díaz",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/2?v=4"
+      }
+    ]
+  },
+  {
+    "countryCode": "ES",
+    "country": "España",
+    "latitude": 40.4168,
+    "longitude": -3.7038,
+    "builderCount": 24,
+    "topBuilders": [
+      {
+        "username": "carlosr",
+        "name": "Carlos Rodríguez",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/3?v=4"
+      }
+    ]
+  },
+  {
+    "countryCode": "CO",
+    "country": "Colombia",
+    "latitude": 4.711,
+    "longitude": -74.0721,
+    "builderCount": 19,
+    "topBuilders": [
+      {
+        "username": "valentinag",
+        "name": "Valentina García",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/4?v=4"
+      }
+    ]
+  },
+  {
+    "countryCode": "CL",
+    "country": "Chile",
+    "latitude": -33.4569,
+    "longitude": -70.6483,
+    "builderCount": 14,
+    "topBuilders": [
+      {
+        "username": "luisc",
+        "name": "Luis Castro",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/5?v=4"
+      }
+    ]
+  },
+  {
+    "countryCode": "PE",
+    "country": "Perú",
+    "latitude": -12.0464,
+    "longitude": -77.0428,
+    "builderCount": 11,
+    "topBuilders": [
+      {
+        "username": "andresp",
+        "name": "Andrés Paredes",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/7?v=4"
+      }
+    ]
+  },
+  {
+    "countryCode": "VE",
+    "country": "Venezuela",
+    "latitude": 10.4806,
+    "longitude": -66.9036,
+    "builderCount": 9,
+    "topBuilders": [
+      {
+        "username": "carlosm",
+        "name": "Carlos Mendoza",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/11?v=4"
+      }
+    ]
+  },
+  {
+    "countryCode": "EC",
+    "country": "Ecuador",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "builderCount": 7,
+    "topBuilders": [
+      {
+        "username": "andar",
+        "name": "Anda Ruiz",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/12?v=4"
+      }
+    ]
+  },
+  {
+    "countryCode": "UY",
+    "country": "Uruguay",
+    "latitude": -34.9011,
+    "longitude": -56.1645,
+    "builderCount": 6,
+    "topBuilders": [
+      {
+        "username": "matiasb",
+        "name": "Matías Benítez",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/13?v=4"
+      }
+    ]
+  },
+  {
+    "countryCode": "PY",
+    "country": "Paraguay",
+    "latitude": -25.2867,
+    "longitude": -57.647,
+    "builderCount": 4,
+    "topBuilders": [
+      {
+        "username": "juanr",
+        "name": "Juan Romero",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/14?v=4"
+      }
+    ]
+  }
+]

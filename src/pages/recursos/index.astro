@@ -1,0 +1,43 @@
+---
+import DirectoryLayout from '@/layouts/DirectoryLayout.astro';
+import ResourceCard from '@/components/recursos/ResourceCard.astro';
+import { getCollection } from 'astro:content';
+
+const breadcrumbs = [
+  { label: 'Inicio', href: '/' },
+  { label: 'Recursos' },
+];
+
+const allRecursos = await getCollection('recursos', ({ data }) => data.draft !== true);
+
+const sortedRecursos = allRecursos.sort(
+  (a, b) =>
+    new Date(b.data.publishedAt).getTime() - new Date(a.data.publishedAt).getTime()
+);
+---
+
+<DirectoryLayout
+  title="Recursos"
+  description="Plantillas, prompts y guías para acelerar tu proceso de vibe coding. Descargables y listos para usar."
+  breadcrumbs={breadcrumbs}
+>
+  {sortedRecursos.length === 0 ? (
+    <div class="bg-surface-silver p-12 text-center">
+      <p class="text-sm" style="color: #888888;">Próximamente: recursos y plantillas.</p>
+    </div>
+  ) : (
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {sortedRecursos.map((recurso) => (
+        <ResourceCard
+          title={recurso.data.title}
+          description={recurso.data.description}
+          type={recurso.data.type}
+          difficulty={recurso.data.difficulty}
+          compatibleTools={recurso.data.compatibleTools}
+          slug={recurso.id}
+          downloadUrl={recurso.data.downloadUrl}
+        />
+      ))}
+    </div>
+  )}
+</DirectoryLayout>

@@ -1,0 +1,54 @@
+---
+interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+const faqs: FAQItem[] = [
+  {
+    question: '¿El plan Free es realmente gratuito para siempre?',
+    answer: 'Sí, el plan Free no tiene fecha de vencimiento ni tarjeta de crédito requerida. Puedes usar VibeCoders gratis indefinidamente con hasta 2 apps publicadas y acceso a todas las funciones básicas.',
+  },
+  {
+    question: '¿Qué incluye exactamente el plan Pro?',
+    answer: 'El plan Pro incluye todo lo del Free más: apps ilimitadas en el directorio, badge Pro visible en tu perfil, acceso anticipado a nuevas charlas, canal privado de Slack para builders Pro, soporte prioritario y mención mensual en la newsletter.',
+  },
+  {
+    question: '¿Puedo cancelar mi plan Pro en cualquier momento?',
+    answer: 'Sí. El plan Pro se factura anualmente. Si cancelas, sigues teniendo acceso hasta el fin del período ya pagado. No hay penalizaciones ni cargos adicionales.',
+  },
+  {
+    question: '¿Cómo funciona el badge Pro en mi perfil?',
+    answer: 'El badge Pro aparece visiblemente en tu perfil público de builder, en el directorio y en todos los comentarios que hagas en la comunidad. Es una señal de compromiso con el ecosistema VibeCoders.',
+  },
+  {
+    question: '¿Qué es el canal privado de builders Pro?',
+    answer: 'Es un espacio exclusivo en Slack donde los builders Pro comparten avances, piden feedback, coordinan colaboraciones y tienen acceso directo al equipo de VibeCoders. La señal es alta porque el acceso es exclusivo.',
+  },
+  {
+    question: '¿Hay descuentos para equipos o estudiantes?',
+    answer: 'Próximamente habilitaremos planes para equipos. Por ahora, cada cuenta es individual. Si eres estudiante o estás comenzando, el plan Free cubre todo lo que necesitas para empezar a construir.',
+  },
+  {
+    question: '¿Cómo se procesan los pagos?',
+    answer: 'Los pagos se procesan de forma segura a través de Stripe. Aceptamos tarjetas de crédito y débito internacionales. La facturación es anual en dólares estadounidenses.',
+  },
+];
+---
+
+<div class="flex flex-col gap-0">
+  {faqs.map((faq, index) => (
+    <details
+      class="border-b border-border group"
+      open={index === 0}
+    >
+      <summary class="flex items-center justify-between gap-4 py-5 cursor-pointer list-none">
+        <span class="font-bold text-base text-brand-black">{faq.question}</span>
+        <span class="text-brand-black font-bold text-xl shrink-0 group-open:rotate-45 transition-transform">+</span>
+      </summary>
+      <div class="pb-5 pr-8">
+        <p class="text-sm leading-relaxed text-brand-black" style="color: #444444;">{faq.answer}</p>
+      </div>
+    </details>
+  ))}
+</div>

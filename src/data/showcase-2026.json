@@ -1,0 +1,57 @@
+[
+  {
+    "rank": 1,
+    "appSlug": "copywiz",
+    "appName": "CopyWiz",
+    "appTagline": "Copy de marketing que convierte, generado por IA en segundos.",
+    "appLogoUrl": "https://placehold.co/64x64/8DC572/000000?text=C",
+    "builderUsername": "valentinag",
+    "builderName": "Valentina García",
+    "highlight": "Más de 3.000 usuarios activos y 34% de mejora en CTR reportado por sus clientes.",
+    "period": "2026"
+  },
+  {
+    "rank": 2,
+    "appSlug": "standupbot",
+    "appName": "StandupBot",
+    "appTagline": "Daily standups asíncronos con resúmenes IA para tu equipo.",
+    "appLogoUrl": "https://placehold.co/64x64/222222/FFFFFF?text=S",
+    "builderUsername": "carlosr",
+    "builderName": "Carlos Rodríguez",
+    "highlight": "Adoptado por más de 150 equipos remotos en 12 países hispanohablantes.",
+    "period": "2026"
+  },
+  {
+    "rank": 3,
+    "appSlug": "facturai",
+    "appName": "FacturAI",
+    "appTagline": "Facturas inteligentes para freelancers hispanohablantes.",
+    "appLogoUrl": "https://placehold.co/64x64/EFDF00/000000?text=F",
+    "builderUsername": "martinl",
+    "builderName": "Martín López",
+    "highlight": "Procesó más de 10.000 facturas en su primer trimestre. Compatible con México, Argentina y España.",
+    "period": "2026"
+  },
+  {
+    "rank": 4,
+    "appSlug": "landin-ai",
+    "appName": "Landin.ai",
+    "appTagline": "Landing pages que convierten, generadas en minutos con IA.",
+    "appLogoUrl": "https://placehold.co/64x64/1883FD/FFFFFF?text=L",
+    "builderUsername": "sofiad",
+    "builderName": "Sofía Díaz",
+    "highlight": "200 early adopters en beta, con landing pages generadas en menos de 3 minutos.",
+    "period": "2026"
+  },
+  {
+    "rank": 5,
+    "appSlug": "fitlog-ai",
+    "appName": "FitLog AI",
+    "appTagline": "Tu entrenador personal IA que aprende de tu cuerpo.",
+    "appLogoUrl": "https://placehold.co/64x64/337AB7/FFFFFF?text=F",
+    "builderUsername": "andresp",
+    "builderName": "Andrés Paredes",
+    "highlight": "Funciona offline, diseñado para la realidad latinoamericana. Beta con gran tracción.",
+    "period": "2026"
+  }
+]

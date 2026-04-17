@@ -1,0 +1,180 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/directory/Breadcrumbs.astro';
+import CTAButton from '@/components/ui/CTAButton.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const tools = await getCollection('tools', ({ data }) => data.draft !== true);
+  return tools.map((tool) => ({
+    params: { slug: tool.id },
+    props: { tool },
+  }));
+}
+
+const { tool } = Astro.props;
+const { Content } = await render(tool);
+
+const breadcrumbs = [
+  { label: 'Inicio', href: '/' },
+  { label: 'Herramientas', href: '/tools' },
+  { label: tool.data.name },
+];
+
+const pricingLabel: Record<string, string> = {
+  free: 'Gratis',
+  freemium: 'Freemium',
+  paid: 'Pago',
+  trial: 'Prueba gratuita',
+};
+
+const categoryLabel: Record<string, string> = {
+  'ai-code-editor': 'Editor con IA',
+  'no-code-builder': 'Constructor No-code',
+  'design-tool': 'Herramienta de diseño',
+  'backend-as-service': 'Backend como servicio',
+  'agent-framework': 'Framework de agentes',
+  'deployment': 'Deploy',
+  'other': 'Otro',
+};
+
+const ratingStars = tool.data.rating ? Math.round(tool.data.rating) : 0;
+---
+
+<BaseLayout
+  title={`${tool.data.name} | Herramientas | VibeCoders`}
+  description={tool.data.tagline}
+>
+  <!-- Breadcrumbs -->
+  <div class="bg-brand-white max-w-[1440px] mx-auto px-6 pt-6">
+    <Breadcrumbs items={breadcrumbs} />
+  </div>
+
+  <!-- Dark Hero -->
+  <section class="bg-brand-black py-12 md:py-20">
+    <div class="max-w-[800px] mx-auto px-6">
+      <!-- Logo + name -->
+      <div class="flex items-center gap-4 mb-6">
+        <div class="w-16 h-16 shrink-0 overflow-hidden bg-surface-charcoal flex items-center justify-center">
+          <img
+            src={tool.data.logo}
+            alt={`Logo de ${tool.data.name}`}
+            width="64"
+            height="64"
+            class="w-full h-full object-cover"
+          />
+        </div>
+        <div>
+          <h1 class="font-bold text-[32px] md:text-[48px] leading-[0.95] text-brand-white">
+            {tool.data.name}
+          </h1>
+          {tool.data.rating && (
+            <div class="flex items-center gap-0.5 mt-1">
+              {Array.from({ length: 5 }, (_, i) => (
+                <span class={`text-sm ${i < ratingStars ? 'text-brand-yellow' : 'text-surface-charcoal'}`}>★</span>
+              ))}
+              <span class="text-sm ml-1" style="color: #888888;">{tool.data.rating.toFixed(1)}</span>
+            </div>
+          )}
+        </div>
+      </div>
+
+      <!-- Tagline -->
+      <p class="text-base md:text-lg leading-relaxed mb-6" style="color: #D9D9D6;">
+        {tool.data.tagline}
+      </p>
+
+      <!-- Badges -->
+      <div class="flex flex-wrap gap-2">
+        <span class="text-xs font-bold uppercase tracking-wider px-2 py-0.5 bg-surface-charcoal text-brand-white rounded-none">
+          {categoryLabel[tool.data.category] ?? tool.data.category}
+        </span>
+        <span class="text-xs font-bold uppercase tracking-wider px-2 py-0.5 bg-surface-charcoal text-brand-white rounded-none">
+          {pricingLabel[tool.data.pricing] ?? tool.data.pricing}
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Light Content -->
+  <section class="bg-brand-white py-12">
+    <div class="max-w-[800px] mx-auto px-6">
+
+      <!-- Pros & Cons -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+        <!-- Pros -->
+        <div class="bg-surface-silver p-6">
+          <h2 class="font-bold text-sm uppercase tracking-wider text-brand-black mb-4">Ventajas</h2>
+          <ul class="flex flex-col gap-3">
+            {tool.data.pros.map((pro) => (
+              <li class="flex items-start gap-2 text-sm text-brand-black">
+                <span class="font-bold text-brand-black shrink-0 mt-0.5">+</span>
+                <span>{pro}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <!-- Cons -->
+        <div class="bg-surface-silver p-6">
+          <h2 class="font-bold text-sm uppercase tracking-wider text-brand-black mb-4">Limitaciones</h2>
+          <ul class="flex flex-col gap-3">
+            {tool.data.cons.map((con) => (
+              <li class="flex items-start gap-2 text-sm text-brand-black">
+                <span class="font-bold shrink-0 mt-0.5" style="color: #888888;">−</span>
+                <span>{con}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <!-- Best For -->
+      <div class="mb-12">
+        <h2 class="font-bold text-sm uppercase tracking-wider text-brand-black mb-4">Ideal para</h2>
+        <ul class="flex flex-col gap-2">
+          {tool.data.bestFor.map((use) => (
+            <li class="flex items-start gap-2 text-sm text-brand-black">
+              <span class="font-bold shrink-0 mt-0.5">→</span>
+              <span>{use}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Review content from MDX -->
+      <article class="prose prose-lg max-w-none prose-headings:text-brand-black prose-headings:font-bold prose-a:text-brand-blue prose-a:no-underline hover:prose-a:underline prose-strong:text-brand-black prose-code:bg-surface-silver prose-code:text-brand-black prose-code:rounded-none prose-pre:rounded-none prose-blockquote:border-l-brand-black">
+        <Content />
+      </article>
+
+      <!-- Alternatives -->
+      {tool.data.alternatives.length > 0 && (
+        <div class="mt-12 pt-8 border-t border-border">
+          <p class="text-sm font-bold text-brand-black uppercase tracking-wider mb-4">Alternativas</p>
+          <div class="flex flex-wrap gap-2">
+            {tool.data.alternatives.map((alt) => (
+              <a
+                href={`/tools/${alt}`}
+                class="text-sm font-bold px-4 py-2 bg-surface-silver text-brand-black hover:bg-brand-black hover:text-brand-white transition-colors no-underline"
+              >
+                {alt}
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <!-- CTA to tool website -->
+      <div class="mt-12 pt-8 border-t border-border text-center">
+        <p class="text-sm font-bold text-brand-black mb-4 uppercase tracking-wider">
+          ¿Quieres probar {tool.data.name}?
+        </p>
+        <CTAButton
+          variant="primary"
+          href={tool.data.referralUrl ?? tool.data.website}
+          label={`Ir a ${tool.data.name}`}
+        />
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,27 @@
+---
+interface Props {
+  variant: 'dark' | 'light';
+  id?: string;
+  padding?: 'default' | 'hero' | 'generous';
+}
+
+const { variant, id, padding = 'default' } = Astro.props;
+
+const bgClass = variant === 'dark' ? 'bg-brand-black' : 'bg-brand-white';
+
+const paddingClass =
+  padding === 'hero'
+    ? 'min-h-screen'
+    : padding === 'generous'
+    ? 'py-16 md:py-24'
+    : 'py-12 md:py-20';
+---
+
+<section
+  id={id}
+  class={`${bgClass} ${paddingClass} w-full`}
+>
+  <div class="max-w-[1440px] mx-auto px-6">
+    <slot />
+  </div>
+</section>

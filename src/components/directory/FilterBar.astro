@@ -1,0 +1,31 @@
+---
+interface FilterItem {
+  label: string;
+  value: string;
+}
+
+interface Props {
+  filters: FilterItem[];
+  activeLabel?: string;
+}
+
+const { filters, activeLabel } = Astro.props;
+---
+
+<div class="flex flex-wrap gap-2" role="group" aria-label="Filtros">
+  {filters.map((filter) => {
+    const isActive = activeLabel === filter.label;
+    return (
+      <span
+        class={[
+          'text-xs font-bold px-3 py-1 rounded-[50px] border border-[#D1D1D1] cursor-default select-none transition-colors',
+          isActive
+            ? 'bg-brand-black text-brand-white border-brand-black'
+            : 'bg-surface-silver text-brand-black',
+        ].join(' ')}
+      >
+        {filter.label}
+      </span>
+    );
+  })}
+</div>

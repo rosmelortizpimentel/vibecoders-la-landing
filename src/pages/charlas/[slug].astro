@@ -1,0 +1,31 @@
+---
+import CharlaLayout from '@/layouts/CharlaLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const charlas = await getCollection('charlas', ({ data }) => data.draft !== true);
+  return charlas.map((charla) => ({
+    params: { slug: charla.id },
+    props: { charla },
+  }));
+}
+
+const { charla } = Astro.props;
+const { Content } = await render(charla);
+---
+
+<CharlaLayout
+  title={charla.data.title}
+  tagline={charla.data.tagline}
+  sessionNumber={charla.data.sessionNumber}
+  speaker={charla.data.speaker}
+  recordedAt={charla.data.recordedAt}
+  videoUrl={charla.data.videoUrl}
+  videoEmbedId={charla.data.videoEmbedId}
+  topics={charla.data.topics}
+  resources={charla.data.resources}
+  timestamps={charla.data.timestamps}
+  durationMinutes={charla.data.durationMinutes}
+>
+  <Content />
+</CharlaLayout>

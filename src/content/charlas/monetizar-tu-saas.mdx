@@ -1,0 +1,56 @@
+---
+sessionNumber: 7
+title: "Monetización para indie builders: de usuarios gratis a ingresos recurrentes"
+tagline: "Estrategias probadas para monetizar un SaaS construido por una persona: modelos de pricing, integración de pagos, y cómo hacer la transición del free al paid sin perder usuarios."
+speaker:
+  name: "Carolina Vega"
+  role: "Indie SaaS Founder"
+  bio: "Fundadora de dos SaaS rentables con ingresos mensuales recurrentes. Experta en la transición de productos gratuitos a modelos de pago sostenibles para builders individuales."
+recordedAt: 2026-02-09
+durationMinutes: 55
+videoEmbedId: "dQw4w9WgXcQ"
+videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+topics: ["monetizacion", "pricing", "stripe", "saas", "revenue"]
+resources:
+  - label: "Stripe para SaaS: guía completa"
+    url: "https://stripe.com/docs/billing"
+    type: "article"
+  - label: "Pricing pages que convierten"
+    url: "https://www.pricingpages.xyz"
+    type: "article"
+timestamps:
+  - seconds: 0
+    label: "El error más común en la monetización de SaaS"
+  - seconds: 660
+    label: "Modelos de pricing: cuándo usar qué"
+  - seconds: 1320
+    label: "Integración de Stripe con IA"
+  - seconds: 2100
+    label: "La transición de free a paid: cómo hacerla bien"
+  - seconds: 2820
+    label: "Métricas que importan: MRR, churn, LTV"
+  - seconds: 3240
+    label: "Casos reales de sus propios productos"
+featured: false
+draft: false
+---
+
+Carolina Vega construyó su primer SaaS monetizado sin saber exactamente cómo hacerlo, aprendiendo sobre la marcha. Su segunda vez fue completamente diferente. Esta charla condensó esos aprendizajes en una guía práctica para la comunidad.
+
+## El error más común: esperar demasiado para cobrar
+
+El error número uno que Carolina ve en builders de la comunidad es esperar a tener el producto "terminado" para cobrar. El producto nunca está terminado. Y esperar significa acumular usuarios en un tier gratuito del que luego es muy difícil mover.
+
+La recomendación: define tu modelo de pricing antes de lanzar, aunque sea una hipótesis. Lanza con un plan de pago desde el primer día, aunque también tengas un free tier. La gente que paga desde el inicio es tu feedback más valioso.
+
+## Modelos que funcionan para indie builders
+
+Carolina comparó tres modelos que ha usado personalmente: freemium (gratis hasta cierto límite, pago para más), trial (acceso completo por 14 días, luego pago), y pago desde el inicio sin free tier. Su conclusión: depende del perfil de usuario y del valor percibido del producto.
+
+Para productos con alto valor percibido desde el primer uso (herramientas de productividad, automatizaciones que ahorran tiempo), el trial funciona mejor. Para herramientas que necesitan tiempo para mostrar su valor, el freemium permite que los usuarios lleguen al momento "aha" antes de pedirles que paguen.
+
+## Stripe + IA: la integración más rápida
+
+La demostración técnica mostró cómo integrar Stripe en un SaaS existente usando Claude Code. El proceso completo (webhooks, gestión de suscripciones, portal de facturación) tomó 40 minutos en live coding. Hace dos años, eso habría sido un día entero de trabajo.
+
+La clave está en el manejo correcto de webhooks: la mayoría de los bugs de facturación en SaaS vienen de webhooks mal implementados. Carolina mostró una checklist de los eventos que hay que manejar siempre: `customer.subscription.created`, `customer.subscription.updated`, `customer.subscription.deleted`, y `invoice.payment_failed`.

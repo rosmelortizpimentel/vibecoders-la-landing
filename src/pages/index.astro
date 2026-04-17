@@ -1,0 +1,70 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import HeroSection from '@/components/landing/HeroSection.astro';
+import BuildersMarquee from '@/components/landing/BuildersMarquee.astro';
+import AppsShowcase from '@/components/landing/AppsShowcase.astro';
+import WhyVibeCoders from '@/components/landing/WhyVibeCoders.astro';
+import CharlasHighlight from '@/components/landing/CharlasHighlight.astro';
+import LandingFAQ from '@/components/landing/LandingFAQ.astro';
+import FinalCTA from '@/components/landing/FinalCTA.astro';
+import { platformCTA } from '@/lib/urls';
+import { supabase } from '@/lib/supabase';
+import type { VerifiedFounder } from '@/types/verified-founder';
+import type { ShowcaseApp } from '@/types/showcase-app';
+
+// Fetch verified founders from Supabase RPC
+const { data: builders, error: buildersError } = await supabase.rpc('get_verified_founders');
+
+if (buildersError) {
+  console.error('Failed to fetch verified founders:', buildersError.message);
+}
+
+const verifiedFounders = (builders ?? []) as VerifiedFounder[];
+
+// Fetch showcase apps from Supabase RPC
+const { data: appsData, error: appsError } = await supabase.rpc('get_showcase_apps');
+
+if (appsError) {
+  console.error('Failed to fetch showcase apps:', appsError.message);
+}
+
+const showcaseApps = (appsData ?? []) as ShowcaseApp[];
+
+// CTA URLs with ref tracking
+const heroCTA = platformCTA('landing-hero');
+const finalCTA = platformCTA('landing-final');
+---
+
+<BaseLayout title="VibeCoders — La comunidad de builders con IA">
+  <!--
+    Structure (per user spec):
+    1. Hero            → DARK
+    2. Builders        → LIGHT
+    3. Apps            → DARK
+    4. Ciclo del builder (Why) → LIGHT
+    5. Charlas + Blog  → DARK
+    6. FAQ             → LIGHT  (replaces Pricing)
+    7. Final CTA       → DARK
+  -->
+
+  <!-- Section 1: Hero — DARK -->
+  <HeroSection heroCTA={heroCTA} />
+
+  <!-- Section 2: Comunidad activa (builders) — LIGHT -->
+  <BuildersMarquee builders={verifiedFounders} />
+
+  <!-- Section 3: Construido con VibeCoders (apps) — DARK -->
+  <AppsShowcase apps={showcaseApps} />
+
+  <!-- Section 4: Ciclo del builder — LIGHT -->
+  <WhyVibeCoders />
+
+  <!-- Section 5: Charlas y contenido — DARK -->
+  <CharlasHighlight />
+
+  <!-- Section 6: FAQ (mentions Pro discretely) — LIGHT -->
+  <LandingFAQ />
+
+  <!-- Section 7: Final CTA — DARK -->
+  <FinalCTA href={finalCTA} />
+</BaseLayout>

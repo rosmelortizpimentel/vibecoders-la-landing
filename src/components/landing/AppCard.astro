@@ -1,0 +1,59 @@
+---
+import Badge from '@/components/ui/Badge.astro';
+import type { ShowcaseApp } from '@/types/showcase-app';
+
+type Props = ShowcaseApp;
+
+const { app_name, app_tagline, app_logo_url, app_url, is_verified, founder_display_name, status } = Astro.props;
+
+const initial = app_name.charAt(0).toUpperCase();
+---
+
+<a
+  href={app_url}
+  target="_blank"
+  rel="noopener noreferrer"
+  class="block w-[240px] h-[180px] p-4 bg-surface-charcoal flex flex-col gap-3 hover:opacity-80 transition-opacity no-underline"
+>
+  <!-- Logo + Name row -->
+  <div class="flex items-center gap-3 shrink-0">
+    <div class="w-10 h-10 overflow-hidden bg-brand-black flex items-center justify-center shrink-0 rounded-none">
+      {app_logo_url ? (
+        <img
+          src={app_logo_url}
+          alt={app_name}
+          width="40"
+          height="40"
+          class="w-full h-full object-contain"
+          loading="lazy"
+        />
+      ) : (
+        <span class="text-brand-white font-bold text-sm">{initial}</span>
+      )}
+    </div>
+    <p class="font-bold text-brand-white text-sm truncate flex-1">{app_name}</p>
+  </div>
+
+  <!-- Tagline -->
+  <p class="text-xs text-text-muted leading-relaxed flex-grow line-clamp-2" style="color: #D9D9D6;">
+    {app_tagline ?? ''}
+  </p>
+
+  <!-- Status badge -->
+  <div class="shrink-0">
+    <span class={`text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 inline-block ${
+      status.slug === 'live'
+        ? 'bg-brand-black text-brand-white'
+        : status.slug === 'building'
+        ? 'bg-surface-silver text-brand-black'
+        : 'bg-brand-yellow text-brand-black'
+    }`}>
+      {status.name}
+    </span>
+  </div>
+
+  <!-- Founder -->
+  <p class="text-[10px]" style="color: #888888;">
+    por <span class="font-bold" style="color: #D9D9D6;">{founder_display_name}</span>
+  </p>
+</a>

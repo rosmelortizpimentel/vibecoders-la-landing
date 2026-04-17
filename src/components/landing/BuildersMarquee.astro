@@ -1,0 +1,54 @@
+---
+import SectionWrapper from '@/components/landing/SectionWrapper.astro';
+import BuilderCard from '@/components/landing/BuilderCard.astro';
+import CTAButton from '@/components/ui/CTAButton.astro';
+import type { VerifiedFounder } from '@/types/verified-founder';
+
+interface Props {
+  builders: VerifiedFounder[];
+}
+
+const { builders } = Astro.props;
+---
+
+<SectionWrapper variant="light" id="builders">
+  <!-- Heading -->
+  <div class="text-center mb-10">
+    <h2 class="text-[32px] md:text-[40px] font-bold leading-[0.95] text-brand-black">
+      Los builders que construyen
+    </h2>
+    <p class="text-sm text-text-muted mt-3 max-w-lg mx-auto leading-relaxed" style="color: #888888;">
+      Conoce a quienes lanzan productos reales con IA cada semana.
+    </p>
+  </div>
+
+  <!-- Horizontal scroll marquee -->
+  <div class="overflow-x-auto pb-4 -mx-6 px-6">
+    <div class="flex flex-nowrap gap-4 w-max">
+      {builders.map((builder) => (
+        <a
+          href={`/builders/${builder.username}`}
+          class="no-underline hover:opacity-80 transition-opacity"
+        >
+          <BuilderCard
+            display_name={builder.display_name}
+            avatar_url={builder.avatar_url}
+            tagline={builder.tagline}
+            city={builder.city}
+            apps_count={builder.apps_count}
+          />
+        </a>
+      ))}
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="flex justify-center mt-10">
+    <CTAButton
+      href="/builders"
+      variant="ghost"
+      onDark={false}
+      label="Ver todos los builders"
+    />
+  </div>
+</SectionWrapper>

@@ -1,0 +1,59 @@
+schema: spec-driven
+
+project: vibecoders-public
+initialized: "2026-04-16"
+mode: hybrid
+
+context: |
+  Stack: Astro 5 (hybrid output) + TypeScript strict + Tailwind CSS v4 + shadcn/ui (astro-shadcn) + MDX (Content Collections) + Supabase JS v2 (read-only)
+  Hosting: Vercel
+  Package manager: pnpm
+  Design: D:\Projects\vibecoders\renault\DESIGN.md (Renault-inspired design system)
+  Font: Space Grotesk variable (placeholder for RenaultGroup-Variable.woff2)
+  Supabase: zkotnnmrehzqonlyeorv.supabase.co (shared with app.vibecoders.la, read-only via edge functions)
+  Purpose: PUBLIC marketing site only — no auth, no DB writes, all CTAs redirect to app.vibecoders.la
+
+strict_tdd: false  # No test runner yet — TBD after first change (likely Vitest + Playwright)
+
+testing:
+  runner: NOT FOUND  # Greenfield — no package.json yet
+  strict_tdd: false
+  layers:
+    unit: { available: false, tool: null }
+    integration: { available: false, tool: null }
+    e2e: { available: false, tool: null }
+  coverage: { available: false, command: null }
+  quality:
+    linter: { available: false, command: null }
+    type_checker: { available: false, command: null }
+    formatter: { available: false, command: null }
+  note: "Greenfield project. Testing capabilities TBD after first change. Planned: Vitest (unit) + Playwright (E2E)."
+
+rules:
+  proposal:
+    - Include rollback plan for risky changes
+    - Identify affected modules/packages
+    - Public site only — no auth, no DB writes
+  specs:
+    - Use Given/When/Then format for scenarios
+    - Use RFC 2119 keywords (MUST, SHALL, SHOULD, MAY)
+  design:
+    - Follow D:\Projects\vibecoders\renault\DESIGN.md as sole design source of truth
+    - Include sequence diagrams for complex flows
+    - Document architecture decisions with rationale
+  tasks:
+    - Group tasks by phase (infrastructure, implementation, testing)
+    - Use hierarchical numbering (1.1, 1.2, etc.)
+  apply:
+    - Follow Astro 5 hybrid mode conventions
+    - Never hardcode colors — use Tailwind tokens from tailwind.config.mjs
+    - Zero border-radius on buttons (Renault system rule)
+    - Chessboard section alternation (light/dark)
+    - All auth/platform CTAs: redirect to app.vibecoders.la?ref=<source>
+    - TypeScript strict — zero `any`
+    - pnpm as package manager (never npm or yarn)
+  verify:
+    - Run tests if test infrastructure exists
+    - Compare implementation against every spec scenario
+  archive:
+    - Warn before merging destructive deltas (large removals)

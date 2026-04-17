@@ -1,0 +1,92 @@
+---
+import SectionWrapper from '@/components/landing/SectionWrapper.astro';
+import CTAButton from '@/components/ui/CTAButton.astro';
+
+interface Props {
+  pricingCTA: string;
+}
+
+const { pricingCTA } = Astro.props;
+
+const freeFeatures = [
+  'Perfil público de builder',
+  'Publicar hasta 2 apps',
+  'Acceso a las charlas grabadas',
+  'Directorio de builders',
+  'Newsletter semanal',
+];
+
+const proFeatures = [
+  'Todo lo del plan Free',
+  'Apps ilimitadas en el directorio',
+  'Badge Pro en tu perfil',
+  'Acceso anticipado a nuevas charlas',
+  'Canal privado de builders Pro',
+  'Soporte prioritario',
+];
+---
+
+<SectionWrapper variant="light" id="pricing">
+  <!-- Heading -->
+  <div class="text-center mb-12">
+    <h2 class="text-[32px] md:text-[40px] font-bold leading-[0.95] text-brand-black">
+      Planes
+    </h2>
+    <p class="text-sm mt-3 max-w-lg mx-auto leading-relaxed" style="color: #888888;">
+      Empieza gratis. Escala cuando lo necesites.
+    </p>
+  </div>
+
+  <!-- Plan cards -->
+  <div class="flex flex-col md:flex-row gap-6 max-w-3xl mx-auto">
+    <!-- Free plan -->
+    <div class="flex-1 bg-brand-white border border-border p-8 flex flex-col gap-6">
+      <div>
+        <p class="text-sm font-bold text-brand-black uppercase tracking-wider">Free</p>
+        <p class="text-[40px] font-bold leading-[0.95] text-brand-black mt-2">Gratis</p>
+        <p class="text-sm mt-2" style="color: #888888;">Para siempre</p>
+      </div>
+
+      <ul class="flex flex-col gap-3 flex-grow">
+        {freeFeatures.map((feature) => (
+          <li class="flex items-start gap-2">
+            <span class="text-brand-black font-bold shrink-0 mt-0.5">✓</span>
+            <span class="text-sm text-brand-black">{feature}</span>
+          </li>
+        ))}
+      </ul>
+
+      <CTAButton
+        href={pricingCTA}
+        variant="primary"
+        onDark={false}
+        label="Empezar gratis"
+      />
+    </div>
+
+    <!-- Pro plan -->
+    <div class="flex-1 bg-brand-white border-2 border-brand-yellow p-8 flex flex-col gap-6">
+      <div>
+        <p class="text-sm font-bold text-brand-black uppercase tracking-wider">Pro</p>
+        <p class="text-[40px] font-bold leading-[0.95] text-brand-black mt-2">$29.90</p>
+        <p class="text-sm mt-2" style="color: #888888;">por año</p>
+      </div>
+
+      <ul class="flex flex-col gap-3 flex-grow">
+        {proFeatures.map((feature) => (
+          <li class="flex items-start gap-2">
+            <span class="text-brand-black font-bold shrink-0 mt-0.5">✓</span>
+            <span class="text-sm text-brand-black">{feature}</span>
+          </li>
+        ))}
+      </ul>
+
+      <!-- Only yellow CTA in this section — one per viewport rule satisfied -->
+      <CTAButton
+        href={pricingCTA}
+        variant="super-primary"
+        label="Ser Pro"
+      />
+    </div>
+  </div>
+</SectionWrapper>

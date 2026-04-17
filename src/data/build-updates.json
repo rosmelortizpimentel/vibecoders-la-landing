@@ -1,0 +1,82 @@
+[
+  {
+    "id": "upd-001",
+    "builderUsername": "martinl",
+    "builderName": "Martín López",
+    "builderAvatarUrl": "https://avatars.githubusercontent.com/u/1?v=4",
+    "appName": "FacturAI",
+    "appSlug": "facturai",
+    "message": "Integré el flujo de generación de facturas con reconocimiento de voz. Ahora puedes dictar los datos del cliente y el sistema los extrae automáticamente. Tardé 6 horas en total usando Claude como pair programmer.",
+    "createdAt": "2026-04-10T14:30:00Z"
+  },
+  {
+    "id": "upd-002",
+    "builderUsername": "sofiad",
+    "builderName": "Sofía Díaz",
+    "builderAvatarUrl": "https://avatars.githubusercontent.com/u/2?v=4",
+    "appName": "Landin.ai",
+    "appSlug": "landin-ai",
+    "message": "Hoy lanzamos el soporte para templates de SaaS B2B. 5 nuevas estructuras de landing diseñadas específicamente para productos que venden a empresas. Feedback bienvenido.",
+    "createdAt": "2026-04-09T11:15:00Z"
+  },
+  {
+    "id": "upd-003",
+    "builderUsername": "carlosr",
+    "builderName": "Carlos Rodríguez",
+    "builderAvatarUrl": "https://avatars.githubusercontent.com/u/3?v=4",
+    "appName": "StandupBot",
+    "appSlug": "standupbot",
+    "message": "Superamos los 150 equipos activos. Migré la infraestructura a edge functions para reducir latencia en Latinoamérica. El tiempo de respuesta bajó de 800ms a 120ms promedio.",
+    "createdAt": "2026-04-08T09:00:00Z"
+  },
+  {
+    "id": "upd-004",
+    "builderUsername": "valentinag",
+    "builderName": "Valentina García",
+    "builderAvatarUrl": "https://avatars.githubusercontent.com/u/4?v=4",
+    "appName": "CopyWiz",
+    "appSlug": "copywiz",
+    "message": "Nuevo formato disponible: hilos de Twitter/X optimizados para engagement. Incluye sugerencias de emojis y estructura de narrativa progresiva. Lo construimos en un fin de semana con Cursor.",
+    "createdAt": "2026-04-07T16:45:00Z"
+  },
+  {
+    "id": "upd-005",
+    "builderUsername": "martinl",
+    "builderName": "Martín López",
+    "builderAvatarUrl": "https://avatars.githubusercontent.com/u/1?v=4",
+    "appName": "FacturAI",
+    "appSlug": "facturai",
+    "message": "Semana difícil: el módulo de exportación a PDF tenía un bug crítico en Safari. Lo resolví cambiando la librería de puppeteer a @react-pdf/renderer. Hora y media de debugging, 20 minutos de fix.",
+    "createdAt": "2026-04-04T18:20:00Z"
+  },
+  {
+    "id": "upd-006",
+    "builderUsername": "sofiad",
+    "builderName": "Sofía Díaz",
+    "builderAvatarUrl": "https://avatars.githubusercontent.com/u/2?v=4",
+    "appName": "Landin.ai",
+    "appSlug": "landin-ai",
+    "message": "Primera entrevista de usuario presencial. 45 minutos con una agencia de marketing en CDMX. Aprendí más en esa conversación que en dos semanas de analytics. El producto va a cambiar bastante.",
+    "createdAt": "2026-04-03T13:00:00Z"
+  },
+  {
+    "id": "upd-007",
+    "builderUsername": "carlosr",
+    "builderName": "Carlos Rodríguez",
+    "builderAvatarUrl": "https://avatars.githubusercontent.com/u/3?v=4",
+    "appName": "StandupBot",
+    "appSlug": "standupbot",
+    "message": "Implementé los dashboards de productividad con datos históricos de hasta 90 días. Los equipos ahora pueden ver tendencias de blockers y velocidad del equipo. Construido con Recharts y datos agregados en Supabase.",
+    "createdAt": "2026-04-02T10:30:00Z"
+  },
+  {
+    "id": "upd-008",
+    "builderUsername": "valentinag",
+    "builderName": "Valentina García",
+    "builderAvatarUrl": "https://avatars.githubusercontent.com/u/4?v=4",
+    "appName": "CopyWiz",
+    "appSlug": "copywiz",
+    "message": "Milestone: 3.000 usuarios activos esta semana. El canal Pro ya tiene 280 miembros. La métrica que más me importa: 71% de retención a los 30 días. Construir en público definitivamente acelera el crecimiento.",
+    "createdAt": "2026-04-01T09:00:00Z"
+  }
+]

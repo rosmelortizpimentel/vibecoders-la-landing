@@ -1,0 +1,13 @@
+---
+term: "Token"
+shortDefinition: "Unidad básica de procesamiento en los modelos de lenguaje. Aproximadamente equivale a 3/4 de una palabra en inglés. Los LLMs procesan y generan texto en tokens, no en palabras."
+category: "ai-fundamentals"
+relatedTerms: ["LLM", "Context Window", "Fine-tuning", "RAG"]
+draft: false
+---
+
+Un **token** es la unidad fundamental con la que los modelos de lenguaje procesan el texto. No equivale exactamente a una palabra: dependiendo del modelo y el idioma, un token puede ser una sílaba, una palabra completa, o incluso parte de una palabra. En inglés, la regla aproximada es que 1 token ≈ 3/4 de una palabra. En español y otros idiomas con palabras más largas, la proporción es menor.
+
+Los tokens son relevantes para los builders por varias razones. Primero, el costo de usar LLMs via API se mide en tokens (tanto de entrada como de salida). Segundo, la ventana de contexto de cada modelo se mide en tokens, lo que define cuánto texto puede procesar en una sola sesión. Tercero, prompts más eficientes (que logran el mismo resultado con menos tokens) son más baratos.
+
+Para tener una referencia práctica: 1.000 tokens equivalen aproximadamente a 750 palabras en inglés o una página de texto. Un modelo con ventana de contexto de 200.000 tokens puede procesar un libro completo en una sola sesión. Esta capacidad es lo que permite a herramientas como Claude Code analizar proyectos de software completos en un solo contexto.

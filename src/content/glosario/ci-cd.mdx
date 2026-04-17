@@ -1,0 +1,16 @@
+---
+term: "Integración y Entrega Continua"
+acronym: "CI/CD"
+shortDefinition: "Conjunto de prácticas de desarrollo que automatizan la verificación y el despliegue del código, permitiendo entregar cambios de forma frecuente, segura y predecible."
+category: "workflows"
+relatedTerms: ["Deployment", "Edge Functions", "MVP"]
+draft: false
+---
+
+**CI/CD (Continuous Integration / Continuous Delivery)** es un conjunto de prácticas y herramientas que automatizan el proceso de integrar cambios de código, verificar que funcionan correctamente, y desplegarlos a producción.
+
+La **Integración Continua (CI)** se refiere a la práctica de que todos los developers integren sus cambios al repositorio principal frecuentemente (idealmente varias veces al día). Cada integración se verifica automáticamente ejecutando tests, análisis de código y compilaciones, detectando problemas rápidamente.
+
+La **Entrega Continua (CD)** extiende la CI para que cada cambio que pasa las verificaciones se despliegue automáticamente a producción o a un entorno de staging, sin intervención manual.
+
+Para los builders que usan Vercel, la mayor parte del CD está configurada por defecto: cada push al repositorio principal desencadena un deploy automático. Añadir la CI (tests automatizados antes del deploy) es el siguiente paso natural para proyectos que crecen y necesitan más garantías de estabilidad. GitHub Actions es la herramienta más usada para esto en el ecosistema Vibe Coding.

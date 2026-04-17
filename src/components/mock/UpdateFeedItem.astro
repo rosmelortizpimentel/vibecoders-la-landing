@@ -1,0 +1,56 @@
+---
+import type { BuildUpdate } from '@/types/build-update';
+
+type Props = BuildUpdate;
+
+const {
+  builderName,
+  builderAvatarUrl,
+  appName,
+  appSlug,
+  message,
+  createdAt,
+} = Astro.props;
+
+const initial = builderName.charAt(0).toUpperCase();
+
+const date = new Date(createdAt);
+const formattedDate = date.toLocaleDateString('es-ES', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+---
+
+<article class="flex gap-4 py-6 border-b border-border">
+  <!-- Avatar -->
+  <div class="w-10 h-10 shrink-0 rounded-full bg-surface-charcoal flex items-center justify-center overflow-hidden">
+    {builderAvatarUrl ? (
+      <img
+        src={builderAvatarUrl}
+        alt={builderName}
+        width="40"
+        height="40"
+        class="w-full h-full object-cover"
+      />
+    ) : (
+      <span class="text-brand-white text-sm font-bold">{initial}</span>
+    )}
+  </div>
+
+  <!-- Content -->
+  <div class="flex-1 min-w-0">
+    <!-- Header row -->
+    <div class="flex flex-wrap items-center gap-2 mb-2">
+      <span class="font-bold text-sm text-brand-black">{builderName}</span>
+      <span class="text-xs" style="color: #888888;">·</span>
+      <a href={`/apps/${appSlug}`} class="text-xs font-bold uppercase tracking-wider px-2 py-0.5 bg-surface-silver text-brand-black rounded-none hover:bg-surface-charcoal hover:text-brand-white transition-colors no-underline">
+        {appName}
+      </a>
+      <span class="text-xs ml-auto" style="color: #888888;">{formattedDate}</span>
+    </div>
+
+    <!-- Message -->
+    <p class="text-sm leading-relaxed text-brand-black">{message}</p>
+  </div>
+</article>

@@ -1,0 +1,61 @@
+---
+title: "De idea a MVP en 72 horas usando herramientas de IA"
+description: "Una guía paso a paso para convertir una idea de negocio en un producto funcional desplegado en producción, usando las herramientas de IA disponibles hoy."
+publishedAt: 2026-02-20
+author:
+  name: "Rosmel Rodríguez"
+  username: "rosmelr"
+tags: ["mvp", "tutorial", "lovable", "supabase", "vercel"]
+cluster: "tutoriales"
+featured: false
+readingTime: 9
+draft: false
+---
+
+Construir un MVP solía ser el mayor cuello de botella para los founders no técnicos. Necesitabas contratar un desarrollador, esperar semanas, gastar miles de dólares... y al final obtener algo que no era exactamente lo que tenías en mente. Con las herramientas de IA disponibles hoy, ese proceso se puede comprimir a 72 horas sin sacrificar la calidad del producto.
+
+Esta guía documenta el proceso exacto que hemos visto funcionar una y otra vez en la comunidad VibeCoders.
+
+## Hora 0–4: Definir el producto con precisión
+
+Antes de abrir cualquier herramienta de IA, necesitas responder tres preguntas:
+
+1. ¿Qué problema concreto resuelve tu producto?
+2. ¿Para quién específicamente lo resuelve?
+3. ¿Cuál es la acción principal que el usuario debe poder hacer?
+
+No sigas hasta tener respuestas claras. La IA puede construir cualquier cosa que le describes, pero si tu descripción es vaga, el resultado también lo será. Escribe un documento de una sola página: el problema, el usuario, y el flujo principal. Nada más por ahora.
+
+## Hora 4–12: Estructura y diseño con Lovable
+
+Con el documento en mano, abre Lovable y empieza con un prompt claro. No escribas "quiero una app de gestión de tareas". Escribe: "Quiero una app donde equipos pequeños puedan crear proyectos, asignar tareas a miembros del equipo, y ver el progreso en un tablero kanban. Los usuarios se autentican con email y contraseña. Necesito una pantalla de login, un dashboard con los proyectos, y una vista de detalle de proyecto con el tablero."
+
+Lovable generará la estructura base. Desde ahí, itera: ajusta el diseño, añade las pantallas que faltan, conecta Supabase para la base de datos. El ciclo es: describe → revisa → ajusta → repite.
+
+## Hora 12–36: Lógica de negocio y datos
+
+Esta es la fase más importante y donde más builders se atascan. Necesitas definir:
+
+- Las tablas en Supabase (usuarios, proyectos, tareas, membresías)
+- Las reglas de acceso: ¿quién puede ver qué? ¿quién puede editar qué?
+- Los flujos principales: crear proyecto, invitar miembro, completar tarea
+
+Usa Claude Code o el chat de Cursor para generar el SQL de las tablas y las políticas de Row Level Security en Supabase. La IA puede generar código correcto si le das el contexto exacto de tu modelo de datos.
+
+## Hora 36–60: Pulir la experiencia
+
+Con la funcionalidad core funcionando, es hora de mejorar la experiencia:
+
+- Manejo de errores: ¿qué pasa cuando algo falla?
+- Estados vacíos: ¿qué ve el usuario cuando no hay datos?
+- Feedback visual: loading states, confirmaciones de acciones, toasts
+
+Estos detalles marcan la diferencia entre un prototipo y un producto que la gente quiere usar. Documéntalos como user stories y pásalos a Lovable o Cursor para implementarlos.
+
+## Hora 60–72: Deploy y distribución
+
+Conecta tu repositorio de GitHub a Vercel. Con el plan gratuito de Vercel tienes más que suficiente para un MVP. Configura las variables de entorno para Supabase, haz el deploy, y verifica que todo funciona en producción.
+
+Comparte el link con al menos 5 personas que encajan con tu perfil de usuario objetivo. No con amigos que van a decir "está bien". Con personas que realmente tienen el problema que intentas resolver. La retroalimentación de esas primeras conversaciones vale más que cualquier feature que puedas añadir en las próximas semanas.
+
+El MVP no es el producto terminado. Es el comienzo del aprendizaje real.

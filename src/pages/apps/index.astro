@@ -1,0 +1,50 @@
+---
+import DirectoryLayout from '@/layouts/DirectoryLayout.astro';
+import AppDirectoryCard from '@/components/directory/AppDirectoryCard.astro';
+import FilterBar from '@/components/directory/FilterBar.astro';
+import { supabase } from '@/lib/supabase';
+import type { ShowcaseApp } from '@/types/showcase-app';
+
+// Fetch showcase apps from Supabase RPC
+const { data: appsData, error } = await supabase.rpc('get_showcase_apps');
+
+if (error) {
+  console.error('Failed to fetch showcase apps:', error.message);
+}
+
+const apps = (appsData ?? []) as ShowcaseApp[];
+
+// Build filter pills from data
+const statuses = [...new Set(apps.map((a) => a.status.slug))] as string[];
+const stacks = [...new Set(
+  apps.flatMap((a) => a.stacks?.map((s) => s.name) ?? [])
+)] as string[];
+
+const filters = [
+  ...statuses.map((s) => ({ label: s.charAt(0).toUpperCase() + s.slice(1), value: s.toLowerCase() })),
+  ...stacks.slice(0, 6).map((s) => ({ label: s, value: s.toLowerCase() })),
+];
+
+const breadcrumbs = [
+  { label: 'Inicio', href: '/' },
+  { label: 'Apps' },
+];
+---
+
+<DirectoryLayout
+  title="Apps"
+  description="Explorá los productos digitales construidos por la comunidad VibeCoders con IA."
+  breadcrumbs={breadcrumbs}
+>
+  <!-- Filter bar -->
+  <div class="mb-8">
+    <FilterBar filters={filters} />
+  </div>
+
+  <!-- Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {apps.map((app) => (
+      <AppDirectoryCard {...app} />
+    ))}
+  </div>
+</DirectoryLayout>

@@ -1,0 +1,44 @@
+---
+import DirectoryLayout from '@/layouts/DirectoryLayout.astro';
+import BlogCard from '@/components/editorial/BlogCard.astro';
+import { getCollection } from 'astro:content';
+
+const breadcrumbs = [
+  { label: 'Inicio', href: '/' },
+  { label: 'Blog' },
+];
+
+const allPosts = await getCollection('blog', ({ data }) => data.draft !== true);
+
+const sortedPosts = allPosts.sort(
+  (a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime()
+);
+---
+
+<DirectoryLayout
+  title="Blog"
+  description="Artículos, guías y reflexiones sobre Vibe Coding, herramientas de IA y cómo construir productos digitales en 2026."
+  breadcrumbs={breadcrumbs}
+>
+  {sortedPosts.length === 0 ? (
+    <div class="bg-surface-silver p-12 text-center">
+      <p class="text-sm" style="color: #888888;">Próximamente: artículos sobre Vibe Coding y herramientas de IA.</p>
+    </div>
+  ) : (
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {sortedPosts.map((post) => (
+        <BlogCard
+          title={post.data.title}
+          description={post.data.description}
+          slug={post.id}
+          author={post.data.author}
+          publishedAt={post.data.publishedAt}
+          tags={post.data.tags}
+          cluster={post.data.cluster}
+          readingTime={post.data.readingTime}
+          cover={post.data.cover}
+        />
+      ))}
+    </div>
+  )}
+</DirectoryLayout>

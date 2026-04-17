@@ -1,0 +1,47 @@
+---
+title: "Cómo mantener arquitectura limpia cuando la IA genera tu código"
+description: "El mayor riesgo del Vibe Coding no es que la IA falle, sino que genere código que funciona pero que nadie puede mantener. Aquí hay estrategias concretas para evitarlo."
+publishedAt: 2026-03-10
+author:
+  name: "Rosmel Rodríguez"
+  username: "rosmelr"
+tags: ["arquitectura", "buenas-practicas", "ia", "deuda-tecnica"]
+cluster: "decisiones-tecnicas"
+featured: false
+readingTime: 8
+draft: false
+---
+
+Hay un patrón que se repite en proyectos de Vibe Coding: en las primeras semanas, todo va rápido y bien. El builder describe features, la IA las implementa, el producto crece. Pero llegado un punto, las nuevas instrucciones empiezan a romper cosas que ya funcionaban. Los archivos tienen cientos de líneas de lógica mezclada. Nadie, ni el builder ni la propia IA, puede entender qué hace exactamente cada parte del sistema.
+
+Ese es el síntoma de deuda técnica acumulada. Y no es exclusivo del Vibe Coding: pasa en todos los proyectos que priorizan la velocidad sin pensar en la estructura. Pero la IA puede acelerarlo dramáticamente si no se aplican algunas estrategias básicas desde el inicio.
+
+## Principio 1: Separa responsabilidades desde el día uno
+
+La regla más importante: cada archivo o módulo debe tener una sola responsabilidad clara. Un componente de React no debería contener lógica de negocio. Una función de API no debería formatear datos de UI. Una función de utilidades no debería hacer llamadas a base de datos.
+
+Cuando le des instrucciones a la IA, sé explícito: "Crea una función en `/lib/projects.ts` que haga la consulta a Supabase. El componente solo debe llamar a esa función y mostrar los resultados." Esa separación explícita en el prompt produce arquitectura mucho más limpia que dejársela a la IA decidir.
+
+## Principio 2: Revisa el código antes de aceptarlo
+
+Este es el punto donde más builders fallan: confiar ciegamente en el output de la IA sin revisarlo. No necesitas entender cada línea, pero sí deberías poder responder: ¿qué hace este archivo? ¿por qué existe esta función? ¿dónde se llama esto?
+
+Si no puedes responder esas preguntas, tienes un problema. Usa la IA para que te explique el código que genera: "Explícame qué hace esta función y por qué la estructuraste así." Es un hábito que construye comprensión y previene bugs futuros.
+
+## Principio 3: Establece convenciones claras y respétalas
+
+Al inicio del proyecto, define y documenta:
+
+- Estructura de carpetas: ¿dónde van los componentes? ¿los hooks? ¿la lógica de negocio?
+- Nomenclatura: ¿PascalCase para componentes? ¿camelCase para funciones?
+- Patrones para operaciones comunes: ¿cómo se hace una llamada a Supabase? ¿cómo se maneja el error?
+
+Guarda esas convenciones en un archivo `CONVENTIONS.md` en la raíz del proyecto. Cuando uses la IA, inclúyelas en el contexto: "Sigue las convenciones definidas en CONVENTIONS.md." Los modelos modernos respetan esas guías con bastante fidelidad.
+
+## Principio 4: Refactoriza antes de que el caos llegue
+
+No esperes a que el proyecto sea inmanejable para limpiar. Dedica 20% de tu tiempo en cada sprint a refactorizar: extraer funciones repetidas, simplificar componentes que crecieron demasiado, añadir comentarios donde la lógica no es obvia.
+
+La buena noticia: la IA es excelente para refactorizar. "Extrae la lógica de autenticación de este componente a un hook personalizado" es exactamente el tipo de instrucción que los modelos ejecutan bien. El builder que entiende cuándo y qué refactorizar tiene una ventaja enorme sobre quien solo sabe pedir features nuevos.
+
+La arquitectura limpia no es un lujo para proyectos grandes. Es la diferencia entre un producto que escala y uno que se convierte en una trampa de mantenimiento.

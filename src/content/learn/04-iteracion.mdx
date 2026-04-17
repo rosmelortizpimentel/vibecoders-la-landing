@@ -1,0 +1,44 @@
+---
+moduleNumber: 4
+title: "Iteración y refinamiento"
+description: "Aprende a trabajar en ciclos cortos con la IA: revisar el resultado, identificar qué ajustar y formular el siguiente prompt para acercarte progresivamente a tu visión."
+durationMinutes: 30
+prerequisites: ["03-primer-prompt"]
+outcomes:
+  - "Adoptar un flujo de trabajo basado en ciclos cortos de revisión y ajuste"
+  - "Formular prompts de refinamiento que corrijan problemas específicos"
+  - "Saber cuándo revertir un cambio y cuándo avanzar sobre él"
+  - "Organizar el contexto para mantener la coherencia del proyecto a largo plazo"
+draft: false
+---
+
+## El vibe coding es un diálogo, no un comando único
+
+Muchas personas esperan que el primer prompt genere el producto terminado. Eso no es realista ni con la mejor IA del mercado. El proceso de vibe coding se parece más a trabajar con un colaborador muy capaz pero que necesita dirección constante: produces algo, lo revisas, das feedback específico, produces la siguiente versión.
+
+Este ciclo — generar, revisar, corregir — es donde ocurre la mayor parte del aprendizaje y donde se define la calidad del producto final. No es un defecto del proceso; es el proceso.
+
+## El ciclo de iteración
+
+Cada ciclo tiene tres pasos:
+
+**Paso 1 — Revisar con intención.** Cuando el resultado llega, no lo evalúes en términos de "me gusta / no me gusta". Evalúa funcionalidad: ¿la acción principal que describí funciona? ¿El flujo es coherente? Anota exactamente qué no funciona, en términos concretos.
+
+**Paso 2 — Aislar el problema.** No intentes corregir todo de una vez en un solo prompt. Elige el problema más importante o el que bloquea todo lo demás. Escribe un prompt que describa específicamente ese problema y qué esperas como solución.
+
+**Paso 3 — Validar el avance.** Después de cada cambio, vuelve a probar las funcionalidades que ya funcionaban. A veces al corregir algo se rompe otra cosa. Mejor detectarlo temprano.
+
+## Cómo formular prompts de refinamiento
+
+La diferencia entre un prompt de inicio y uno de refinamiento es que el segundo tiene contexto. Puedes ser mucho más específico:
+
+- ❌ "El formulario no funciona bien"
+- ✅ "Cuando el usuario hace clic en Guardar sin haber completado el campo Email, no aparece ningún mensaje de error. Necesito que se muestre un texto en rojo debajo del campo que diga 'El email es obligatorio'."
+
+La especificidad es tu mejor herramienta. Cuanto más precisas tus instrucciones, menos interpretación necesita la IA y mejor es el resultado.
+
+## Cuándo detenerse y empezar de nuevo
+
+A veces el código acumulado llega a un estado donde cada cambio rompe algo más. Reconocer ese momento es una habilidad importante. Si después de tres ciclos de corrección el estado del proyecto empeora, considera hacer un "reset" parcial o total y empezar desde un punto más estable, con lo que aprendiste en el proceso.
+
+> **Consejo**: Mantén un documento de texto simple con la lista de funcionalidades que ya funcionan. Antes de cada prompt de refinamiento, verifica que esa lista sigue siendo válida. Ese documento es tu red de seguridad.

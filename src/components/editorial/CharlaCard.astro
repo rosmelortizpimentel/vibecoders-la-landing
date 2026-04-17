@@ -1,0 +1,94 @@
+---
+interface Speaker {
+  name: string;
+  role: string;
+  avatarUrl?: string;
+}
+
+interface Props {
+  title: string;
+  slug: string;
+  sessionNumber: number;
+  speaker: Speaker;
+  tagline: string;
+  topics: string[];
+  thumbnail?: string;
+  recordedAt: Date;
+  durationMinutes?: number;
+}
+
+const { title, slug, sessionNumber, speaker, tagline, topics, thumbnail, recordedAt, durationMinutes } = Astro.props;
+
+const formattedDate = recordedAt.toLocaleDateString('es-ES', {
+  day: 'numeric',
+  month: 'short',
+  year: 'numeric',
+});
+---
+
+<a href={`/charlas/${slug}`} class="block bg-surface-charcoal hover:shadow-soft transition-shadow no-underline rounded-none group">
+  <!-- Thumbnail area -->
+  <div class="h-40 overflow-hidden relative bg-brand-black">
+    {thumbnail ? (
+      <img
+        src={thumbnail}
+        alt={title}
+        class="w-full h-full object-cover opacity-70"
+        loading="lazy"
+      />
+    ) : (
+      <div class="w-full h-full flex items-center justify-center">
+        <!-- Play icon placeholder -->
+        <div class="w-12 h-12 bg-surface-charcoal border border-surface-silver flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#ffffff" aria-hidden="true">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </div>
+      </div>
+    )}
+    <!-- Session badge overlay -->
+    <div class="absolute top-3 left-3">
+      <span class="text-xs font-bold uppercase tracking-wider px-2 py-0.5 bg-brand-yellow text-brand-black rounded-none">
+        #{sessionNumber}
+      </span>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="p-5">
+    <!-- Title -->
+    <h2 class="font-bold text-base text-brand-white leading-tight mb-2 group-hover:text-brand-yellow transition-colors line-clamp-2">
+      {title}
+    </h2>
+
+    <!-- Tagline -->
+    <p class="text-sm leading-relaxed mb-3 line-clamp-2" style="color: #D9D9D6;">
+      {tagline}
+    </p>
+
+    <!-- Speaker -->
+    <div class="flex items-center gap-2 mb-3">
+      <span class="text-xs font-bold" style="color: #D9D9D6;">{speaker.name}</span>
+      <span class="text-xs" style="color: #888888;">· {speaker.role}</span>
+    </div>
+
+    <!-- Topics -->
+    {topics.length > 0 && (
+      <div class="flex flex-wrap gap-1 mb-3">
+        {topics.slice(0, 3).map((topic) => (
+          <span class="text-xs font-bold uppercase tracking-wider px-2 py-0.5 bg-surface-charcoal text-brand-white border border-surface-silver rounded-none">
+            {topic}
+          </span>
+        ))}
+      </div>
+    )}
+
+    <!-- Meta row -->
+    <div class="flex items-center justify-between pt-3 border-t border-surface-silver">
+      <span class="text-xs" style="color: #888888;">{formattedDate}</span>
+      {durationMinutes && (
+        <span class="text-xs font-bold" style="color: #D9D9D6;">{durationMinutes} min</span>
+      )}
+    </div>
+  </div>
+</a>

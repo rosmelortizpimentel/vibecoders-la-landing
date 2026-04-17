@@ -1,0 +1,50 @@
+---
+import type { ShowcaseEntry } from '@/types/showcase';
+
+type Props = ShowcaseEntry;
+
+const { rank, appName, appTagline, appLogoUrl, builderName, highlight } = Astro.props;
+
+const rankColors: Record<number, string> = {
+  1: 'bg-brand-yellow text-brand-black',
+  2: 'bg-surface-charcoal text-brand-white',
+  3: 'bg-surface-silver text-brand-black',
+};
+
+const rankColor = rankColors[rank] ?? 'bg-surface-silver text-brand-black';
+---
+
+<div class="bg-brand-white border border-border p-6 flex flex-col gap-4">
+  <!-- Rank + app header -->
+  <div class="flex items-start gap-4">
+    <!-- Rank badge -->
+    <div class={`shrink-0 w-10 h-10 flex items-center justify-center font-bold text-lg ${rankColor}`}>
+      {rank}
+    </div>
+
+    <!-- App info -->
+    <div class="flex items-center gap-3 flex-1 min-w-0">
+      <div class="w-12 h-12 shrink-0 overflow-hidden bg-surface-silver">
+        <img
+          src={appLogoUrl}
+          alt={`Logo de ${appName}`}
+          width="48"
+          height="48"
+          class="w-full h-full object-cover"
+        />
+      </div>
+      <div class="min-w-0">
+        <h3 class="font-bold text-[18px] leading-tight text-brand-black">{appName}</h3>
+        <p class="text-xs truncate" style="color: #888888;">{appTagline}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Highlight text -->
+  <p class="text-sm leading-relaxed text-brand-black">{highlight}</p>
+
+  <!-- Builder -->
+  <p class="text-xs font-bold uppercase tracking-wider" style="color: #888888;">
+    Por {builderName}
+  </p>
+</div>

@@ -1,0 +1,41 @@
+---
+import { platformCTA } from '@/lib/urls';
+
+const navLinks = [
+  { label: 'Builders', href: '/builders' },
+  { label: 'Apps', href: '/apps' },
+  { label: 'Blog', href: '/blog' },
+  { label: 'Charlas', href: '/charlas' },
+];
+
+const ctaUrl = platformCTA('nav');
+---
+
+<header class="sticky top-0 z-50 bg-brand-white w-full border-b border-border">
+  <div class="max-w-[1440px] mx-auto px-6 h-[64px] flex items-center justify-between">
+    <!-- Logo -->
+    <a href="/" class="font-sans font-bold text-xl text-brand-black no-underline hover:opacity-80">
+      VibeCoders
+    </a>
+
+    <!-- Nav links -->
+    <nav class="hidden md:flex items-center gap-8">
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class="text-[13px] font-bold text-brand-black hover:text-brand-blue transition-colors no-underline"
+        >
+          {link.label}
+        </a>
+      ))}
+    </nav>
+
+    <!-- CTA Button — Primary Black, ZERO border-radius (enforced globally) -->
+    <a
+      href={ctaUrl}
+      class="bg-brand-black text-brand-white text-sm font-bold px-[15px] py-[10px] hover:opacity-70 transition-opacity no-underline"
+    >
+      Unirme
+    </a>
+  </div>
+</header>

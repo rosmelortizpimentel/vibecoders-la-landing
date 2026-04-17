@@ -1,0 +1,41 @@
+---
+import SectionWrapper from '@/components/landing/SectionWrapper.astro';
+import AppCard from '@/components/landing/AppCard.astro';
+import CTAButton from '@/components/ui/CTAButton.astro';
+import type { ShowcaseApp } from '@/types/showcase-app';
+
+interface Props {
+  apps: ShowcaseApp[];
+}
+
+const { apps } = Astro.props;
+---
+
+<SectionWrapper variant="dark" id="apps">
+  <!-- Heading -->
+  <div class="text-center mb-10">
+    <h2 class="text-[32px] md:text-[40px] font-bold leading-[0.95] text-brand-white">
+      Apps que la comunidad construye
+    </h2>
+    <p class="text-sm text-text-muted mt-3 max-w-lg mx-auto leading-relaxed">
+      Desde ideas hasta productos en producción. Todo construido con IA.
+    </p>
+  </div>
+
+  <!-- Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {apps.map((app) => (
+      <AppCard {...app} />
+    ))}
+  </div>
+
+  <!-- CTA -->
+  <div class="flex justify-center mt-10">
+    <CTAButton
+      href="/apps"
+      variant="ghost"
+      onDark={true}
+      label="Ver todas las apps"
+    />
+  </div>
+</SectionWrapper>

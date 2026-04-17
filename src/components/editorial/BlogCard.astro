@@ -1,0 +1,85 @@
+---
+interface Author {
+  name: string;
+  username: string;
+  avatarUrl?: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  slug: string;
+  author: Author;
+  publishedAt: Date;
+  tags: string[];
+  cluster: string;
+  readingTime?: number;
+  cover?: string;
+}
+
+const { title, description, slug, author, publishedAt, cluster, readingTime, cover } = Astro.props;
+
+const formattedDate = publishedAt.toLocaleDateString('es-ES', {
+  day: 'numeric',
+  month: 'short',
+  year: 'numeric',
+});
+
+const initial = author.name.charAt(0).toUpperCase();
+---
+
+<a href={`/blog/${slug}`} class="block bg-surface-silver hover:shadow-soft transition-shadow no-underline rounded-none group">
+  <!-- Cover area -->
+  <div class="h-40 overflow-hidden relative">
+    {cover ? (
+      <img
+        src={cover}
+        alt={title}
+        class="w-full h-full object-cover"
+        loading="lazy"
+      />
+    ) : (
+      <div class="w-full h-full bg-brand-black flex items-end p-4">
+        <span class="text-xs font-bold uppercase tracking-wider text-brand-white opacity-40">{cluster}</span>
+      </div>
+    )}
+  </div>
+
+  <!-- Content -->
+  <div class="p-5">
+    <!-- Cluster badge -->
+    <span class="text-xs font-bold uppercase tracking-wider px-2 py-0.5 bg-surface-silver text-brand-black inline-block mb-3 border border-border rounded-none">
+      {cluster}
+    </span>
+
+    <!-- Title -->
+    <h2 class="font-bold text-base text-brand-black leading-tight mb-2 group-hover:text-brand-blue transition-colors line-clamp-2">
+      {title}
+    </h2>
+
+    <!-- Description -->
+    <p class="text-sm leading-relaxed mb-4 line-clamp-2" style="color: #888888;">
+      {description}
+    </p>
+
+    <!-- Author + meta row -->
+    <div class="flex items-center gap-3 pt-3 border-t border-border">
+      <!-- Avatar -->
+      <div class="w-7 h-7 rounded-full bg-surface-charcoal flex items-center justify-center shrink-0 overflow-hidden">
+        {author.avatarUrl ? (
+          <img src={author.avatarUrl} alt={author.name} width="28" height="28" class="w-full h-full object-cover" />
+        ) : (
+          <span class="text-brand-white text-xs font-bold">{initial}</span>
+        )}
+      </div>
+
+      <div class="flex-1 min-w-0">
+        <p class="text-xs font-bold text-brand-black truncate">{author.name}</p>
+        <p class="text-xs" style="color: #888888;">
+          {formattedDate}
+          {readingTime && ` · ${readingTime} min de lectura`}
+        </p>
+      </div>
+    </div>
+  </div>
+</a>

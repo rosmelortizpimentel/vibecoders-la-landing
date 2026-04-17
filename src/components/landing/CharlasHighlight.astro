@@ -1,0 +1,81 @@
+---
+import SectionWrapper from '@/components/landing/SectionWrapper.astro';
+import CTAButton from '@/components/ui/CTAButton.astro';
+
+// Hardcoded charla previews — NOT from content collections (per spec)
+const charlas = [
+  {
+    session: 1,
+    speaker: 'Nicolás Dubois',
+    topic: 'Automatización con N8N: workflows que trabajan mientras duermes',
+    description:
+      'Cómo construir pipelines de automatización con N8N y conectar APIs sin código.',
+  },
+  {
+    session: 6,
+    speaker: 'Pol Baladas',
+    topic: 'Claude Code y el futuro del desarrollo asistido por IA',
+    description:
+      'Un recorrido práctico por Claude Code: desde setup hasta workflows avanzados en proyectos reales.',
+  },
+  {
+    session: 8,
+    speaker: 'Rosmel Rodríguez',
+    topic: 'Lovable en producción: de idea a SaaS en 72 horas',
+    description:
+      'Cómo lanzar un producto real con Lovable, Supabase y Stripe sin tocar código backend.',
+  },
+];
+---
+
+<SectionWrapper variant="dark" id="charlas">
+  <!-- Heading -->
+  <div class="text-center mb-10">
+    <h2 class="text-[32px] md:text-[40px] font-bold leading-[0.95] text-brand-white">
+      Charlas de la comunidad
+    </h2>
+    <p class="text-sm text-text-muted mt-3 max-w-lg mx-auto leading-relaxed">
+      Cada semana un builder comparte cómo construyó algo con IA. Sin teoría. Solo experiencia real.
+    </p>
+  </div>
+
+  <!-- Charla preview cards -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {charlas.map((charla) => (
+      <div class="bg-surface-charcoal p-6 flex flex-col gap-4">
+        <!-- Session badge -->
+        <span class="text-xs font-bold uppercase tracking-wider px-2 py-0.5 bg-brand-black text-brand-white rounded-none inline-block w-max">
+          Sesión {charla.session}
+        </span>
+
+        <!-- Thumbnail placeholder -->
+        <div class="w-full h-24 bg-brand-black flex items-center justify-center">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="5 3 19 12 5 21 5 3" stroke="#D9D9D6" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" fill="none"/>
+          </svg>
+        </div>
+
+        <!-- Speaker + Topic -->
+        <div class="flex flex-col gap-1">
+          <p class="font-bold text-brand-white text-sm">{charla.speaker}</p>
+          <p class="text-sm leading-[1.4] text-brand-white">{charla.topic}</p>
+        </div>
+
+        <!-- Description -->
+        <p class="text-xs leading-relaxed text-text-muted">
+          {charla.description}
+        </p>
+      </div>
+    ))}
+  </div>
+
+  <!-- CTA -->
+  <div class="flex justify-center mt-10">
+    <CTAButton
+      href="/charlas"
+      variant="ghost"
+      onDark={true}
+      label="Ver todas las charlas"
+    />
+  </div>
+</SectionWrapper>

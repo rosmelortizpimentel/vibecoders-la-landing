@@ -1,0 +1,72 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  type: string;
+  difficulty: string;
+  compatibleTools: string[];
+  slug: string;
+  downloadUrl?: string;
+}
+
+const { title, description, type, difficulty, compatibleTools, slug, downloadUrl } = Astro.props;
+
+const typeLabel: Record<string, string> = {
+  prompt: 'Prompt',
+  template: 'Plantilla',
+  guide: 'Guía',
+  snippet: 'Snippet',
+  spec: 'Spec',
+};
+
+const difficultyLabel: Record<string, string> = {
+  beginner: 'Principiante',
+  intermediate: 'Intermedio',
+  advanced: 'Avanzado',
+};
+
+const difficultyColor: Record<string, string> = {
+  beginner: 'bg-surface-silver text-brand-black',
+  intermediate: 'bg-surface-charcoal text-brand-white',
+  advanced: 'bg-brand-black text-brand-white',
+};
+---
+
+<a
+  href={`/recursos/${slug}`}
+  class="group block bg-brand-white border border-border p-6 hover:border-brand-black transition-colors no-underline"
+>
+  <!-- Badges -->
+  <div class="flex flex-wrap gap-2 mb-3">
+    <span class="text-xs font-bold uppercase tracking-wider px-2 py-0.5 bg-surface-silver text-brand-black rounded-none">
+      {typeLabel[type] ?? type}
+    </span>
+    <span class={`text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded-none ${difficultyColor[difficulty] ?? 'bg-surface-silver text-brand-black'}`}>
+      {difficultyLabel[difficulty] ?? difficulty}
+    </span>
+    {downloadUrl && (
+      <span class="text-xs font-bold uppercase tracking-wider px-2 py-0.5 bg-brand-yellow text-brand-black rounded-none">
+        Descargable
+      </span>
+    )}
+  </div>
+
+  <!-- Title -->
+  <h3 class="font-bold text-[18px] leading-tight text-brand-black group-hover:opacity-70 transition-opacity mb-2">
+    {title}
+  </h3>
+
+  <!-- Description -->
+  <p class="text-sm leading-relaxed mb-4" style="color: #888888;">{description}</p>
+
+  <!-- Compatible tools -->
+  {compatibleTools.length > 0 && (
+    <div class="flex flex-wrap gap-1">
+      {compatibleTools.map((tool) => (
+        <span class="text-xs px-1.5 py-0.5 bg-surface-silver text-brand-black rounded-none border border-border">
+          {tool}
+        </span>
+      ))}
+    </div>
+  )}
+</a>

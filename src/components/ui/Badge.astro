@@ -1,0 +1,34 @@
+---
+interface Props {
+  variant: 'tier' | 'category' | 'status';
+  value: string;
+  class?: string;
+}
+
+const { variant, value, class: className = '' } = Astro.props;
+
+// Badge color map per design.md
+const colorMap: Record<string, string> = {
+  // Tier values
+  'founder': 'bg-brand-yellow text-brand-black',
+  'pro': 'bg-surface-charcoal text-brand-white',
+  'free': 'bg-surface-silver text-brand-black',
+  // Status values
+  'launched': 'bg-brand-black text-brand-white',
+  'beta': 'bg-surface-charcoal text-brand-white',
+  'building': 'bg-surface-charcoal text-brand-white',
+  'idea': 'bg-surface-silver text-brand-black',
+};
+
+// Category badges all use silver/black
+const colors =
+  variant === 'category'
+    ? 'bg-surface-silver text-brand-black'
+    : (colorMap[value.toLowerCase()] ?? 'bg-surface-silver text-brand-black');
+---
+
+<span
+  class={`text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded-none inline-block ${colors} ${className}`}
+>
+  {value}
+</span>

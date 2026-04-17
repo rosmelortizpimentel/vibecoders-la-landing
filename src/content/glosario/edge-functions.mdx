@@ -1,0 +1,15 @@
+---
+term: "Edge Functions"
+shortDefinition: "Funciones de servidor que se ejecutan en la red de distribución de contenido (CDN), más cerca del usuario final, ofreciendo latencia mínima y escalado automático."
+category: "workflows"
+relatedTerms: ["Deployment", "CI/CD", "Supabase", "API"]
+draft: false
+---
+
+Las **Edge Functions** son pequeños fragmentos de código de servidor que se ejecutan en los nodos de la red de distribución de contenido (CDN), geográficamente distribuidos cerca de los usuarios finales. A diferencia de las funciones de servidor tradicionales que se ejecutan en una región específica, las edge functions se ejecutan en la ubicación más cercana al usuario que hace la petición.
+
+Las ventajas principales son: latencia mínima (el código se ejecuta a pocos milisegundos del usuario), escalado automático sin configuración, y un modelo de cobro por ejecución (serverless) que hace que el costo sea cero cuando no hay tráfico.
+
+Tanto Vercel como Supabase ofrecen edge functions como parte de su plataforma. Vercel Edge Middleware permite ejecutar lógica antes de que la petición llegue a la aplicación (autenticación, redirecciones, A/B testing). Supabase Edge Functions permiten crear endpoints de API serverless que tienen acceso directo a la base de datos con privilegios de servidor.
+
+Para los builders, las edge functions son especialmente útiles para: webhooks de pagos (Stripe), lógica de autenticación personalizada, transformaciones de datos sensibles, y cualquier operación que no debería exponerse directamente en el frontend.

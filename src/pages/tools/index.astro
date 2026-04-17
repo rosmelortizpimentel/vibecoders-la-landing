@@ -1,0 +1,42 @@
+---
+import DirectoryLayout from '@/layouts/DirectoryLayout.astro';
+import ToolCard from '@/components/tools/ToolCard.astro';
+import { getCollection } from 'astro:content';
+
+const breadcrumbs = [
+  { label: 'Inicio', href: '/' },
+  { label: 'Herramientas' },
+];
+
+const allTools = await getCollection('tools', ({ data }) => data.draft !== true);
+
+const sortedTools = allTools.sort((a, b) =>
+  (b.data.rating ?? 0) - (a.data.rating ?? 0)
+);
+---
+
+<DirectoryLayout
+  title="Herramientas"
+  description="Las herramientas más populares del ecosistema vibe coding. Reviews detalladas con pros, contras y casos de uso reales."
+  breadcrumbs={breadcrumbs}
+>
+  {sortedTools.length === 0 ? (
+    <div class="bg-surface-silver p-12 text-center">
+      <p class="text-sm" style="color: #888888;">Próximamente: reviews de herramientas.</p>
+    </div>
+  ) : (
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {sortedTools.map((tool) => (
+        <ToolCard
+          name={tool.data.name}
+          tagline={tool.data.tagline}
+          category={tool.data.category}
+          pricing={tool.data.pricing}
+          rating={tool.data.rating}
+          logo={tool.data.logo}
+          slug={tool.id}
+        />
+      ))}
+    </div>
+  )}
+</DirectoryLayout>

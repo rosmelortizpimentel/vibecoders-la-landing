@@ -1,0 +1,136 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/directory/Breadcrumbs.astro';
+import CTAButton from '@/components/ui/CTAButton.astro';
+import { platformCTA } from '@/lib/urls';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const modules = await getCollection('learn', ({ data }) => data.draft !== true);
+  const sorted = modules.sort((a, b) => a.data.moduleNumber - b.data.moduleNumber);
+  return sorted.map((module, index) => ({
+    params: { slug: module.id },
+    props: {
+      module,
+      prev: sorted[index - 1] ?? null,
+      next: sorted[index + 1] ?? null,
+    },
+  }));
+}
+
+const { module, prev, next } = Astro.props;
+const { Content } = await render(module);
+
+const breadcrumbs = [
+  { label: 'Inicio', href: '/' },
+  { label: 'Aprende', href: '/learn' },
+  { label: module.data.title },
+];
+---
+
+<BaseLayout
+  title={`Módulo ${module.data.moduleNumber}: ${module.data.title} | Aprende | VibeCoders`}
+  description={module.data.description}
+>
+  <!-- Breadcrumbs -->
+  <div class="bg-brand-white max-w-[1440px] mx-auto px-6 pt-6">
+    <Breadcrumbs items={breadcrumbs} />
+  </div>
+
+  <!-- Dark Hero -->
+  <section class="bg-brand-black py-12 md:py-20">
+    <div class="max-w-[800px] mx-auto px-6">
+      <!-- Module number badge -->
+      <div class="mb-6">
+        <span class="text-xs font-bold uppercase tracking-wider px-2 py-0.5 bg-surface-charcoal text-brand-white rounded-none">
+          Módulo {module.data.moduleNumber}
+        </span>
+        <span class="text-xs font-bold uppercase tracking-wider px-2 py-0.5 bg-surface-charcoal text-brand-white rounded-none ml-2">
+          {module.data.durationMinutes} min
+        </span>
+      </div>
+
+      <!-- Title -->
+      <h1 class="font-bold text-[32px] md:text-[56px] leading-[0.95] text-brand-white mb-6">
+        {module.data.title}
+      </h1>
+
+      <!-- Description -->
+      <p class="text-base md:text-lg leading-relaxed" style="color: #D9D9D6;">
+        {module.data.description}
+      </p>
+
+      <!-- Outcomes -->
+      {module.data.outcomes.length > 0 && (
+        <div class="mt-8 pt-8 border-t border-surface-charcoal">
+          <p class="text-xs font-bold uppercase tracking-wider mb-4" style="color: #888888;">
+            Lo que vas a aprender
+          </p>
+          <ul class="flex flex-col gap-2">
+            {module.data.outcomes.map((outcome) => (
+              <li class="flex items-start gap-2 text-sm text-brand-white">
+                <span class="font-bold text-brand-yellow shrink-0 mt-0.5">✓</span>
+                <span>{outcome}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- Light Content -->
+  <section class="bg-brand-white py-12">
+    <div class="max-w-[800px] mx-auto px-6">
+      <article class="prose prose-lg max-w-none prose-headings:text-brand-black prose-headings:font-bold prose-a:text-brand-blue prose-a:no-underline hover:prose-a:underline prose-strong:text-brand-black prose-code:bg-surface-silver prose-code:text-brand-black prose-code:rounded-none prose-pre:rounded-none prose-blockquote:border-l-brand-black prose-blockquote:text-brand-black">
+        <Content />
+      </article>
+
+      <!-- Prev / Next navigation -->
+      <nav class="mt-16 pt-8 border-t border-border grid grid-cols-1 md:grid-cols-2 gap-4">
+        {prev ? (
+          <a
+            href={`/learn/${prev.id}`}
+            class="group block bg-surface-silver p-5 hover:bg-brand-black transition-colors no-underline"
+          >
+            <p class="text-xs font-bold uppercase tracking-wider mb-1 group-hover:text-brand-white" style="color: #888888;">
+              ← Módulo anterior
+            </p>
+            <p class="font-bold text-brand-black group-hover:text-brand-white text-sm">
+              {prev.data.title}
+            </p>
+          </a>
+        ) : (
+          <div />
+        )}
+        {next ? (
+          <a
+            href={`/learn/${next.id}`}
+            class="group block bg-surface-silver p-5 hover:bg-brand-black transition-colors no-underline md:text-right"
+          >
+            <p class="text-xs font-bold uppercase tracking-wider mb-1 group-hover:text-brand-white" style="color: #888888;">
+              Módulo siguiente →
+            </p>
+            <p class="font-bold text-brand-black group-hover:text-brand-white text-sm">
+              {next.data.title}
+            </p>
+          </a>
+        ) : (
+          <div />
+        )}
+      </nav>
+
+      <!-- Final CTA -->
+      <div class="mt-12 pt-8 border-t border-border text-center">
+        <p class="text-sm font-bold text-brand-black mb-4 uppercase tracking-wider">
+          ¿Listo para construir con la comunidad?
+        </p>
+        <CTAButton
+          variant="primary"
+          href={platformCTA('learn-module')}
+          label="Únete a VibeCoders"
+        />
+      </div>
+    </div>
+  </section>
+</BaseLayout>

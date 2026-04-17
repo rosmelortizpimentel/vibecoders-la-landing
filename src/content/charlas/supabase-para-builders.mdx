@@ -1,0 +1,54 @@
+---
+sessionNumber: 2
+title: "Supabase para Vibe Coders: backend completo sin dolor"
+tagline: "Todo lo que necesitas saber sobre Supabase para construir el backend de tu SaaS: base de datos, autenticación, storage y edge functions en una sola plataforma."
+speaker:
+  name: "Martín Acosta"
+  role: "Full-stack Builder & Supabase enthusiast"
+  bio: "Builder argentino con experiencia construyendo productos SaaS usando Supabase como backend principal. Ha lanzado 3 productos en el último año usando Vibe Coding."
+recordedAt: 2025-11-24
+durationMinutes: 58
+videoEmbedId: "dQw4w9WgXcQ"
+videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+topics: ["supabase", "backend", "saas", "autenticacion", "base-de-datos"]
+resources:
+  - label: "Supabase Docs"
+    url: "https://supabase.com/docs"
+    type: "article"
+  - label: "Supabase + Lovable integration guide"
+    url: "https://supabase.com/docs/guides/getting-started/quickstarts/lovable"
+    type: "article"
+timestamps:
+  - seconds: 0
+    label: "¿Por qué Supabase? Alternativas y tradeoffs"
+  - seconds: 540
+    label: "Configuración inicial y estructura de proyecto"
+  - seconds: 1080
+    label: "Schema design y Row Level Security (RLS)"
+  - seconds: 1980
+    label: "Autenticación: email, OAuth y magic links"
+  - seconds: 2700
+    label: "Edge Functions para lógica de servidor"
+  - seconds: 3180
+    label: "Storage para archivos e imágenes"
+featured: false
+draft: false
+---
+
+Martín Acosta llegó a esta segunda sesión con una premisa clara: Supabase es probablemente la mejor inversión de tiempo que puede hacer un builder que quiere escalar sin contratar un backend engineer. En 58 minutos, recorrimos desde la configuración inicial hasta el deployment de edge functions en producción.
+
+## Supabase como plataforma completa
+
+Lo que hace poderoso a Supabase no es ninguna característica individual, sino la integración de todo el stack: PostgreSQL como base de datos, autenticación gestionada, storage para archivos, realtime para actualizaciones en vivo, y edge functions para lógica de servidor. Todo en un dashboard unificado con un generoso free tier.
+
+Martín mostró cómo, para su último SaaS, el tiempo desde "idea" hasta "producto con autenticación y base de datos funcionando" fue de menos de 3 horas usando Lovable + Supabase.
+
+## El componente más subestimado: RLS
+
+Row Level Security fue el tema que más tiempo ocupó en la sesión, y con razón. RLS es el mecanismo de Supabase para controlar qué usuario puede ver o modificar qué datos. Sin RLS bien configurado, tu aplicación tiene vulnerabilidades de seguridad graves aunque el frontend parezca funcionar bien.
+
+La demostración en vivo fue impactante: en menos de 5 minutos, Martín mostró cómo acceder directamente a la API de Supabase sin autenticación para extraer todos los datos de una tabla que no tenía RLS activado. Después mostró cómo una política RLS de tres líneas bloqueaba ese acceso completamente.
+
+## Lo que la IA puede y no puede hacer aquí
+
+Una advertencia importante de Martín: los modelos de IA generan políticas RLS, pero no siempre correctas. Siempre hay que testear manualmente que las políticas funcionan como se espera. Este es uno de los puntos donde el criterio humano sigue siendo irremplazable.

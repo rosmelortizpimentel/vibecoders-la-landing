@@ -1,0 +1,387 @@
+[
+  {
+    "username": "martinl",
+    "memberNumber": 1,
+    "name": "Martín López",
+    "tagline": "Builder full-stack. Construyo SaaS con IA en semanas, no meses.",
+    "bio": "Desarrollador con 8 años de experiencia. Fundé 3 startups. Ahora construyo con IA como co-piloto y comparto todo en la comunidad.",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/1?v=4",
+    "location": {
+      "country": "Argentina",
+      "countryCode": "AR",
+      "city": "Buenos Aires"
+    },
+    "isPioneer": true,
+    "isContributor": true,
+    "isVerified": true,
+    "tier": "founder",
+    "availableForChat": true,
+    "availableForConsulting": false,
+    "socials": {
+      "github": "https://github.com/martinl",
+      "twitter": "https://twitter.com/martinl",
+      "website": "https://martinl.dev"
+    },
+    "stats": {
+      "apps": 3,
+      "followers": 142,
+      "following": 38
+    },
+    "joinedAt": "2026-01-01T00:00:00Z",
+    "apps": [
+      {
+        "slug": "facturai",
+        "name": "FacturAI",
+        "tagline": "Facturas inteligentes para freelancers hispanohablantes.",
+        "logoUrl": "https://placehold.co/64x64/EFDF00/000000?text=F",
+        "isVerified": true
+      }
+    ]
+  },
+  {
+    "username": "sofiad",
+    "memberNumber": 2,
+    "name": "Sofía Díaz",
+    "tagline": "Diseñadora que aprendió a programar con IA. Founders técnicos, eso somos.",
+    "bio": "Vengo del diseño UX. Cursor y Claude me abrieron un mundo nuevo. Ahora construyo productos end-to-end sola.",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/2?v=4",
+    "location": {
+      "country": "México",
+      "countryCode": "MX",
+      "city": "CDMX"
+    },
+    "isPioneer": true,
+    "isContributor": false,
+    "isVerified": true,
+    "tier": "pro",
+    "availableForChat": true,
+    "availableForConsulting": true,
+    "socials": {
+      "linkedin": "https://linkedin.com/in/sofiad",
+      "instagram": "https://instagram.com/sofiad.builds"
+    },
+    "stats": {
+      "apps": 2,
+      "followers": 89,
+      "following": 51
+    },
+    "joinedAt": "2026-01-10T00:00:00Z",
+    "apps": [
+      {
+        "slug": "landin-ai",
+        "name": "Landin.ai",
+        "tagline": "Landing pages que convierten, generadas en minutos con IA.",
+        "logoUrl": "https://placehold.co/64x64/1883FD/FFFFFF?text=L",
+        "isVerified": false
+      }
+    ]
+  },
+  {
+    "username": "carlosr",
+    "memberNumber": 3,
+    "name": "Carlos Rodríguez",
+    "tagline": "Ex-CTO construyendo herramientas para equipos que usan IA.",
+    "bio": "15 años en ingeniería de software. Ahora me enfoco en tooling para builders. La IA cambió todo.",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/3?v=4",
+    "location": {
+      "country": "España",
+      "countryCode": "ES",
+      "city": "Madrid"
+    },
+    "isPioneer": false,
+    "isContributor": true,
+    "isVerified": true,
+    "tier": "pro",
+    "availableForChat": false,
+    "availableForConsulting": true,
+    "socials": {
+      "github": "https://github.com/carlosr",
+      "linkedin": "https://linkedin.com/in/carlosr",
+      "website": "https://carlosr.es"
+    },
+    "stats": {
+      "apps": 1,
+      "followers": 204,
+      "following": 12
+    },
+    "joinedAt": "2026-01-20T00:00:00Z",
+    "apps": [
+      {
+        "slug": "standupbot",
+        "name": "StandupBot",
+        "tagline": "Daily standups asíncronos con resúmenes IA para tu equipo.",
+        "logoUrl": "https://placehold.co/64x64/222222/FFFFFF?text=S",
+        "isVerified": true
+      }
+    ]
+  },
+  {
+    "username": "valentinag",
+    "memberNumber": 4,
+    "name": "Valentina García",
+    "tagline": "Creadora de contenido IA. Automatizo marketing con modelos de lenguaje.",
+    "bio": "Marketera convertida en builder. Uso IA para escalar campañas de contenido. Colombia representa.",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/4?v=4",
+    "location": {
+      "country": "Colombia",
+      "countryCode": "CO",
+      "city": "Medellín"
+    },
+    "isPioneer": false,
+    "isContributor": true,
+    "isVerified": true,
+    "tier": "pro",
+    "availableForChat": true,
+    "availableForConsulting": true,
+    "socials": {
+      "twitter": "https://twitter.com/valentinag",
+      "instagram": "https://instagram.com/valentinag.ai",
+      "linkedin": "https://linkedin.com/in/valentinag"
+    },
+    "stats": {
+      "apps": 2,
+      "followers": 317,
+      "following": 74
+    },
+    "joinedAt": "2026-01-28T00:00:00Z",
+    "apps": [
+      {
+        "slug": "copywiz",
+        "name": "CopyWiz",
+        "tagline": "Copy de marketing que convierte, generado por IA en segundos.",
+        "logoUrl": "https://placehold.co/64x64/8DC572/000000?text=C",
+        "isVerified": true
+      }
+    ]
+  },
+  {
+    "username": "diegom",
+    "memberNumber": 5,
+    "name": "Diego Morales",
+    "tagline": "Estudiante construyendo su primera app con IA. El futuro es ahora.",
+    "bio": "Estudiante de ingeniería en Santiago. Claude es mi partner de código. Construyo porque aprender haciendo es lo único que funciona.",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/5?v=4",
+    "location": {
+      "country": "Chile",
+      "countryCode": "CL",
+      "city": "Santiago"
+    },
+    "isPioneer": false,
+    "isContributor": false,
+    "isVerified": false,
+    "tier": "free",
+    "availableForChat": true,
+    "availableForConsulting": false,
+    "socials": {
+      "github": "https://github.com/diegom"
+    },
+    "stats": {
+      "apps": 1,
+      "followers": 23,
+      "following": 102
+    },
+    "joinedAt": "2026-02-10T00:00:00Z",
+    "apps": [
+      {
+        "slug": "fitlog-ai",
+        "name": "FitLog AI",
+        "tagline": "Tu entrenador personal IA que aprende de tu cuerpo.",
+        "logoUrl": "https://placehold.co/64x64/337AB7/FFFFFF?text=F",
+        "isVerified": false
+      }
+    ]
+  },
+  {
+    "username": "luciab",
+    "memberNumber": 6,
+    "name": "Lucía Bentancur",
+    "tagline": "Data scientist que construye productos con ML e IA generativa.",
+    "bio": "PhD en estadística. Ahora combino ciencia de datos con LLMs para crear herramientas que resuelven problemas reales.",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/6?v=4",
+    "location": {
+      "country": "Uruguay",
+      "countryCode": "UY",
+      "city": "Montevideo"
+    },
+    "isPioneer": false,
+    "isContributor": true,
+    "isVerified": true,
+    "tier": "pro",
+    "availableForChat": true,
+    "availableForConsulting": true,
+    "socials": {
+      "linkedin": "https://linkedin.com/in/luciab",
+      "github": "https://github.com/luciab",
+      "website": "https://luciab.io"
+    },
+    "stats": {
+      "apps": 2,
+      "followers": 156,
+      "following": 29
+    },
+    "joinedAt": "2026-02-15T00:00:00Z",
+    "apps": [
+      {
+        "slug": "docuflow",
+        "name": "DocuFlow",
+        "tagline": "Automatización de documentos con IA para equipos legales.",
+        "logoUrl": "https://placehold.co/64x64/F2F2F2/000000?text=D",
+        "isVerified": false
+      }
+    ]
+  },
+  {
+    "username": "andresp",
+    "memberNumber": 7,
+    "name": "Andrés Paredes",
+    "tagline": "Mobile-first builder. Apps nativas con IA que funcionan offline.",
+    "bio": "Especialista en React Native y Expo. Construyo apps para Latinoamérica pensando en conectividad limitada y bajo ancho de banda.",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/7?v=4",
+    "location": {
+      "country": "Perú",
+      "countryCode": "PE",
+      "city": "Lima"
+    },
+    "isPioneer": false,
+    "isContributor": false,
+    "isVerified": false,
+    "tier": "free",
+    "availableForChat": true,
+    "availableForConsulting": false,
+    "socials": {
+      "github": "https://github.com/andresp",
+      "twitter": "https://twitter.com/andresp_builds"
+    },
+    "stats": {
+      "apps": 1,
+      "followers": 41,
+      "following": 88
+    },
+    "joinedAt": "2026-02-20T00:00:00Z",
+    "apps": [
+      {
+        "slug": "fitlog-ai",
+        "name": "FitLog AI",
+        "tagline": "Tu entrenador personal IA que aprende de tu cuerpo.",
+        "logoUrl": "https://placehold.co/64x64/337AB7/FFFFFF?text=F",
+        "isVerified": false
+      }
+    ]
+  },
+  {
+    "username": "marianaj",
+    "memberNumber": 8,
+    "name": "Mariana Jiménez",
+    "tagline": "Serial entrepreneur. Mi tercera startup es un SaaS de productividad con IA.",
+    "bio": "Dos exits y ahora voy por el tercero. Costa Rica tiene builders serios. La IA me da velocidad de ejecución que antes no tenía.",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/8?v=4",
+    "location": {
+      "country": "Costa Rica",
+      "countryCode": "CR",
+      "city": "San José"
+    },
+    "isPioneer": true,
+    "isContributor": true,
+    "isVerified": true,
+    "tier": "founder",
+    "availableForChat": false,
+    "availableForConsulting": true,
+    "socials": {
+      "linkedin": "https://linkedin.com/in/marianaj",
+      "twitter": "https://twitter.com/marianaj_builds",
+      "website": "https://marianaj.cr"
+    },
+    "stats": {
+      "apps": 3,
+      "followers": 289,
+      "following": 17
+    },
+    "joinedAt": "2026-03-01T00:00:00Z",
+    "apps": [
+      {
+        "slug": "docuflow",
+        "name": "DocuFlow",
+        "tagline": "Automatización de documentos con IA para equipos legales.",
+        "logoUrl": "https://placehold.co/64x64/F2F2F2/000000?text=D",
+        "isVerified": false
+      }
+    ]
+  },
+  {
+    "username": "rafaelc",
+    "memberNumber": 9,
+    "name": "Rafael Costa",
+    "tagline": "Builder full-stack do Brasil. Construindo o futuro com IA e muito café.",
+    "bio": "Desenvolvedor com 6 anos de experiência em startups brasileiras. Mirei em SaaS B2B e hoje uso Claude e GPT-4 como pair programmers. Comunidade é tudo.",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/9?v=4",
+    "location": {
+      "country": "Brasil",
+      "countryCode": "BR",
+      "city": "São Paulo"
+    },
+    "isPioneer": false,
+    "isContributor": true,
+    "isVerified": true,
+    "tier": "pro",
+    "availableForChat": true,
+    "availableForConsulting": true,
+    "socials": {
+      "github": "https://github.com/rafaelc",
+      "linkedin": "https://linkedin.com/in/rafaelc",
+      "twitter": "https://twitter.com/rafaelc_builds"
+    },
+    "stats": {
+      "apps": 2,
+      "followers": 98,
+      "following": 44
+    },
+    "joinedAt": "2026-03-10T00:00:00Z",
+    "apps": [
+      {
+        "slug": "resumeai",
+        "name": "ResumeAI",
+        "tagline": "CVs que pasan el filtro ATS y consiguen entrevistas.",
+        "logoUrl": "https://placehold.co/64x64/000000/EFDF00?text=R",
+        "isVerified": false
+      }
+    ]
+  },
+  {
+    "username": "isabellav",
+    "memberNumber": 10,
+    "name": "Isabella Vargas",
+    "tagline": "Construyo desde Panamá. Herramientas de educación con IA para toda Latinoamérica.",
+    "bio": "Maestra reconvertida en builder. Uso la IA para democratizar la educación de calidad. Panamá Hub tiene builders reales.",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/10?v=4",
+    "location": {
+      "country": "Panamá",
+      "countryCode": "PA",
+      "city": "Ciudad de Panamá"
+    },
+    "isPioneer": false,
+    "isContributor": false,
+    "isVerified": false,
+    "tier": "free",
+    "availableForChat": true,
+    "availableForConsulting": false,
+    "socials": {
+      "instagram": "https://instagram.com/isabellav.builds",
+      "linkedin": "https://linkedin.com/in/isabellav"
+    },
+    "stats": {
+      "apps": 1,
+      "followers": 14,
+      "following": 57
+    },
+    "joinedAt": "2026-03-20T00:00:00Z",
+    "apps": [
+      {
+        "slug": "clasesia",
+        "name": "ClaseIA",
+        "tagline": "Clases personalizadas con IA para estudiantes de toda Latinoamérica.",
+        "logoUrl": "https://placehold.co/64x64/337AB7/FFFFFF?text=C",
+        "isVerified": false
+      }
+    ]
+  }
+]

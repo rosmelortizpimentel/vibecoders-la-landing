@@ -1,0 +1,54 @@
+---
+sessionNumber: 5
+title: "Testing asistido por IA: cómo garantizar calidad sin frenar la velocidad"
+tagline: "Estrategias prácticas para integrar tests en proyectos de Vibe Coding sin sacrificar la velocidad de desarrollo que hace poderoso a este enfoque."
+speaker:
+  name: "Ana Torres"
+  role: "QA Engineer & Builder"
+  bio: "Especialista en calidad de software con experiencia en startups de alto crecimiento. Defiende que el testing y la velocidad no son opuestos, sino complementarios cuando se hacen bien."
+recordedAt: 2026-01-12
+durationMinutes: 48
+videoEmbedId: "dQw4w9WgXcQ"
+videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+topics: ["testing", "calidad", "ia", "vitest", "playwright"]
+resources:
+  - label: "Vitest Documentation"
+    url: "https://vitest.dev"
+    type: "tool"
+  - label: "Playwright para E2E testing"
+    url: "https://playwright.dev"
+    type: "tool"
+timestamps:
+  - seconds: 0
+    label: "El problema del testing en Vibe Coding"
+  - seconds: 600
+    label: "Qué testear y qué no testear"
+  - seconds: 1200
+    label: "Generando tests con IA: prompts que funcionan"
+  - seconds: 1980
+    label: "Testing E2E con Playwright"
+  - seconds: 2580
+    label: "Integrar tests en el workflow de deploy"
+featured: false
+draft: false
+---
+
+Ana Torres llegó a VibeCoders con una misión: desmitificar el testing en proyectos de Vibe Coding. Hay una creencia extendida de que testear y moverse rápido son incompatibles. Ana demostró que es falso, con ejemplos concretos.
+
+## El problema real con el testing en Vibe Coding
+
+El problema no es que el testing sea difícil. Es que los builders no saben qué testear. Si intentas tener cobertura del 100% del código que genera la IA, efectivamente se convierte en un cuello de botella. Pero nadie debería buscar eso.
+
+La pregunta correcta es: ¿qué partes de mi aplicación, si fallan, destruyen la experiencia de mi usuario? Esas partes necesitan tests. El resto puede esperar.
+
+## Lo que sí debes testear siempre
+
+Ana identificó tres categorías que siempre merecen tests en un SaaS: flujos de autenticación (login, registro, recuperación de contraseña), lógica de pago (si usas Stripe o similar, los webhooks y la activación de planes), y las transformaciones de datos críticas (cálculos de precios, generación de reportes, formateo de información importante).
+
+La IA genera esos tests con notable precisión si le das el contexto correcto. Ana mostró un prompt que genera tests de Vitest para funciones de transformación de datos: especificar los inputs, los outputs esperados y los casos edge es todo lo que necesitas.
+
+## Testing E2E: solo para los flujos principales
+
+Para testing end-to-end, Ana recomienda Playwright y una regla simple: tests E2E solo para los 3-5 flujos que, si se rompen, hacen que el producto sea inutilizable. Registro + onboarding, flujo de pago, y la acción core del producto. Nada más.
+
+La IA puede generar los scripts de Playwright si grabas el flujo una vez con el modo record de la herramienta. Es una inversión de 30 minutos que previene regresiones durante meses.

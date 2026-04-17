@@ -1,0 +1,60 @@
+---
+sessionNumber: 8
+title: "Lovable en producción: lecciones de 6 meses usando la herramienta en proyectos reales"
+tagline: "Lo que nadie te cuenta sobre usar Lovable en proyectos que llegan a producción: limitaciones reales, workarounds, patrones que funcionan y cuándo salir del modo chat."
+speaker:
+  name: "Rosmel Rodríguez"
+  role: "Founder VibeCoders"
+  bio: "Fundador de VibeCoders y builder con más de un año usando herramientas de Vibe Coding en producción. Ha lanzado múltiples productos usando Lovable como herramienta principal."
+  twitterUrl: "https://twitter.com/rosmelr"
+  websiteUrl: "https://vibecoders.la"
+recordedAt: 2026-02-23
+durationMinutes: 67
+videoEmbedId: "dQw4w9WgXcQ"
+videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+topics: ["lovable", "produccion", "vibe-coding", "lessons-learned"]
+resources:
+  - label: "Lovable Documentation"
+    url: "https://docs.lovable.dev"
+    type: "article"
+  - label: "Lovable + Supabase Guide"
+    url: "https://docs.lovable.dev/integrations/supabase"
+    type: "article"
+timestamps:
+  - seconds: 0
+    label: "El contexto: qué construimos con Lovable y por qué"
+  - seconds: 720
+    label: "Las primeras semanas: todo parece fácil"
+  - seconds: 1440
+    label: "Mes 2-3: las limitaciones que nadie menciona"
+  - seconds: 2520
+    label: "Patrones que funcionan en proyectos medianos"
+  - seconds: 3360
+    label: "Cuándo es el momento de salir del modo Lovable"
+  - seconds: 3960
+    label: "Retrospectiva y recomendaciones finales"
+featured: true
+draft: false
+---
+
+Esta fue la charla más personal de toda la serie. Rosmel compartió seis meses de trabajo real con Lovable, incluyendo los fracasos y las lecciones aprendidas de la manera difícil. No es una charla de marketing de la herramienta: es una evaluación honesta de lo que funciona y lo que no.
+
+## Las primeras semanas: la luna de miel
+
+Las primeras semanas con Lovable son casi mágicas. Describes una feature, aparece implementada. Pides un cambio de diseño, se aplica. El feedback loop es tan rápido que la sensación es de productividad ilimitada. Y en cierta medida, para proyectos en etapa temprana, eso es real.
+
+El primer producto construido con Lovable llegó a su primer usuario en 5 días. Cinco días desde el concepto hasta alguien usando el producto en producción. Eso hubiera sido imposible dos años antes.
+
+## Mes 2-3: cuando el contexto se fragmenta
+
+El problema que nadie menciona: Lovable trabaja con el estado actual del código, pero el contexto de "por qué esto está así" se pierde con el tiempo. Cuando empiezas a pedir cambios en features que se construyeron hace un mes, la IA a veces no comprende las decisiones anteriores y genera código que rompe cosas que ya funcionaban.
+
+La solución que encontré: mantener un documento `CONTEXT.md` actualizado que explica las decisiones arquitectónicas principales y el estado actual del producto. Incluirlo al inicio de sesiones importantes con Lovable reduce dramáticamente los problemas de contexto.
+
+## Patrones que funcionan
+
+Tres patrones que recomiendo después de seis meses: (1) Trabajar en features atómicas: una sola cosa por sesión, no pedir cinco cambios a la vez. (2) Hacer commits frecuentes: antes de cada sesión importante, commit del estado estable para poder revertir si algo se rompe. (3) Revisar el diff antes de aceptar: Lovable muestra los cambios antes de aplicarlos; ese paso de revisión previene el 80% de los problemas.
+
+## Cuándo salir del modo Lovable
+
+Lovable es perfecta para el 80% del trabajo en un indie SaaS. Para el 20% restante (lógica de negocio compleja, integraciones con APIs raras, optimizaciones de performance), es mejor usar Cursor o Claude Code directamente en el repositorio. El error es insistir con Lovable en partes del proyecto donde no es la herramienta correcta.

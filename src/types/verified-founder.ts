@@ -1,0 +1,17 @@
+/**
+ * Shape returned by the Supabase RPC `get_verified_founders`.
+ * Used in the landing page BuildersMarquee section.
+ */
+export interface VerifiedFounder {
+  display_name: string;
+  username: string;
+  avatar_url: string | null;
+  tagline: string | null;
+  city: string | null;
+  apps_count: number;
+  social_links: {
+    github?: string;
+    twitter?: string;
+    linkedin?: string;
+  };
+}
