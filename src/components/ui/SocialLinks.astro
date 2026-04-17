@@ -1,8 +1,6 @@
 ---
-import type { Builder } from '@/types/builder';
-
 interface Props {
-  socials: Builder['socials'];
+  socials: Record<string, string | undefined | null>;
   onDark?: boolean;
   class?: string;
 }
@@ -13,7 +11,7 @@ const colorClass = onDark
   ? 'text-brand-white hover:text-brand-blue'
   : 'text-brand-black hover:text-brand-blue';
 
-const links: Array<{ key: keyof Builder['socials']; label: string; icon: string }> = [
+const links: Array<{ key: string; label: string; icon: string }> = [
   {
     key: 'github',
     label: 'GitHub',

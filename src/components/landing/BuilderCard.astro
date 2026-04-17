@@ -1,10 +1,11 @@
 ---
 import type { VerifiedFounder } from '@/types/verified-founder';
 import Badge from '@/components/ui/Badge.astro';
+import SocialLinks from '@/components/ui/SocialLinks.astro';
 
-type Props = Pick<VerifiedFounder, 'display_name' | 'avatar_url' | 'tagline' | 'city' | 'is_pro' | 'is_founder'>;
+type Props = Pick<VerifiedFounder, 'display_name' | 'avatar_url' | 'tagline' | 'city' | 'is_pro' | 'is_founder' | 'social_links'>;
 
-const { display_name, avatar_url, tagline, city, is_pro, is_founder } = Astro.props;
+const { display_name, avatar_url, tagline, city, is_pro, is_founder, social_links } = Astro.props;
 
 // Generate initial for avatar fallback
 const initial = display_name.charAt(0).toUpperCase();
@@ -83,9 +84,15 @@ const locationLabel = formatLocation(city);
     </div>
 
     {tagline && (
-      <p class="text-[16px] text-brand-black leading-relaxed mt-auto">
+      <p class={`text-[16px] text-brand-black leading-relaxed line-clamp-2 ${!social_links || Object.keys(social_links).length === 0 ? 'mt-auto' : ''}`}>
         {tagline}
       </p>
+    )}
+
+    {social_links && Object.keys(social_links).length > 0 && (
+      <div class="mt-auto pt-4 border-t border-brand-black/10">
+        <SocialLinks socials={social_links} class="text-brand-black" />
+      </div>
     )}
   </div>
 </div>
