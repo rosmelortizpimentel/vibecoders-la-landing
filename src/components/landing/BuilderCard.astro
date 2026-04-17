@@ -1,16 +1,16 @@
 ---
 import type { VerifiedFounder } from '@/types/verified-founder';
 
-type Props = Pick<VerifiedFounder, 'display_name' | 'avatar_url' | 'tagline' | 'city' | 'apps_count'>;
+type Props = Pick<VerifiedFounder, 'display_name' | 'avatar_url' | 'tagline' | 'city' | 'is_pro' | 'is_founder'>;
 
-const { display_name, avatar_url, tagline, city, apps_count } = Astro.props;
+const { display_name, avatar_url, tagline, city, is_pro, is_founder } = Astro.props;
 
 // Generate initial for avatar fallback
 const initial = display_name.charAt(0).toUpperCase();
 ---
 
 <div class="w-[200px] h-[160px] p-3 bg-surface-silver flex flex-col gap-2 shrink-0">
-  <!-- Avatar + Apps badge row -->
+  <!-- Avatar + badges row -->
   <div class="flex items-start justify-between">
     <div class="w-10 h-10 rounded-full overflow-hidden bg-surface-charcoal flex items-center justify-center shrink-0">
       {avatar_url ? (
@@ -26,11 +26,22 @@ const initial = display_name.charAt(0).toUpperCase();
         <span class="text-brand-white font-bold text-xs">{initial}</span>
       )}
     </div>
-    {apps_count > 0 && (
-      <span class="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 bg-surface-charcoal text-brand-white inline-block">
-        {apps_count} {apps_count === 1 ? 'app' : 'apps'}
-      </span>
-    )}
+    <div class="flex items-center gap-2">
+      {is_founder && (
+        <span
+          title="Builder Fundador"
+          aria-label="Builder Fundador"
+          class="w-7 h-7 rounded-full bg-[#EFDF00] text-brand-black font-black text-[10px] flex items-center justify-center border border-brand-black"
+        >
+          BF
+        </span>
+      )}
+      {is_pro && (
+        <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 bg-[#C9B458] text-brand-black inline-block border border-brand-black">
+          Pro
+        </span>
+      )}
+    </div>
   </div>
 
   <!-- Info -->

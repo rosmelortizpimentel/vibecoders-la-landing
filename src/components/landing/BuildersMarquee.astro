@@ -9,6 +9,7 @@ interface Props {
 }
 
 const { builders } = Astro.props;
+const duplicatedBuilders = [...builders, ...builders];
 ---
 
 <SectionWrapper variant="light" id="builders">
@@ -22,25 +23,104 @@ const { builders } = Astro.props;
     </p>
   </div>
 
-  <!-- Horizontal scroll marquee -->
-  <div class="overflow-x-auto pb-4 -mx-6 px-6">
-    <div class="flex flex-nowrap gap-4 w-max">
-      {builders.map((builder) => (
-        <a
-          href={`/builders/${builder.username}`}
-          class="no-underline hover:opacity-80 transition-opacity"
-        >
-          <BuilderCard
-            display_name={builder.display_name}
-            avatar_url={builder.avatar_url}
-            tagline={builder.tagline}
-            city={builder.city}
-            apps_count={builder.apps_count}
-          />
-        </a>
-      ))}
+  <!-- Auto carousel -->
+  <div class="relative">
+    <button
+      type="button"
+      class="builders-prev absolute left-0 top-1/2 z-10 -translate-y-1/2 bg-brand-white border border-brand-black text-brand-black w-10 h-10 hidden md:flex items-center justify-center hover:bg-brand-black hover:text-brand-white transition-colors"
+      aria-label="Ver builders anteriores"
+    >
+      ←
+    </button>
+
+    <div class="builders-carousel overflow-x-auto overflow-y-hidden pb-2 -mx-6 px-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <div class="builders-track flex flex-nowrap gap-4 w-max">
+        {duplicatedBuilders.map((builder, index) => (
+          <a
+            href={`/builders/${builder.username}`}
+            class="no-underline hover:opacity-80 transition-opacity"
+            data-builder-card
+            aria-hidden={index >= builders.length ? 'true' : 'false'}
+            tabindex={index >= builders.length ? '-1' : undefined}
+          >
+            <BuilderCard
+              display_name={builder.display_name}
+              avatar_url={builder.avatar_url}
+              tagline={builder.tagline}
+              city={builder.city}
+              is_pro={builder.is_pro}
+              is_founder={builder.is_founder}
+            />
+          </a>
+        ))}
+      </div>
     </div>
+
+    <button
+      type="button"
+      class="builders-next absolute right-0 top-1/2 z-10 -translate-y-1/2 bg-brand-white border border-brand-black text-brand-black w-10 h-10 hidden md:flex items-center justify-center hover:bg-brand-black hover:text-brand-white transition-colors"
+      aria-label="Ver más builders"
+    >
+      →
+    </button>
   </div>
+
+  <script is:inline>
+    (() => {
+      const root = document.currentScript?.closest('section');
+      if (!root) return;
+
+      const carousel = root.querySelector('.builders-carousel');
+      const track = root.querySelector('.builders-track');
+      const prev = root.querySelector('.builders-prev');
+      const next = root.querySelector('.builders-next');
+      const firstCard = root.querySelector('[data-builder-card]');
+
+      if (!carousel || !track || !firstCard) return;
+
+      let paused = false;
+      let rafId = 0;
+      const speed = 0.35;
+      const cycleWidth = track.scrollWidth / 2;
+      const cardStep = firstCard.getBoundingClientRect().width + 16;
+
+      const tick = () => {
+        if (!paused) {
+          carousel.scrollLeft += speed;
+          if (carousel.scrollLeft >= cycleWidth) {
+            carousel.scrollLeft -= cycleWidth;
+          }
+        }
+        rafId = window.requestAnimationFrame(tick);
+      };
+
+      const moveBy = (amount) => {
+        paused = true;
+        carousel.scrollBy({ left: amount, behavior: 'smooth' });
+      };
+
+      root.addEventListener('mouseenter', () => {
+        paused = true;
+      });
+
+      root.addEventListener('mouseleave', () => {
+        paused = false;
+      });
+
+      prev?.addEventListener('click', () => moveBy(-cardStep * 2));
+      next?.addEventListener('click', () => moveBy(cardStep * 2));
+
+      rafId = window.requestAnimationFrame(tick);
+
+      window.addEventListener(
+        'beforeunload',
+        () => {
+          window.cancelAnimationFrame(rafId);
+        },
+        { once: true }
+      );
+    })();
+  </script>
 
   <!-- CTA -->
   <div class="flex justify-center mt-10">

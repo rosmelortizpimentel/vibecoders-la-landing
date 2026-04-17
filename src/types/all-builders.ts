@@ -1,5 +1,5 @@
 /**
- * Shape returned by the Supabase RPC `get_all_builders`.
+ * Shape returned by the Supabase RPC `get_verified_founders`.
  * Used in the /builders directory page.
  */
 export interface AllBuilder {
@@ -8,7 +8,6 @@ export interface AllBuilder {
   avatar_url: string | null;
   tagline: string | null;
   city: string | null;
-  is_verified: boolean;
   apps_count: number;
   social_links: {
     github?: string;
@@ -16,4 +15,7 @@ export interface AllBuilder {
     linkedin?: string;
     instagram?: string;
   } | null;
+  is_pro: boolean;
+  is_founder: boolean;
+  seeks_partner: boolean;
 }

@@ -14,4 +14,7 @@ export interface VerifiedFounder {
     twitter?: string;
     linkedin?: string;
   };
+  is_pro: boolean;
+  is_founder: boolean;
+  seeks_partner: boolean;
 }

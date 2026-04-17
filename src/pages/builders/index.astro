@@ -1,7 +1,6 @@
 ---
 import DirectoryLayout from '@/layouts/DirectoryLayout.astro';
 import BuilderDirectoryCard from '@/components/directory/BuilderDirectoryCard.astro';
-import FilterBar from '@/components/directory/FilterBar.astro';
 import { supabase } from '@/lib/supabase';
 import type { AllBuilder } from '@/types/all-builders';
 
@@ -14,11 +13,6 @@ if (error) {
 
 const builders = (buildersData ?? []) as AllBuilder[];
 
-// Build filter pills from data
-const cities = [...new Set(builders.map((b) => b.city).filter(Boolean))] as string[];
-
-const filters = cities.slice(0, 10).map((c) => ({ label: c, value: c.toLowerCase() }));
-
 const breadcrumbs = [
   { label: 'Inicio', href: '/' },
   { label: 'Builders' },
@@ -30,11 +24,6 @@ const breadcrumbs = [
   description="Conoce a los builders hispanohablantes que construyen productos digitales con IA."
   breadcrumbs={breadcrumbs}
 >
-  <!-- Filter bar -->
-  <div class="mb-8">
-    <FilterBar filters={filters} />
-  </div>
-
   <!-- Grid -->
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     {builders.map((builder) => (

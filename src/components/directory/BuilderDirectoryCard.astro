@@ -1,10 +1,9 @@
 ---
-import Badge from '@/components/ui/Badge.astro';
 import type { AllBuilder } from '@/types/all-builders';
 
 type Props = AllBuilder;
 
-const { username, display_name, avatar_url, tagline, city, is_verified, apps_count } = Astro.props;
+const { username, display_name, avatar_url, tagline, city, is_pro, is_founder, seeks_partner } = Astro.props;
 
 const initial = display_name.charAt(0).toUpperCase();
 ---
@@ -30,31 +29,41 @@ const initial = display_name.charAt(0).toUpperCase();
       )}
     </div>
 
-    <div class="min-w-0">
-      <p class="font-bold text-lg text-brand-black leading-tight truncate">{display_name}</p>
+    <div class="min-w-0 flex-1">
+      <div class="flex items-center gap-2 mb-1 flex-wrap">
+        <p class="font-bold text-lg text-brand-black leading-tight truncate">{display_name}</p>
+        {is_founder && (
+          <span
+            title="Builder Fundador"
+            aria-label="Builder Fundador"
+            class="w-7 h-7 rounded-full bg-[#EFDF00] text-brand-black font-black text-[10px] flex items-center justify-center border border-brand-black shrink-0"
+          >
+            BF
+          </span>
+        )}
+        {is_pro && (
+          <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 bg-[#C9B458] text-brand-black inline-block border border-brand-black shrink-0">
+            Pro
+          </span>
+        )}
+      </div>
       <p class="text-sm mt-0.5 line-clamp-2 leading-relaxed" style="color: #888888;">{tagline ?? ''}</p>
     </div>
   </div>
 
-  <!-- Location + Verified row -->
+  <!-- Location row -->
   <div class="flex items-center justify-between gap-2 mb-4">
     {city && (
       <p class="text-sm text-brand-black">
         {city}
       </p>
     )}
-    {is_verified && (
-      <span class="text-xs font-bold uppercase tracking-wider px-2 py-0.5 bg-brand-black text-brand-white inline-block">
-        Verified
-      </span>
-    )}
   </div>
 
-  <!-- Apps count -->
+  <!-- Builder status -->
   <div class="flex items-center gap-4 pt-3 border-t border-border">
-    <div class="text-center">
-      <p class="text-sm font-bold text-brand-black">{apps_count}</p>
-      <p class="text-xs" style="color: #888888;">apps</p>
-    </div>
+    <p class="text-sm font-bold text-brand-black">
+      {seeks_partner ? 'Busca partner' : 'Abierto a conectar'}
+    </p>
   </div>
 </a>

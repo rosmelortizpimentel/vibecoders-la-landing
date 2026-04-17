@@ -7,10 +7,11 @@ import WhyVibeCoders from '@/components/landing/WhyVibeCoders.astro';
 import CharlasHighlight from '@/components/landing/CharlasHighlight.astro';
 import LandingFAQ from '@/components/landing/LandingFAQ.astro';
 import FinalCTA from '@/components/landing/FinalCTA.astro';
-import { platformCTA } from '@/lib/urls';
+import { communityWhatsAppCTA } from '@/lib/urls';
 import { supabase } from '@/lib/supabase';
 import type { VerifiedFounder } from '@/types/verified-founder';
 import type { ShowcaseApp } from '@/types/showcase-app';
+import type { LandingCharla } from '@/types/landing-charla';
 
 // Fetch verified founders from Supabase RPC
 const { data: builders, error: buildersError } = await supabase.rpc('get_verified_founders');
@@ -30,9 +31,17 @@ if (appsError) {
 
 const showcaseApps = (appsData ?? []) as ShowcaseApp[];
 
-// CTA URLs with ref tracking
-const heroCTA = platformCTA('landing-hero');
-const finalCTA = platformCTA('landing-final');
+// Fetch landing charlas from Supabase RPC
+const { data: charlasData, error: charlasError } = await supabase.rpc('get_landing_charlas');
+
+if (charlasError) {
+  console.error('Failed to fetch landing charlas:', charlasError.message);
+}
+
+const landingCharlas = (charlasData ?? []) as LandingCharla[];
+
+const heroCTA = communityWhatsAppCTA();
+const finalCTA = communityWhatsAppCTA();
 ---
 
 <BaseLayout title="VibeCoders — La comunidad de builders con IA">
@@ -60,7 +69,7 @@ const finalCTA = platformCTA('landing-final');
   <WhyVibeCoders />
 
   <!-- Section 5: Charlas y contenido — DARK -->
-  <CharlasHighlight />
+  <CharlasHighlight charlas={landingCharlas} />
 
   <!-- Section 6: FAQ (mentions Pro discretely) — LIGHT -->
   <LandingFAQ />

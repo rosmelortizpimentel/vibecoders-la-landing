@@ -1,31 +1,94 @@
 ---
+export const prerender = false;
+
 import CharlaLayout from '@/layouts/CharlaLayout.astro';
 import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import { supabase } from '@/lib/supabase';
+import type { CharlaDetail } from '@/types/landing-charla';
 
-export async function getStaticPaths() {
+const slug = Astro.params.slug ?? '';
+const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(slug);
+
+let charlaMdx: CollectionEntry<'charlas'> | undefined;
+let Content: Awaited<ReturnType<typeof render>>['Content'] | null = null;
+let charlaDb: CharlaDetail | null = null;
+
+if (isUuid) {
+  const { data, error } = await supabase.rpc('get_charla_detail', { p_charla_id: slug });
+
+  if (error) {
+    console.error('Failed to fetch charla detail:', error.message);
+    return Astro.redirect('/charlas');
+  }
+
+  charlaDb = ((data ?? [])[0] ?? null) as CharlaDetail | null;
+
+  if (!charlaDb) {
+    return Astro.redirect('/charlas');
+  }
+} else {
   const charlas = await getCollection('charlas', ({ data }) => data.draft !== true);
-  return charlas.map((charla) => ({
-    params: { slug: charla.id },
-    props: { charla },
-  }));
-}
+  charlaMdx = charlas.find((charla) => charla.id === slug);
 
-const { charla } = Astro.props;
-const { Content } = await render(charla);
+  if (!charlaMdx) {
+    return Astro.redirect('/charlas');
+  }
+
+  const rendered = await render(charlaMdx);
+  Content = rendered.Content;
+}
 ---
 
-<CharlaLayout
-  title={charla.data.title}
-  tagline={charla.data.tagline}
-  sessionNumber={charla.data.sessionNumber}
-  speaker={charla.data.speaker}
-  recordedAt={charla.data.recordedAt}
-  videoUrl={charla.data.videoUrl}
-  videoEmbedId={charla.data.videoEmbedId}
-  topics={charla.data.topics}
-  resources={charla.data.resources}
-  timestamps={charla.data.timestamps}
-  durationMinutes={charla.data.durationMinutes}
->
-  <Content />
-</CharlaLayout>
+{charlaDb ? (
+  <CharlaLayout
+    title={charlaDb.title}
+    tagline={charlaDb.tagline ?? charlaDb.description ?? ''}
+    sessionNumber={charlaDb.session_number}
+    speaker={{
+      name: charlaDb.speaker_name ?? 'Speaker invitado',
+      role: charlaDb.speaker_tagline ?? 'Ponente invitado',
+      bio: charlaDb.description ?? 'Próximamente añadiremos más información sobre esta charla.',
+      avatarUrl: charlaDb.speaker_photo_url ?? undefined,
+    }}
+    recordedAt={new Date(charlaDb.scheduled_at)}
+    videoUrl={charlaDb.audio_url ?? undefined}
+    topics={[]}
+    resources={charlaDb.luma_url ? [{ label: charlaDb.is_past ? 'Página del evento' : 'Registro en Luma', url: charlaDb.luma_url, type: 'other' }] : []}
+    timestamps={[]}
+    durationMinutes={charlaDb.duration_minutes ?? undefined}
+  >
+    <div class="space-y-6">
+      {charlaDb.banner_url && (
+        <img src={charlaDb.banner_url} alt={charlaDb.title} class="w-full h-auto" loading="lazy" />
+      )}
+
+      <p>{charlaDb.description ?? charlaDb.tagline ?? 'Próximamente añadiremos la descripción completa de esta charla.'}</p>
+
+      {!charlaDb.audio_url && charlaDb.is_past && (
+        <div class="bg-surface-silver p-6">
+          <p class="font-bold text-brand-black mb-2">Grabación próximamente</p>
+          <p class="text-sm" style="color: #888888;">
+            El detalle ya está disponible, pero la grabación todavía no se ha publicado.
+          </p>
+        </div>
+      )}
+    </div>
+  </CharlaLayout>
+) : (
+  <CharlaLayout
+    title={charlaMdx!.data.title}
+    tagline={charlaMdx!.data.tagline}
+    sessionNumber={charlaMdx!.data.sessionNumber}
+    speaker={charlaMdx!.data.speaker}
+    recordedAt={charlaMdx!.data.recordedAt}
+    videoUrl={charlaMdx!.data.videoUrl}
+    videoEmbedId={charlaMdx!.data.videoEmbedId}
+    topics={charlaMdx!.data.topics}
+    resources={charlaMdx!.data.resources}
+    timestamps={charlaMdx!.data.timestamps}
+    durationMinutes={charlaMdx!.data.durationMinutes}
+  >
+    {Content && <Content />}
+  </CharlaLayout>
+)}

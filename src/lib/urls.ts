@@ -1,6 +1,9 @@
 export const PLATFORM_URL: string =
   import.meta.env.PUBLIC_PLATFORM_URL || 'https://app.vibecoders.la';
 
+export const COMMUNITY_WHATSAPP_URL =
+  'https://chat.whatsapp.com/KY0zyPxTQO49m6dBurRPNe';
+
 /**
  * Generates a platform CTA URL with a `ref` tracking parameter.
  *
@@ -16,4 +19,8 @@ export function platformCTA(ref: string, path = '/'): string {
   const url = new URL(path, PLATFORM_URL);
   url.searchParams.set('ref', ref);
   return url.toString();
+}
+
+export function communityWhatsAppCTA(): string {
+  return COMMUNITY_WHATSAPP_URL;
 }

@@ -1,31 +1,61 @@
 ---
 import SectionWrapper from '@/components/landing/SectionWrapper.astro';
 import CTAButton from '@/components/ui/CTAButton.astro';
+import type { LandingCharla } from '@/types/landing-charla';
 
-// Hardcoded charla previews — NOT from content collections (per spec)
-const charlas = [
-  {
-    session: 1,
-    speaker: 'Nicolás Dubois',
-    topic: 'Automatización con N8N: workflows que trabajan mientras duermes',
-    description:
-      'Cómo construir pipelines de automatización con N8N y conectar APIs sin código.',
-  },
-  {
-    session: 6,
-    speaker: 'Pol Baladas',
-    topic: 'Claude Code y el futuro del desarrollo asistido por IA',
-    description:
-      'Un recorrido práctico por Claude Code: desde setup hasta workflows avanzados en proyectos reales.',
-  },
-  {
-    session: 8,
-    speaker: 'Rosmel Rodríguez',
-    topic: 'Lovable en producción: de idea a SaaS en 72 horas',
-    description:
-      'Cómo lanzar un producto real con Lovable, Supabase y Stripe sin tocar código backend.',
-  },
-];
+interface Props {
+  charlas: LandingCharla[];
+}
+
+const { charlas } = Astro.props;
+
+function formatDate(dateString: string) {
+  return new Date(dateString).toLocaleDateString('es-ES', {
+    day: 'numeric',
+    month: 'short',
+  });
+}
+
+function formatFullDate(dateString: string) {
+  return new Date(dateString).toLocaleDateString('es-ES', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+  });
+}
+
+function formatTimeForZone(dateString: string, timeZone: string) {
+  return new Intl.DateTimeFormat('es-ES', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+    timeZone,
+  }).format(new Date(dateString));
+}
+
+function getScheduleChips(dateString: string) {
+  return [
+    { code: 'mx', alt: 'México', time: formatTimeForZone(dateString, 'America/Mexico_City') },
+    { code: 'co', alt: 'Colombia', time: formatTimeForZone(dateString, 'America/Bogota') },
+    { code: 'ar', alt: 'Argentina', time: formatTimeForZone(dateString, 'America/Argentina/Buenos_Aires') },
+    { code: 'es', alt: 'España', time: formatTimeForZone(dateString, 'Europe/Madrid') },
+  ];
+}
+
+function getRelativeLabel(dateString: string, isPast: boolean) {
+  if (isPast) return 'Pasada';
+
+  const now = new Date();
+  const target = new Date(dateString);
+  const diffMs = target.getTime() - now.getTime();
+  const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+
+  if (diffDays <= 1) return 'Mañana';
+  if (diffDays < 7) return `En ${diffDays} días`;
+  if (diffDays <= 8) return 'En una semana';
+
+  return 'Próxima';
+}
 ---
 
 <SectionWrapper variant="dark" id="charlas">
@@ -42,29 +72,103 @@ const charlas = [
   <!-- Charla preview cards -->
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     {charlas.map((charla) => (
-      <div class="bg-surface-charcoal p-6 flex flex-col gap-4">
-        <!-- Session badge -->
-        <span class="text-xs font-bold uppercase tracking-wider px-2 py-0.5 bg-brand-black text-brand-white rounded-none inline-block w-max">
-          Sesión {charla.session}
-        </span>
-
-        <!-- Thumbnail placeholder -->
-        <div class="w-full h-24 bg-brand-black flex items-center justify-center">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <polygon points="5 3 19 12 5 21 5 3" stroke="#D9D9D6" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" fill="none"/>
-          </svg>
+      <div class="bg-surface-charcoal flex flex-col overflow-hidden">
+        <div class="bg-brand-black overflow-hidden">
+          {charla.banner_url ? (
+            <img
+              src={charla.banner_url}
+              alt={charla.title}
+              class="w-full h-auto block"
+              loading="lazy"
+            />
+          ) : (
+            <div class="aspect-[4/3] w-full flex items-center justify-center">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="5 3 19 12 5 21 5 3" stroke="#D9D9D6" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" fill="none"/>
+              </svg>
+            </div>
+          )}
         </div>
 
-        <!-- Speaker + Topic -->
-        <div class="flex flex-col gap-1">
-          <p class="font-bold text-brand-white text-sm">{charla.speaker}</p>
-          <p class="text-sm leading-[1.4] text-brand-white">{charla.topic}</p>
+        <div class="px-6 py-4 border-t border-brand-black/20 bg-[#111111]">
+          <div class="flex items-center justify-between gap-3">
+            <p class="text-sm font-bold text-brand-white tracking-tight capitalize">
+              {formatFullDate(charla.scheduled_at)}
+            </p>
+            <span class="text-xs font-bold uppercase tracking-wider px-2 py-0.5 bg-brand-black text-brand-white inline-block w-max shrink-0">
+              {getRelativeLabel(charla.scheduled_at, charla.is_past)}
+            </span>
+          </div>
+          <div class="flex flex-wrap gap-2 mt-3">
+            {getScheduleChips(charla.scheduled_at).map((chip) => (
+              <span class="inline-flex items-center gap-1.5 text-[11px] px-2.5 py-1 border border-surface-silver text-text-muted">
+                <img
+                  src={`https://flagcdn.com/24x18/${chip.code}.png`}
+                  alt={chip.alt}
+                  width="16"
+                  height="12"
+                  class="w-4 h-3 object-cover shrink-0"
+                  loading="lazy"
+                />
+                <span>{chip.time}</span>
+              </span>
+            ))}
+          </div>
         </div>
+        <div class="p-6 flex flex-col gap-4 flex-1">
 
-        <!-- Description -->
-        <p class="text-xs leading-relaxed text-text-muted">
-          {charla.description}
-        </p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full overflow-hidden bg-brand-black flex items-center justify-center shrink-0">
+              {charla.speaker_photo_url ? (
+                <img src={charla.speaker_photo_url} alt={charla.speaker_name ?? 'Speaker'} class="w-full h-full object-cover" loading="lazy" />
+              ) : (
+                <span class="text-brand-white font-bold text-xs">{(charla.speaker_name ?? 'S').charAt(0).toUpperCase()}</span>
+              )}
+            </div>
+            <div class="min-w-0">
+              <p class="font-bold text-brand-white text-sm truncate">{charla.speaker_name ?? 'Speaker invitado'}</p>
+              {charla.speaker_tagline && (
+                <p class="text-xs truncate" style="color: #888888;">{charla.speaker_tagline}</p>
+              )}
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-2 flex-1">
+            <p class="text-base leading-[1.4] text-brand-white font-bold line-clamp-2">{charla.title}</p>
+            <p class="text-sm leading-relaxed text-text-muted line-clamp-3">
+              {charla.tagline ?? ''}
+            </p>
+          </div>
+
+          <div class="flex flex-wrap gap-3 mt-auto">
+            {charla.is_past ? (
+              <>
+                <span class="font-bold text-sm px-[15px] py-[10px] min-w-[160px] inline-block text-center bg-transparent border border-surface-silver text-text-muted opacity-60 cursor-not-allowed">
+                  Registro cerrado
+                </span>
+                <a
+                  href={`/charlas/${charla.id}`}
+                  class="font-bold text-sm px-[15px] py-[10px] min-w-[160px] inline-block text-center bg-brand-white text-brand-black no-underline hover:opacity-70 transition-all"
+                >
+                  Ver grabación
+                </a>
+              </>
+            ) : charla.luma_url ? (
+              <a
+                href={charla.luma_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="font-bold text-sm px-[15px] py-[10px] min-w-[160px] inline-block text-center bg-brand-white text-brand-black no-underline hover:opacity-70 transition-all"
+              >
+                Registrarse
+              </a>
+            ) : (
+              <span class="font-bold text-sm px-[15px] py-[10px] min-w-[160px] inline-block text-center bg-transparent border border-surface-silver text-text-muted opacity-60 cursor-not-allowed">
+                Registro próximamente
+              </span>
+            )}
+          </div>
+        </div>
       </div>
     ))}
   </div>
