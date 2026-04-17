@@ -34,11 +34,11 @@ const duplicatedBuilders = [...builders, ...builders];
     </button>
 
     <div class="builders-carousel overflow-x-auto overflow-y-hidden pb-2 -mx-6 px-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-      <div class="builders-track flex flex-nowrap gap-4 w-max">
+      <div class="builders-track flex flex-nowrap items-stretch gap-4 w-max">
         {duplicatedBuilders.map((builder, index) => (
           <a
             href={`/builders/${builder.username}`}
-            class="no-underline hover:opacity-80 transition-opacity"
+            class="flex flex-col no-underline hover:opacity-80 transition-opacity h-full"
             data-builder-card
             aria-hidden={index >= builders.length ? 'true' : 'false'}
             tabindex={index >= builders.length ? '-1' : undefined}

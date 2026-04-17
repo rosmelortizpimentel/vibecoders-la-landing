@@ -16,6 +16,9 @@ interface Speaker {
   linkedinUrl?: string;
   twitterUrl?: string;
   websiteUrl?: string;
+  githubUrl?: string;
+  youtubeUrl?: string;
+  lovableUrl?: string;
 }
 
 interface Resource {
@@ -82,6 +85,8 @@ const breadcrumbs = [
   { label: 'Charlas', href: '/charlas' },
   { label: title },
 ];
+
+const hasVideo = Boolean(videoUrl || videoEmbedId);
 ---
 
 <BaseLayout title={`${title} | Charlas | VibeCoders`} description={tagline}>
@@ -93,7 +98,7 @@ const breadcrumbs = [
   <!-- Dark Hero -->
   <section class="bg-brand-black py-12 md:py-20">
     <div class="max-w-[1440px] mx-auto px-6">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+      <div class={`grid grid-cols-1 ${hasVideo ? 'lg:grid-cols-2' : ''} gap-12 items-start`}>
         <!-- Left: info -->
         <div>
           <!-- Session badge -->
@@ -131,9 +136,11 @@ const breadcrumbs = [
         </div>
 
         <!-- Right: Video embed -->
-        <div>
-          <VideoEmbed videoUrl={videoUrl} videoEmbedId={videoEmbedId} title={title} />
-        </div>
+        {hasVideo && (
+          <div>
+            <VideoEmbed videoUrl={videoUrl} videoEmbedId={videoEmbedId} title={title} />
+          </div>
+        )}
       </div>
     </div>
   </section>

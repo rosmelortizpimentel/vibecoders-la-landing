@@ -61,15 +61,7 @@ const founderInitial = founder_display_name.charAt(0).toUpperCase();
 
   <!-- Status badge -->
   <div class="flex items-center justify-between gap-2 pt-3 border-t" style="border-color: #333333;">
-    <span class={`text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 inline-block ${
-      status.slug === 'live'
-        ? 'bg-brand-black text-brand-white'
-        : status.slug === 'building'
-        ? 'bg-surface-silver text-brand-black'
-        : 'bg-brand-yellow text-brand-black'
-    }`}>
-      {status.name}
-    </span>
+    <Badge variant="status" value={status.name} />
     {is_verified && (
       <span class="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 bg-brand-black text-brand-white">
         Verified

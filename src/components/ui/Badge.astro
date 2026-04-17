@@ -1,34 +1,81 @@
 ---
 interface Props {
-  variant: 'tier' | 'category' | 'status';
+  variant: 'tier' | 'category' | 'status' | 'event';
   value: string;
   class?: string;
 }
 
 const { variant, value, class: className = '' } = Astro.props;
 
-// Badge color map per design.md
-const colorMap: Record<string, string> = {
-  // Tier values
-  'founder': 'bg-brand-yellow text-brand-black',
-  'pro': 'bg-surface-charcoal text-brand-white',
-  'free': 'bg-surface-silver text-brand-black',
-  // Status values
-  'launched': 'bg-brand-black text-brand-white',
-  'beta': 'bg-surface-charcoal text-brand-white',
-  'building': 'bg-surface-charcoal text-brand-white',
-  'idea': 'bg-surface-silver text-brand-black',
-};
+// Render logic for different badge types
+let bgClass = '';
+let textClass = '';
+let borderClass = '';
+let dotClass = '';
+let displayValue = value.toUpperCase();
 
-// Category badges all use silver/black
-const colors =
-  variant === 'category'
-    ? 'bg-surface-silver text-brand-black'
-    : (colorMap[value.toLowerCase()] ?? 'bg-surface-silver text-brand-black');
+const val = value.toLowerCase();
+
+if (variant === 'tier') {
+  if (val === 'founder' || val === 'fundador' || val === 'builder fundador') {
+    bgClass = 'bg-[#EFDF00]';
+    textClass = 'text-[#000000]';
+    displayValue = 'BUILDER FUNDADOR';
+  } else if (val === 'pro') {
+    bgClass = 'bg-[#000000]';
+    textClass = 'text-[#FFFFFF]';
+  } else {
+    // free or others
+    bgClass = 'bg-[#FFFFFF]';
+    textClass = 'text-[#000000]';
+    borderClass = 'border border-[#000000]';
+  }
+} else if (variant === 'status') {
+  if (val === 'launched' || val === 'live') {
+    bgClass = 'bg-[#000000]';
+    textClass = 'text-[#FFFFFF]';
+    displayValue = 'LAUNCHED';
+  } else {
+    // beta, building, idea
+    bgClass = 'bg-[#FFFFFF]';
+    textClass = 'text-[#000000]';
+    borderClass = 'border border-[#000000]';
+  }
+} else if (variant === 'event') {
+  if (val === 'en vivo') {
+    bgClass = 'bg-[#C0615A]';
+    textClass = 'text-[#FFFFFF]';
+    dotClass = 'bg-[#FFFFFF]';
+  } else if (val.includes('próxima') || val.includes('mañana') || val.includes('día') || val.includes('semana')) {
+    bgClass = 'bg-[#EFDF00]';
+    textClass = 'text-[#000000]';
+  } else {
+    // pasada
+    bgClass = 'bg-[#FFFFFF]';
+    textClass = 'text-[#000000]';
+    borderClass = 'border border-[#000000]';
+    displayValue = 'PASADA';
+  }
+} else {
+  // category
+  bgClass = 'bg-[#FFFFFF]';
+  textClass = 'text-[#000000]';
+  borderClass = 'border border-[#000000]';
+}
 ---
 
-<span
-  class={`text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded-none inline-block ${colors} ${className}`}
->
-  {value}
-</span>
+{displayValue === 'BUILDER FUNDADOR' ? (
+  <img
+    src="/logo-yellow.jpg"
+    alt="Builder Fundador"
+    title="Builder Fundador"
+    class={`w-8 h-8 object-cover rounded-full border-[1.5px] border-brand-black shrink-0 ${className}`}
+  />
+) : (
+  <span
+    class={`text-[11px] font-bold tracking-[0.1em] px-2.5 py-1 inline-flex items-center gap-1.5 whitespace-nowrap ${bgClass} ${textClass} ${borderClass} ${className}`}
+  >
+    {dotClass && <span class={`w-1.5 h-1.5 rounded-full ${dotClass} opacity-80`} aria-hidden="true" />}
+    {displayValue}
+  </span>
+)}

@@ -47,12 +47,19 @@ if (isUuid) {
     sessionNumber={charlaDb.session_number}
     speaker={{
       name: charlaDb.speaker_name ?? 'Speaker invitado',
+      username: charlaDb.speaker_username ?? undefined,
       role: charlaDb.speaker_tagline ?? 'Ponente invitado',
       bio: charlaDb.description ?? 'Próximamente añadiremos más información sobre esta charla.',
       avatarUrl: charlaDb.speaker_photo_url ?? undefined,
+      twitterUrl: charlaDb.speaker_twitter ?? undefined,
+      githubUrl: charlaDb.speaker_github ?? undefined,
+      linkedinUrl: charlaDb.speaker_linkedin ?? undefined,
+      youtubeUrl: charlaDb.speaker_youtube ?? undefined,
+      websiteUrl: charlaDb.speaker_website ?? undefined,
+      lovableUrl: charlaDb.speaker_lovable ?? undefined,
     }}
     recordedAt={new Date(charlaDb.scheduled_at)}
-    videoUrl={charlaDb.audio_url ?? undefined}
+    videoUrl={charlaDb.recording_url ?? undefined}
     topics={[]}
     resources={charlaDb.luma_url ? [{ label: charlaDb.is_past ? 'Página del evento' : 'Registro en Luma', url: charlaDb.luma_url, type: 'other' }] : []}
     timestamps={[]}
@@ -63,9 +70,9 @@ if (isUuid) {
         <img src={charlaDb.banner_url} alt={charlaDb.title} class="w-full h-auto" loading="lazy" />
       )}
 
-      <p>{charlaDb.description ?? charlaDb.tagline ?? 'Próximamente añadiremos la descripción completa de esta charla.'}</p>
+      <p class="whitespace-pre-line">{charlaDb.description ?? charlaDb.tagline ?? 'Próximamente añadiremos la descripción completa de esta charla.'}</p>
 
-      {!charlaDb.audio_url && charlaDb.is_past && (
+      {!charlaDb.recording_url && charlaDb.is_past && (
         <div class="bg-surface-silver p-6">
           <p class="font-bold text-brand-black mb-2">Grabación próximamente</p>
           <p class="text-sm" style="color: #888888;">

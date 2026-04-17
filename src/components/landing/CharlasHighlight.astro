@@ -2,6 +2,7 @@
 import SectionWrapper from '@/components/landing/SectionWrapper.astro';
 import CTAButton from '@/components/ui/CTAButton.astro';
 import type { LandingCharla } from '@/types/landing-charla';
+import Badge from '@/components/ui/Badge.astro';
 
 interface Props {
   charlas: LandingCharla[];
@@ -95,9 +96,7 @@ function getRelativeLabel(dateString: string, isPast: boolean) {
             <p class="text-sm font-bold text-brand-white tracking-tight capitalize">
               {formatFullDate(charla.scheduled_at)}
             </p>
-            <span class="text-xs font-bold uppercase tracking-wider px-2 py-0.5 bg-brand-black text-brand-white inline-block w-max shrink-0">
-              {getRelativeLabel(charla.scheduled_at, charla.is_past)}
-            </span>
+            <Badge variant="event" value={getRelativeLabel(charla.scheduled_at, charla.is_past)} class="shrink-0" />
           </div>
           <div class="flex flex-wrap gap-2 mt-3">
             {getScheduleChips(charla.scheduled_at).map((chip) => (

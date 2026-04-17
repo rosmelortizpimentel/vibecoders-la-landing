@@ -1,5 +1,6 @@
 ---
 import type { VerifiedFounder } from '@/types/verified-founder';
+import Badge from '@/components/ui/Badge.astro';
 
 type Props = Pick<VerifiedFounder, 'display_name' | 'avatar_url' | 'tagline' | 'city' | 'is_pro' | 'is_founder'>;
 
@@ -7,57 +8,84 @@ const { display_name, avatar_url, tagline, city, is_pro, is_founder } = Astro.pr
 
 // Generate initial for avatar fallback
 const initial = display_name.charAt(0).toUpperCase();
+
+function formatLocation(rawCity?: string | null) {
+  if (!rawCity) return null;
+
+  const normalized = rawCity.toLowerCase();
+  const countryCodeMap: Record<string, string> = {
+    argentina: 'AR',
+    españa: 'ES',
+    spain: 'ES',
+    colombia: 'CO',
+    perú: 'PE',
+    peru: 'PE',
+    méxico: 'MX',
+    mexico: 'MX',
+    chile: 'CL',
+    uruguay: 'UY',
+    bolivia: 'BO',
+    ecuador: 'EC',
+    paraguay: 'PY',
+    venezuela: 'VE',
+    guatemala: 'GT',
+    honduras: 'HN',
+    panamá: 'PA',
+    panama: 'PA',
+    'república dominicana': 'DO',
+    'republica dominicana': 'DO',
+  };
+
+  const countryCode = Object.entries(countryCodeMap).find(([country]) => normalized.includes(country))?.[1];
+  const cityLabel = rawCity
+    .split(',')[0]
+    ?.trim()
+    ?.toUpperCase();
+
+  return countryCode ? `${cityLabel} · ${countryCode}` : cityLabel;
+}
+
+const locationLabel = formatLocation(city);
 ---
 
-<div class="w-[200px] h-[160px] p-3 bg-surface-silver flex flex-col gap-2 shrink-0">
-  <!-- Avatar + badges row -->
-  <div class="flex items-start justify-between">
-    <div class="w-10 h-10 rounded-full overflow-hidden bg-surface-charcoal flex items-center justify-center shrink-0">
-      {avatar_url ? (
-        <img
-          src={avatar_url}
-          alt={display_name}
-          width="40"
-          height="40"
-          class="w-full h-full object-cover"
-          loading="lazy"
-        />
-      ) : (
-        <span class="text-brand-white font-bold text-xs">{initial}</span>
-      )}
-    </div>
-    <div class="flex items-center gap-2">
-      {is_founder && (
-        <span
-          title="Builder Fundador"
-          aria-label="Builder Fundador"
-          class="w-7 h-7 rounded-full bg-[#EFDF00] text-brand-black font-black text-[10px] flex items-center justify-center border border-brand-black"
-        >
-          BF
-        </span>
-      )}
-      {is_pro && (
-        <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 bg-[#C9B458] text-brand-black inline-block border border-brand-black">
-          Pro
-        </span>
-      )}
-    </div>
+<div class="w-[520px] h-full min-h-[180px] p-8 bg-brand-white border border-brand-black flex gap-6 shrink-0 flex-1">
+  <div class="w-20 h-20 rounded-full overflow-hidden bg-[#3D5AFE] flex items-center justify-center shrink-0 mt-1">
+    {avatar_url ? (
+      <img
+        src={avatar_url}
+        alt={display_name}
+        width="80"
+        height="80"
+        class="w-full h-full object-cover"
+        loading="lazy"
+      />
+    ) : (
+      <span class="text-brand-white font-bold text-xl">{initial}</span>
+    )}
   </div>
 
-  <!-- Info -->
-  <div class="flex-1 overflow-hidden">
-    <p class="text-xs font-bold text-brand-black leading-tight truncate">{display_name}</p>
+  <div class="flex-1 min-w-0 flex flex-col gap-4">
+    <div class="flex items-start justify-between gap-4">
+      <div class="min-w-0">
+        <p class="text-[20px] font-bold text-brand-black leading-tight truncate">{display_name}</p>
+        {locationLabel && (
+          <p class="text-[13px] tracking-[0.22em] uppercase text-brand-black/70 mt-2 truncate">{locationLabel}</p>
+        )}
+      </div>
+      <div class="flex items-center gap-3 shrink-0">
+        {is_founder && (
+          <Badge variant="tier" value="BUILDER FUNDADOR" />
+        )}
+        {is_pro && (
+          <Badge variant="tier" value="PRO" />
+        )}
+      </div>
+    </div>
+
     {tagline && (
-      <p class="text-[10px] text-text-muted mt-1 line-clamp-2 leading-relaxed" style="color: #888888;">
+      <p class="text-[16px] text-brand-black leading-relaxed mt-auto">
         {tagline}
       </p>
     )}
   </div>
-
-  <!-- City -->
-  {city && (
-    <p class="text-[10px] text-text-muted truncate" style="color: #888888;">
-      {city}
-    </p>
-  )}
 </div>

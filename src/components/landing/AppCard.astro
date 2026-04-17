@@ -41,15 +41,7 @@ const initial = app_name.charAt(0).toUpperCase();
 
   <!-- Status badge -->
   <div class="shrink-0">
-    <span class={`text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 inline-block ${
-      status.slug === 'live'
-        ? 'bg-brand-black text-brand-white'
-        : status.slug === 'building'
-        ? 'bg-surface-silver text-brand-black'
-        : 'bg-brand-yellow text-brand-black'
-    }`}>
-      {status.name}
-    </span>
+    <Badge variant="status" value={status.name} />
   </div>
 
   <!-- Founder -->

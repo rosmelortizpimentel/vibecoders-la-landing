@@ -21,10 +21,17 @@ export interface CharlaDetail {
   scheduled_at: string;
   duration_minutes: number | null;
   luma_url: string | null;
-  audio_url: string | null;
+  recording_url: string | null;
   is_past: boolean;
   session_number: number;
   speaker_name: string | null;
   speaker_tagline: string | null;
   speaker_photo_url: string | null;
+  speaker_username: string | null;
+  speaker_twitter: string | null;
+  speaker_github: string | null;
+  speaker_linkedin: string | null;
+  speaker_youtube: string | null;
+  speaker_website: string | null;
+  speaker_lovable: string | null;
 }
