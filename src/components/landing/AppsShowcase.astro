@@ -57,7 +57,7 @@ const duplicatedRecent = [...recentApps, ...recentApps];
       <div class="apps-track flex flex-nowrap items-stretch gap-4 w-max">
         {duplicatedRecent.map((app, index) => (
           <div 
-            class="flex flex-col w-[320px] sm:w-[400px] shrink-0"
+            class="flex flex-col h-full w-[320px] sm:w-[400px] shrink-0"
             data-app-card
             aria-hidden={index >= recentApps.length ? 'true' : 'false'}
             tabindex={index >= recentApps.length ? '-1' : undefined}
