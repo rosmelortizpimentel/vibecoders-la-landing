@@ -21,4 +21,6 @@ export interface ShowcaseApp {
     name: string;
     logo_url: string;
   }> | null;
+  beta_active: boolean;
+  open_to_partnerships: boolean;
 }

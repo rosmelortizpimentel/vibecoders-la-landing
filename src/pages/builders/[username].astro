@@ -64,17 +64,8 @@ const breadcrumbs = [
     <Breadcrumbs items={breadcrumbs} />
   </div>
 
-  <!-- Dark Hero with Banner -->
+  <!-- Dark Hero -->
   <section class="bg-brand-black py-12 md:py-20 relative overflow-hidden">
-    {p.banner_url && (
-      <div class="absolute inset-0 opacity-30">
-        <img
-          src={p.banner_url}
-          alt=""
-          class="w-full h-full object-cover"
-        />
-      </div>
-    )}
     <div class="max-w-[1440px] mx-auto px-6 relative z-10">
       <div class="flex flex-col md:flex-row md:items-center gap-8">
         <!-- Avatar -->
@@ -100,10 +91,15 @@ const breadcrumbs = [
             </h1>
             <Badge variant="tier" value={tier} />
             {isVerified && (
-              <span class="text-xs font-bold text-brand-yellow uppercase tracking-wider">✓ Verificado</span>
+              <span class="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 bg-brand-black text-brand-yellow border border-brand-yellow inline-flex items-center gap-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                Perfil Verificado
+              </span>
             )}
             {isPioneer && (
-              <span class="text-xs font-bold uppercase tracking-wider" style="color: #D9D9D6;">Pioneer</span>
+              <Badge variant="tier" value="BUILDER FUNDADOR" />
             )}
           </div>
 
@@ -111,7 +107,10 @@ const breadcrumbs = [
 
           {p.location && (
             <p class="text-sm mb-4 flex items-center gap-2" style="color: #D9D9D6;">
-              <span>📍</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
               <span>{p.location}</span>
             </p>
           )}
@@ -228,8 +227,10 @@ const breadcrumbs = [
                       <p class="text-xs mt-0.5 line-clamp-2" style="color: #888888;">{app.tagline ?? ''}</p>
                     </div>
                     {app.is_verified && (
-                      <span class="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 bg-brand-black text-brand-white">
-                        ✓
+                      <span class="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 bg-brand-black text-brand-white inline-flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
                       </span>
                     )}
                   </a>

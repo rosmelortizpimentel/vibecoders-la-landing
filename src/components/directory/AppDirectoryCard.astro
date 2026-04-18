@@ -4,7 +4,7 @@ import type { ShowcaseApp } from '@/types/showcase-app';
 
 type Props = ShowcaseApp;
 
-const { id, app_name, app_tagline, app_logo_url, app_url, is_verified, founder_handle, founder_display_name, founder_avatar_url, status } = Astro.props;
+const { id, app_name, app_tagline, app_logo_url, app_url, is_verified, founder_handle, founder_display_name, founder_avatar_url, status, beta_active, open_to_partnerships } = Astro.props;
 
 const initial = app_name.charAt(0).toUpperCase();
 const founderInitial = founder_display_name.charAt(0).toUpperCase();
@@ -12,6 +12,10 @@ const founderInitial = founder_display_name.charAt(0).toUpperCase();
 
 <a
   href={`/apps/${id}`}
+  data-app-card
+  data-app-name={app_name.toLowerCase()}
+  data-beta-active={beta_active ? 'true' : 'false'}
+  data-open-to-partnerships={open_to_partnerships ? 'true' : 'false'}
   class="flex flex-col sm:flex-row items-stretch w-full p-6 sm:p-8 bg-surface-charcoal gap-6 sm:gap-8 hover:shadow-soft transition-shadow no-underline"
 >
   <div class="w-16 h-16 sm:w-20 sm:h-20 bg-brand-black flex items-center justify-center shrink-0">
