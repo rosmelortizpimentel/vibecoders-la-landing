@@ -2,20 +2,26 @@
 export const prerender = false;
 
 import CharlaLayout from '@/layouts/CharlaLayout.astro';
+import VideoEmbed from '@/components/editorial/VideoEmbed.astro';
 import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import { supabase } from '@/lib/supabase';
 import type { CharlaDetail } from '@/types/landing-charla';
 
 const slug = Astro.params.slug ?? '';
-const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(slug);
 
 let charlaMdx: CollectionEntry<'charlas'> | undefined;
 let Content: Awaited<ReturnType<typeof render>>['Content'] | null = null;
 let charlaDb: CharlaDetail | null = null;
 
-if (isUuid) {
-  const { data, error } = await supabase.rpc('get_charla_detail', { p_charla_id: slug });
+const charlas = await getCollection('charlas', ({ data }) => data.draft !== true);
+charlaMdx = charlas.find((charla) => charla.id === slug);
+
+if (charlaMdx) {
+  const rendered = await render(charlaMdx);
+  Content = rendered.Content;
+} else {
+  const { data, error } = await supabase.rpc('get_charla_detail', { p_identifier: slug });
 
   if (error) {
     console.error('Failed to fetch charla detail:', error.message);
@@ -27,17 +33,8 @@ if (isUuid) {
   if (!charlaDb) {
     return Astro.redirect('/charlas');
   }
-} else {
-  const charlas = await getCollection('charlas', ({ data }) => data.draft !== true);
-  charlaMdx = charlas.find((charla) => charla.id === slug);
-
-  if (!charlaMdx) {
-    return Astro.redirect('/charlas');
-  }
-
-  const rendered = await render(charlaMdx);
-  Content = rendered.Content;
 }
+
 ---
 
 {charlaDb ? (
@@ -59,16 +56,18 @@ if (isUuid) {
       lovableUrl: charlaDb.speaker_lovable ?? undefined,
     }}
     recordedAt={new Date(charlaDb.scheduled_at)}
-    videoUrl={charlaDb.recording_url ?? undefined}
+    videoUrl={undefined}
     topics={[]}
     resources={charlaDb.luma_url ? [{ label: charlaDb.is_past ? 'Página del evento' : 'Registro en Luma', url: charlaDb.luma_url, type: 'other' }] : []}
     timestamps={[]}
     durationMinutes={charlaDb.duration_minutes ?? undefined}
   >
     <div class="space-y-6">
-      {charlaDb.banner_url && (
+      {charlaDb.recording_url ? (
+        <VideoEmbed videoUrl={charlaDb.recording_url} title={charlaDb.title} />
+      ) : charlaDb.banner_url ? (
         <img src={charlaDb.banner_url} alt={charlaDb.title} class="w-full h-auto" loading="lazy" />
-      )}
+      ) : null}
 
       <p class="whitespace-pre-line">{charlaDb.description ?? charlaDb.tagline ?? 'Próximamente añadiremos la descripción completa de esta charla.'}</p>
 
