@@ -10,6 +10,7 @@ export interface LandingCharla {
   speaker_name: string | null;
   speaker_tagline: string | null;
   speaker_photo_url: string | null;
+  slug: string;
 }
 
 export interface CharlaDetail {
