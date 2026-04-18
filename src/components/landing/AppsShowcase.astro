@@ -9,6 +9,16 @@ interface Props {
 }
 
 const { apps } = Astro.props;
+
+// Top 9 most liked apps for the grid
+const topApps = apps.slice(0, 9);
+
+// 5 most recent apps for the carousel
+const recentApps = [...apps]
+  .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+  .slice(0, 5);
+
+const duplicatedRecent = [...recentApps, ...recentApps];
 ---
 
 <SectionWrapper variant="dark" id="apps">
@@ -22,15 +32,110 @@ const { apps } = Astro.props;
     </p>
   </div>
 
-  <!-- Grid -->
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    {apps.slice(0, 6).map((app) => (
+  <!-- Grid (Top 9) -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+    {topApps.map((app) => (
       <AppCard {...app} />
     ))}
   </div>
 
+  <!-- Recent Apps Carousel -->
+  <div class="text-center mb-6">
+    <h3 class="text-xl font-bold text-brand-white">Últimas apps registradas</h3>
+  </div>
+
+  <div class="relative">
+    <button
+      type="button"
+      class="apps-prev absolute left-0 top-1/2 z-10 -translate-y-1/2 bg-brand-black border border-surface-silver text-brand-white w-10 h-10 hidden md:flex items-center justify-center hover:bg-brand-white hover:text-brand-black hover:border-brand-white transition-colors"
+      aria-label="Ver apps anteriores"
+    >
+      ←
+    </button>
+
+    <div class="apps-carousel overflow-x-auto overflow-y-hidden pb-2 -mx-6 px-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <div class="apps-track flex flex-nowrap items-stretch gap-4 w-max">
+        {duplicatedRecent.map((app, index) => (
+          <div 
+            class="flex flex-col w-[320px] sm:w-[400px] shrink-0"
+            data-app-card
+            aria-hidden={index >= recentApps.length ? 'true' : 'false'}
+            tabindex={index >= recentApps.length ? '-1' : undefined}
+          >
+            <AppCard {...app} />
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <button
+      type="button"
+      class="apps-next absolute right-0 top-1/2 z-10 -translate-y-1/2 bg-brand-black border border-surface-silver text-brand-white w-10 h-10 hidden md:flex items-center justify-center hover:bg-brand-white hover:text-brand-black hover:border-brand-white transition-colors"
+      aria-label="Ver más apps"
+    >
+      →
+    </button>
+  </div>
+
+  <script is:inline>
+    (() => {
+      const root = document.currentScript?.closest('section');
+      if (!root) return;
+
+      const carousel = root.querySelector('.apps-carousel');
+      const track = root.querySelector('.apps-track');
+      const prev = root.querySelector('.apps-prev');
+      const next = root.querySelector('.apps-next');
+      const firstCard = root.querySelector('[data-app-card]');
+
+      if (!carousel || !track || !firstCard) return;
+
+      let paused = false;
+      let rafId = 0;
+      const speed = 0.35;
+      const cycleWidth = track.scrollWidth / 2;
+      const cardStep = firstCard.getBoundingClientRect().width + 16; // 16px gap
+
+      const tick = () => {
+        if (!paused) {
+          carousel.scrollLeft += speed;
+          if (carousel.scrollLeft >= cycleWidth) {
+            carousel.scrollLeft -= cycleWidth;
+          }
+        }
+        rafId = window.requestAnimationFrame(tick);
+      };
+
+      const moveBy = (amount) => {
+        paused = true;
+        carousel.scrollBy({ left: amount, behavior: 'smooth' });
+      };
+
+      root.addEventListener('mouseenter', () => {
+        paused = true;
+      });
+
+      root.addEventListener('mouseleave', () => {
+        paused = false;
+      });
+
+      prev?.addEventListener('click', () => moveBy(-cardStep));
+      next?.addEventListener('click', () => moveBy(cardStep));
+
+      rafId = window.requestAnimationFrame(tick);
+
+      window.addEventListener(
+        'beforeunload',
+        () => {
+          window.cancelAnimationFrame(rafId);
+        },
+        { once: true }
+      );
+    })();
+  </script>
+
   <!-- CTA -->
-  <div class="flex justify-center mt-10">
+  <div class="flex justify-center mt-12">
     <CTAButton
       href="/apps"
       variant="ghost"

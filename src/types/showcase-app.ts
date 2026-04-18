@@ -5,17 +5,27 @@
 export interface ShowcaseApp {
   id: string;
   app_name: string;
-  app_tagline: string | null;
-  app_logo_url: string | null;
+  app_tagline: string;
+  app_logo_url: string;
   app_url: string;
   is_verified: boolean;
   founder_handle: string;
   founder_display_name: string;
-  founder_avatar_url: string | null;
+  founder_avatar_url: string;
+  founder_social_links: {
+    linkedin?: string;
+    twitter?: string;
+    github?: string;
+    youtube?: string;
+    instagram?: string;
+    tiktok?: string;
+    website?: string;
+    lovable?: string;
+  } | null;
   status: {
     name: string;
     slug: string;
-  };
+  } | null;
   stacks: Array<{
     id: string;
     name: string;
@@ -23,4 +33,5 @@ export interface ShowcaseApp {
   }> | null;
   beta_active: boolean;
   open_to_partnerships: boolean;
+  created_at: string;
 }
