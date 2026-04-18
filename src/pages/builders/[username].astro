@@ -5,6 +5,7 @@ export const prerender = false;
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Badge from '@/components/ui/Badge.astro';
 import SocialLinks from '@/components/ui/SocialLinks.astro';
+import ShareProfile from '@/components/ui/ShareProfile.astro';
 import Breadcrumbs from '@/components/directory/Breadcrumbs.astro';
 import { platformCTA } from '@/lib/urls';
 import type { PublicProfile } from '@/types/public-profile';
@@ -58,7 +59,11 @@ const breadcrumbs = [
 ];
 ---
 
-<BaseLayout title={`${p.name} | Builders | VibeCoders`} description={p.tagline ?? undefined}>
+<BaseLayout 
+  title={`${p.name} | Builders | VibeCoders`} 
+  description={p.tagline ?? undefined}
+  ogImage={p.avatar_url ?? undefined}
+>
   <!-- Breadcrumbs -->
   <div class="bg-brand-white max-w-[1440px] mx-auto px-6 pt-6">
     <Breadcrumbs items={breadcrumbs} />
@@ -85,22 +90,29 @@ const breadcrumbs = [
 
         <!-- Info -->
         <div class="flex-1">
-          <div class="flex flex-wrap items-center gap-3 mb-3">
-            <h1 class="font-bold text-[56px] leading-[0.95] text-brand-white">
-              {p.name}
-            </h1>
-            <Badge variant="tier" value={tier} />
-            {isVerified && (
-              <span class="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 bg-brand-black text-brand-yellow border border-brand-yellow inline-flex items-center gap-1.5">
-                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="20 6 9 17 4 12"></polyline>
-                </svg>
-                Perfil Verificado
-              </span>
-            )}
-            {isPioneer && (
-              <Badge variant="tier" value="BUILDER FUNDADOR" />
-            )}
+          <div class="flex flex-wrap items-center justify-between gap-4 mb-3">
+            <div class="flex flex-wrap items-center gap-3">
+              <h1 class="font-bold text-[56px] leading-[0.95] text-brand-white">
+                {p.name}
+              </h1>
+              <Badge variant="tier" value={tier} />
+              {isVerified && (
+                <span class="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 bg-brand-black text-brand-yellow border border-brand-yellow inline-flex items-center gap-1.5">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                  Perfil Verificado
+                </span>
+              )}
+              {isPioneer && (
+                <Badge variant="tier" value="BUILDER FUNDADOR" />
+              )}
+            </div>
+            
+            <!-- Share Profile -->
+            <div class="shrink-0 mt-2 md:mt-0">
+              <ShareProfile url={Astro.url.href} title={p.name} text={p.tagline ?? ''} />
+            </div>
           </div>
 
           <p class="text-base leading-relaxed mb-4" style="color: #D9D9D6;">{p.tagline ?? ''}</p>

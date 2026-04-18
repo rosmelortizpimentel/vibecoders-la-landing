@@ -1,0 +1,118 @@
+---
+interface Props {
+  url: string;
+  title: string;
+  text: string;
+}
+
+const { url, title, text } = Astro.props;
+const encodedUrl = encodeURIComponent(url);
+const encodedTitle = encodeURIComponent(title);
+const encodedText = encodeURIComponent(text);
+
+const shareLinks = {
+  whatsapp: `https://api.whatsapp.com/send?text=${encodedTitle}%20${encodedUrl}`,
+  linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
+  twitter: `https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}`,
+  facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
+};
+
+const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodedUrl}`;
+---
+
+<div class="relative inline-block text-left" id="share-menu-container">
+  <button
+    type="button"
+    id="share-button"
+    class="flex items-center justify-center w-10 h-10 rounded-full border border-surface-silver bg-brand-white text-brand-black hover:bg-surface-silver transition-colors focus:outline-none"
+    aria-haspopup="true"
+    aria-expanded="false"
+    aria-label="Compartir perfil"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="18" cy="5" r="3"></circle>
+      <circle cx="6" cy="12" r="3"></circle>
+      <circle cx="18" cy="19" r="3"></circle>
+      <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+      <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+    </svg>
+  </button>
+
+  <div
+    id="share-dropdown"
+    class="origin-top-right absolute right-0 mt-2 w-64 rounded-none shadow-soft bg-brand-white border border-border ring-1 ring-black ring-opacity-5 divide-y divide-border hidden z-50"
+    role="menu"
+    aria-orientation="vertical"
+    aria-labelledby="share-button"
+  >
+    <div class="py-1" role="none">
+      <a href={shareLinks.whatsapp} target="_blank" rel="noopener noreferrer" class="text-brand-black group flex items-center px-4 py-3 text-sm hover:bg-surface-silver no-underline" role="menuitem">
+        <svg class="mr-3 h-5 w-5 text-brand-black opacity-70 group-hover:opacity-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+        Compartir en WhatsApp
+      </a>
+      <a href={shareLinks.linkedin} target="_blank" rel="noopener noreferrer" class="text-brand-black group flex items-center px-4 py-3 text-sm hover:bg-surface-silver no-underline" role="menuitem">
+        <svg class="mr-3 h-5 w-5 text-brand-black opacity-70 group-hover:opacity-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+        Compartir en LinkedIn
+      </a>
+      <a href={shareLinks.twitter} target="_blank" rel="noopener noreferrer" class="text-brand-black group flex items-center px-4 py-3 text-sm hover:bg-surface-silver no-underline" role="menuitem">
+        <svg class="mr-3 h-5 w-5 text-brand-black opacity-70 group-hover:opacity-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11.733 16h4.267l-11.733 -16z"></path><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"></path></svg>
+        Compartir en X (Twitter)
+      </a>
+      <a href={shareLinks.facebook} target="_blank" rel="noopener noreferrer" class="text-brand-black group flex items-center px-4 py-3 text-sm hover:bg-surface-silver no-underline" role="menuitem">
+        <svg class="mr-3 h-5 w-5 text-brand-black opacity-70 group-hover:opacity-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+        Compartir en Facebook
+      </a>
+    </div>
+    <div class="py-1" role="none">
+      <button type="button" id="copy-link-btn" class="w-full text-left text-brand-black group flex items-center px-4 py-3 text-sm hover:bg-surface-silver focus:outline-none" role="menuitem">
+        <svg class="mr-3 h-5 w-5 text-brand-black opacity-70 group-hover:opacity-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+        <span id="copy-text">Copiar enlace</span>
+      </button>
+    </div>
+    <div class="py-4 px-4 flex flex-col items-center justify-center bg-surface-silver" role="none">
+      <p class="text-xs font-bold text-brand-black mb-3 uppercase tracking-wider">Código QR</p>
+      <div class="bg-brand-white p-2 border border-brand-black">
+        <img src={qrCodeUrl} alt="Código QR del perfil" class="w-32 h-32" loading="lazy" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<script define:vars={{ url }}>
+  const container = document.getElementById('share-menu-container');
+  const button = document.getElementById('share-button');
+  const dropdown = document.getElementById('share-dropdown');
+  const copyBtn = document.getElementById('copy-link-btn');
+  const copyText = document.getElementById('copy-text');
+
+  if (button && dropdown) {
+    button.addEventListener('click', () => {
+      const isExpanded = button.getAttribute('aria-expanded') === 'true';
+      button.setAttribute('aria-expanded', String(!isExpanded));
+      dropdown.classList.toggle('hidden');
+    });
+
+    // Close when clicking outside
+    document.addEventListener('click', (event) => {
+      if (container && !container.contains(event.target)) {
+        button.setAttribute('aria-expanded', 'false');
+        dropdown.classList.add('hidden');
+      }
+    });
+  }
+
+  if (copyBtn && copyText) {
+    copyBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(url);
+        const originalText = copyText.textContent;
+        copyText.textContent = '¡Copiado!';
+        setTimeout(() => {
+          if (copyText) copyText.textContent = originalText;
+        }, 2000);
+      } catch (err) {
+        console.error('Failed to copy', err);
+      }
+    });
+  }
+</script>
