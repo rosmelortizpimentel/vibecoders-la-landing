@@ -40,7 +40,7 @@ const links: Array<{ key: string; label: string; icon: string }> = [
 ];
 ---
 
-<div class={`flex items-center gap-4 ${className}`}>
+<div class={`flex items-center gap-4 relative z-20 ${className}`}>
   {links.map(({ key, label, icon }) =>
     socials[key] ? (
       <a
