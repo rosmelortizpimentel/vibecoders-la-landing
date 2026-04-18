@@ -46,6 +46,9 @@ export interface ProfileApp {
   hours_building: number;
   screenshots: string[];
   tags: string[];
+  beta_active: boolean;
+  open_to_partnerships: boolean;
+  partnership_types: string[];
   status: {
     name: string;
     slug: string;

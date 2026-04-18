@@ -13,6 +13,12 @@ export interface LandingCharla {
   slug: string;
 }
 
+export interface CharlaResource {
+  label: string;
+  url: string;
+  type?: string;
+}
+
 export interface CharlaDetail {
   id: string;
   title: string;
@@ -35,4 +41,5 @@ export interface CharlaDetail {
   speaker_youtube: string | null;
   speaker_website: string | null;
   speaker_lovable: string | null;
+  download_urls: CharlaResource[] | null;
 }

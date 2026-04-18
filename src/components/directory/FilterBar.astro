@@ -51,83 +51,93 @@ const { filters } = Astro.props;
 
 <script is:inline>
   (() => {
-    const searchInput = document.getElementById('app-search-input');
-    const filterBtns = document.querySelectorAll('[data-filter-btn]');
-    const cards = document.querySelectorAll('[data-app-card]');
-    const container = document.querySelector('.grid');
+    const initAppFilters = () => {
+      const searchInput = document.getElementById('app-search-input');
+      const filterBtns = document.querySelectorAll('[data-filter-btn]');
+      const cards = document.querySelectorAll('[data-app-card]');
+      const container = document.querySelector('[data-apps-grid]');
 
-    if (!searchInput || filterBtns.length === 0 || cards.length === 0) return;
+      if (!searchInput || filterBtns.length === 0 || cards.length === 0 || !container) return;
 
-    let currentSearch = '';
-    let currentFilter = 'all';
+      let currentSearch = '';
+      let currentFilter = 'all';
 
-    function applyFilters() {
-      let visibleCount = 0;
-      
-      cards.forEach((card) => {
-        const name = (card.getAttribute('data-app-name') || '').toLowerCase();
-        const isBeta = card.getAttribute('data-beta-active') === 'true';
-        const isPartnerships = card.getAttribute('data-open-to-partnerships') === 'true';
+      function applyFilters() {
+        let visibleCount = 0;
+        
+        cards.forEach((card) => {
+          const name = (card.getAttribute('data-app-name') || '').toLowerCase();
+          const isBeta = card.getAttribute('data-beta-active') === 'true';
+          const isPartnerships = card.getAttribute('data-open-to-partnerships') === 'true';
 
-        // Check text search
-        const matchesSearch = currentSearch === '' || name.includes(currentSearch);
+          // Check text search
+          const matchesSearch = currentSearch === '' || name.includes(currentSearch);
 
-        // Check pill filter
-        let matchesFilter = true;
-        if (currentFilter !== 'all') {
-          if (currentFilter === 'open-testing') {
-            matchesFilter = isBeta;
-          } else if (currentFilter === 'open-partnerships') {
-            matchesFilter = isPartnerships;
-          } else {
-            matchesFilter = false;
+          // Check pill filter
+          let matchesFilter = true;
+          if (currentFilter !== 'all') {
+            if (currentFilter === 'open-testing') {
+              matchesFilter = isBeta;
+            } else if (currentFilter === 'open-partnerships') {
+              matchesFilter = isPartnerships;
+            } else {
+              matchesFilter = false;
+            }
           }
-        }
 
-        if (matchesSearch && matchesFilter) {
-          card.classList.remove('hidden');
-          visibleCount++;
-        } else {
-          card.classList.add('hidden');
-        }
-      });
-
-      // Handle empty state manually if needed
-      const emptyStateId = 'empty-filter-state';
-      let emptyEl = document.getElementById(emptyStateId);
-      
-      if (visibleCount === 0) {
-        if (!emptyEl && container) {
-          container.insertAdjacentHTML(
-            'afterend', 
-            `<div id="${emptyStateId}" class="col-span-full py-12 text-center text-brand-black/70">No se encontraron apps que coincidan con la búsqueda.</div>`
-          );
-        }
-      } else if (emptyEl) {
-        emptyEl.remove();
-      }
-    }
-
-    searchInput.addEventListener('input', (e) => {
-      currentSearch = (e.target.value || '').trim().toLowerCase();
-      applyFilters();
-    });
-
-    filterBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        // Reset all buttons to inactive state
-        filterBtns.forEach(b => {
-          b.classList.remove('bg-brand-black', 'text-brand-white', 'border-brand-black');
-          b.classList.add('bg-brand-white', 'text-brand-black/70', 'border-[#D1D1D1]');
+          if (matchesSearch && matchesFilter) {
+            card.classList.remove('hidden');
+            visibleCount++;
+          } else {
+            card.classList.add('hidden');
+          }
         });
 
-        // Set clicked button to active state
-        btn.classList.remove('bg-brand-white', 'text-brand-black/70', 'border-[#D1D1D1]');
-        btn.classList.add('bg-brand-black', 'text-brand-white', 'border-brand-black');
+        // Handle empty state manually if needed
+        const emptyStateId = 'empty-filter-state';
+        let emptyEl = document.getElementById(emptyStateId);
+        
+        if (visibleCount === 0) {
+          if (!emptyEl) {
+            container.insertAdjacentHTML(
+              'afterend', 
+              `<div id="${emptyStateId}" class="py-12 text-center text-brand-black/70">No se encontraron apps que coincidan con la búsqueda.</div>`
+            );
+          }
+        } else if (emptyEl) {
+          emptyEl.remove();
+        }
+      }
 
-        currentFilter = btn.getAttribute('data-filter-btn') || 'all';
+      searchInput.addEventListener('input', (e) => {
+        currentSearch = (e.target.value || '').trim().toLowerCase();
         applyFilters();
       });
-    });
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          // Reset all buttons to inactive state
+          filterBtns.forEach(b => {
+            b.classList.remove('bg-brand-black', 'text-brand-white', 'border-brand-black');
+            b.classList.add('bg-brand-white', 'text-brand-black/70', 'border-[#D1D1D1]');
+          });
+
+          // Set clicked button to active state
+          btn.classList.remove('bg-brand-white', 'text-brand-black/70', 'border-[#D1D1D1]');
+          btn.classList.add('bg-brand-black', 'text-brand-white', 'border-brand-black');
+
+          currentFilter = btn.getAttribute('data-filter-btn') || 'all';
+          applyFilters();
+        });
+      });
+
+      applyFilters();
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initAppFilters, { once: true });
+    } else {
+      initAppFilters();
+    }
   })();
 </script>

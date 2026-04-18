@@ -58,7 +58,10 @@ if (charlaMdx) {
     recordedAt={new Date(charlaDb.scheduled_at)}
     videoUrl={undefined}
     topics={[]}
-    resources={charlaDb.luma_url ? [{ label: charlaDb.is_past ? 'Página del evento' : 'Registro en Luma', url: charlaDb.luma_url, type: 'other' }] : []}
+    resources={[
+      ...(charlaDb.luma_url ? [{ label: charlaDb.is_past ? 'Página del evento' : 'Registro en Luma', url: charlaDb.luma_url, type: 'other' as const }] : []),
+      ...(charlaDb.download_urls ? charlaDb.download_urls.map(r => ({ label: r.label, url: r.url, type: 'other' as const })) : [])
+    ]}
     timestamps={[]}
     durationMinutes={charlaDb.duration_minutes ?? undefined}
   >

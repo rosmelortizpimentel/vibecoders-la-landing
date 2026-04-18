@@ -16,9 +16,10 @@ interface Speaker {
 interface Props {
   speaker: Speaker;
   onDark?: boolean;
+  showBio?: boolean;
 }
 
-const { speaker, onDark = true } = Astro.props;
+const { speaker, onDark = true, showBio = true } = Astro.props;
 
 const initial = speaker.name.charAt(0).toUpperCase();
 
@@ -68,7 +69,7 @@ const profileLink = speaker.username ? `/builders/${speaker.username}` : null;
       <p class={`font-bold text-base ${textPrimary}`}>{speaker.name}</p>
     )}
     <p class="text-sm" style={textMuted}>{speaker.role}</p>
-    {speaker.bio && (
+    {showBio && speaker.bio && (
       <p class="text-sm mt-2 leading-relaxed" style={textMuted}>{speaker.bio}</p>
     )}
 
