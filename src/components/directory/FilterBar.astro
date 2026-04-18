@@ -6,26 +6,128 @@ interface FilterItem {
 
 interface Props {
   filters: FilterItem[];
-  activeLabel?: string;
 }
 
-const { filters, activeLabel } = Astro.props;
+const { filters } = Astro.props;
 ---
 
-<div class="flex flex-wrap gap-2" role="group" aria-label="Filtros">
-  {filters.map((filter) => {
-    const isActive = activeLabel === filter.label;
-    return (
-      <span
-        class={[
-          'text-xs font-bold px-3 py-1 rounded-[50px] border border-[#D1D1D1] cursor-default select-none transition-colors',
-          isActive
-            ? 'bg-brand-black text-brand-white border-brand-black'
-            : 'bg-surface-silver text-brand-black',
-        ].join(' ')}
+<div class="flex flex-col lg:flex-row gap-4">
+  <!-- Search input -->
+  <div class="relative flex-1">
+    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-brand-black/50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+    </div>
+    <input
+      type="text"
+      id="app-search-input"
+      placeholder="Buscar app..."
+      class="w-full pl-11 pr-4 py-3 bg-brand-white border border-border text-brand-black focus:outline-none focus:border-brand-black transition-colors rounded-[50px]"
+    />
+  </div>
+
+  <!-- Filter Pills -->
+  <div class="flex items-center gap-2 overflow-x-auto pb-2 lg:pb-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden shrink-0" role="group" aria-label="Filtros">
+    <button
+      type="button"
+      data-filter-btn="all"
+      class="text-[14px] font-bold px-5 py-3 rounded-[50px] border border-brand-black cursor-pointer select-none transition-colors whitespace-nowrap bg-brand-black text-brand-white"
+    >
+      Todas
+    </button>
+    {filters.map((filter) => (
+      <button
+        type="button"
+        data-filter-btn={filter.value}
+        class="text-[14px] font-bold px-5 py-3 rounded-[50px] border border-[#D1D1D1] cursor-pointer select-none transition-colors whitespace-nowrap bg-brand-white text-brand-black/70 hover:text-brand-black hover:border-brand-black"
       >
         {filter.label}
-      </span>
-    );
-  })}
+      </button>
+    ))}
+  </div>
 </div>
+
+<script is:inline>
+  (() => {
+    const searchInput = document.getElementById('app-search-input');
+    const filterBtns = document.querySelectorAll('[data-filter-btn]');
+    const cards = document.querySelectorAll('[data-app-card]');
+    const container = document.querySelector('.grid');
+
+    if (!searchInput || filterBtns.length === 0 || cards.length === 0) return;
+
+    let currentSearch = '';
+    let currentFilter = 'all';
+
+    function applyFilters() {
+      let visibleCount = 0;
+      
+      cards.forEach((card) => {
+        const name = (card.getAttribute('data-app-name') || '').toLowerCase();
+        const isBeta = card.getAttribute('data-beta-active') === 'true';
+        const isPartnerships = card.getAttribute('data-open-to-partnerships') === 'true';
+
+        // Check text search
+        const matchesSearch = currentSearch === '' || name.includes(currentSearch);
+
+        // Check pill filter
+        let matchesFilter = true;
+        if (currentFilter !== 'all') {
+          if (currentFilter === 'open-testing') {
+            matchesFilter = isBeta;
+          } else if (currentFilter === 'open-partnerships') {
+            matchesFilter = isPartnerships;
+          } else {
+            matchesFilter = false;
+          }
+        }
+
+        if (matchesSearch && matchesFilter) {
+          card.classList.remove('hidden');
+          visibleCount++;
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+
+      // Handle empty state manually if needed
+      const emptyStateId = 'empty-filter-state';
+      let emptyEl = document.getElementById(emptyStateId);
+      
+      if (visibleCount === 0) {
+        if (!emptyEl && container) {
+          container.insertAdjacentHTML(
+            'afterend', 
+            `<div id="${emptyStateId}" class="col-span-full py-12 text-center text-brand-black/70">No se encontraron apps que coincidan con la búsqueda.</div>`
+          );
+        }
+      } else if (emptyEl) {
+        emptyEl.remove();
+      }
+    }
+
+    searchInput.addEventListener('input', (e) => {
+      currentSearch = (e.target.value || '').trim().toLowerCase();
+      applyFilters();
+    });
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Reset all buttons to inactive state
+        filterBtns.forEach(b => {
+          b.classList.remove('bg-brand-black', 'text-brand-white', 'border-brand-black');
+          b.classList.add('bg-brand-white', 'text-brand-black/70', 'border-[#D1D1D1]');
+        });
+
+        // Set clicked button to active state
+        btn.classList.remove('bg-brand-white', 'text-brand-black/70', 'border-[#D1D1D1]');
+        btn.classList.add('bg-brand-black', 'text-brand-white', 'border-brand-black');
+
+        currentFilter = btn.getAttribute('data-filter-btn') || 'all';
+        applyFilters();
+      });
+    });
+  })();
+</script>

@@ -15,14 +15,9 @@ if (error) {
 const apps = (appsData ?? []) as ShowcaseApp[];
 
 // Build filter pills from data
-const statuses = [...new Set(apps.map((a) => a.status.slug))] as string[];
-const stacks = [...new Set(
-  apps.flatMap((a) => a.stacks?.map((s) => s.name) ?? [])
-)] as string[];
-
 const filters = [
-  ...statuses.map((s) => ({ label: s.charAt(0).toUpperCase() + s.slice(1), value: s.toLowerCase() })),
-  ...stacks.slice(0, 6).map((s) => ({ label: s, value: s.toLowerCase() })),
+  { label: 'Open for Testing', value: 'open-testing' },
+  { label: 'Open to Partnerships', value: 'open-partnerships' }
 ];
 
 const breadcrumbs = [

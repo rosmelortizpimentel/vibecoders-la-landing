@@ -70,7 +70,16 @@ const breadcrumbs = [
   </div>
 
   <!-- Dark Hero -->
-  <section class="bg-brand-black py-12 md:py-20 relative overflow-hidden">
+  <section class="bg-brand-black py-12 md:py-20 relative">
+    <div class="absolute inset-0 opacity-30 overflow-hidden pointer-events-none">
+      {p.banner_url && (
+        <img
+          src={p.banner_url}
+          alt=""
+          class="w-full h-full object-cover"
+        />
+      )}
+    </div>
     <div class="max-w-[1440px] mx-auto px-6 relative z-10">
       <div class="flex flex-col md:flex-row md:items-center gap-8">
         <!-- Avatar -->
