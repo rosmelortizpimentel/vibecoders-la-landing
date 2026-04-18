@@ -4,48 +4,47 @@ import type { ShowcaseApp } from '@/types/showcase-app';
 
 type Props = ShowcaseApp;
 
-const { app_name, app_tagline, app_logo_url, app_url, is_verified, founder_display_name, status } = Astro.props;
+const { id, app_name, app_tagline, app_logo_url, app_url, is_verified, founder_display_name, status } = Astro.props;
 
 const initial = app_name.charAt(0).toUpperCase();
 ---
 
 <a
-  href={app_url}
-  target="_blank"
-  rel="noopener noreferrer"
-  class="block w-[240px] h-[180px] p-4 bg-surface-charcoal flex flex-col gap-3 hover:opacity-80 transition-opacity no-underline"
+  href={`/apps/${id}`}
+  class="flex flex-col sm:flex-row items-stretch w-full p-6 sm:p-8 bg-surface-charcoal gap-6 sm:gap-8 hover:shadow-soft transition-shadow no-underline"
 >
-  <!-- Logo + Name row -->
-  <div class="flex items-center gap-3 shrink-0">
-    <div class="w-10 h-10 overflow-hidden bg-brand-black flex items-center justify-center shrink-0 rounded-none">
-      {app_logo_url ? (
-        <img
-          src={app_logo_url}
-          alt={app_name}
-          width="40"
-          height="40"
-          class="w-full h-full object-contain"
-          loading="lazy"
-        />
-      ) : (
-        <span class="text-brand-white font-bold text-sm">{initial}</span>
+  <div class="w-16 h-16 sm:w-20 sm:h-20 bg-brand-black flex items-center justify-center shrink-0">
+    {app_logo_url ? (
+      <img
+        src={app_logo_url}
+        alt={app_name}
+        width="80"
+        height="80"
+        class="w-full h-full object-contain"
+        loading="lazy"
+      />
+    ) : (
+      <span class="text-brand-white font-bold text-xl">{initial}</span>
+    )}
+  </div>
+
+  <div class="flex-1 min-w-0 flex flex-col gap-3">
+    <div class="min-w-0">
+      <p class="text-[20px] font-bold text-brand-white leading-tight truncate">{app_name}</p>
+      {app_tagline && (
+        <p class="text-[14px] text-text-muted mt-2 line-clamp-2 leading-relaxed" style="color: #D9D9D6;">
+          {app_tagline}
+        </p>
       )}
     </div>
-    <p class="font-bold text-brand-white text-sm truncate flex-1">{app_name}</p>
+
+    <div class="mt-auto pt-4 flex items-center gap-4">
+      <div class="shrink-0">
+        <Badge variant="status" value={status.name} />
+      </div>
+      <p class="text-[12px]" style="color: #888888;">
+        por <span class="font-bold" style="color: #D9D9D6;">{founder_display_name}</span>
+      </p>
+    </div>
   </div>
-
-  <!-- Tagline -->
-  <p class="text-xs text-text-muted leading-relaxed flex-grow line-clamp-2" style="color: #D9D9D6;">
-    {app_tagline ?? ''}
-  </p>
-
-  <!-- Status badge -->
-  <div class="shrink-0">
-    <Badge variant="status" value={status.name} />
-  </div>
-
-  <!-- Founder -->
-  <p class="text-[10px]" style="color: #888888;">
-    por <span class="font-bold" style="color: #D9D9D6;">{founder_display_name}</span>
-  </p>
 </a>
