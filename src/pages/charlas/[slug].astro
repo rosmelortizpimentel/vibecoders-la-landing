@@ -59,8 +59,7 @@ if (charlaMdx) {
     videoUrl={undefined}
     topics={[]}
     resources={[
-      ...(charlaDb.luma_url ? [{ label: charlaDb.is_past ? 'Página del evento' : 'Registro en Luma', url: charlaDb.luma_url, type: 'other' as const }] : []),
-      ...(charlaDb.download_urls ? charlaDb.download_urls.map(r => ({ label: r.label, url: r.url, type: 'other' as const })) : [])
+      ...(charlaDb.download_urls ? charlaDb.download_urls.map(r => ({ label: r.label, url: r.url, type: (r.type === 'link' ? 'link' : 'download') as const })) : [])
     ]}
     timestamps={[]}
     durationMinutes={charlaDb.duration_minutes ?? undefined}
@@ -68,8 +67,6 @@ if (charlaMdx) {
     <div class="space-y-6">
       {charlaDb.recording_url ? (
         <VideoEmbed videoUrl={charlaDb.recording_url} title={charlaDb.title} />
-      ) : charlaDb.banner_url ? (
-        <img src={charlaDb.banner_url} alt={charlaDb.title} class="w-full h-auto" loading="lazy" />
       ) : null}
 
       <p class="whitespace-pre-line">{charlaDb.description ?? charlaDb.tagline ?? 'Próximamente añadiremos la descripción completa de esta charla.'}</p>
