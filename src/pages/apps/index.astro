@@ -5,14 +5,20 @@ import FilterBar from '@/components/directory/FilterBar.astro';
 import { supabase } from '@/lib/supabase';
 import type { ShowcaseApp } from '@/types/showcase-app';
 
+const limit = 20;
+
 // Fetch showcase apps from Supabase RPC
-const { data: appsData, error } = await supabase.rpc('get_showcase_apps');
+const { data: appsData, error } = await supabase.rpc('get_showcase_apps', {
+  p_limit: limit,
+  p_offset: 0
+});
 
 if (error) {
   console.error('Failed to fetch showcase apps:', error.message);
 }
 
 const apps = (appsData ?? []) as ShowcaseApp[];
+const hasMore = apps.length === limit;
 
 // Build filter pills from data
 const filters = [
@@ -36,10 +42,69 @@ const breadcrumbs = [
     <FilterBar filters={filters} />
   </div>
 
-  <!-- Grid -->
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6" data-apps-grid>
+  <!-- Apps List -->
+  <div id="apps-container" class="flex flex-col gap-6" data-apps-grid>
     {apps.map((app) => (
       <AppDirectoryCard {...app} />
     ))}
   </div>
+
+  <!-- Empty state -->
+  {apps.length === 0 && (
+    <p class="text-center text-text-muted py-12">No hay apps aún.</p>
+  )}
+
+  <!-- Load more -->
+  {hasMore && (
+    <div class="flex justify-center mt-12">
+      <button
+        id="load-more-btn"
+        data-offset={limit}
+        class="bg-brand-black text-brand-white px-6 py-3 font-bold text-sm hover:opacity-70 transition-opacity cursor-pointer border border-brand-black"
+      >
+        Cargar más apps
+      </button>
+    </div>
+  )}
+
+  <script is:inline>
+    const btn = document.getElementById('load-more-btn');
+    const container = document.getElementById('apps-container');
+
+    if (btn && container) {
+      btn.addEventListener('click', async () => {
+        const offset = parseInt(btn.getAttribute('data-offset'), 10);
+        btn.textContent = 'Cargando...';
+        btn.disabled = true;
+
+        try {
+          const res = await fetch(`/api/apps?offset=${offset}`);
+          if (!res.ok) throw new Error('Error al cargar');
+          const html = await res.text();
+          
+          if (html.trim() !== '') {
+            container.insertAdjacentHTML('beforeend', html);
+            
+            // Check if end reached (via the injected marker from API)
+            const endMarker = document.getElementById('end-of-apps');
+            if (endMarker) {
+              btn.remove();
+              endMarker.remove(); // clean up
+            } else {
+              const limit = 20;
+              btn.setAttribute('data-offset', offset + limit);
+              btn.textContent = 'Cargar más apps';
+              btn.disabled = false;
+            }
+          } else {
+            btn.remove();
+          }
+        } catch (e) {
+          console.error(e);
+          btn.textContent = 'Cargar más apps';
+          btn.disabled = false;
+        }
+      });
+    }
+  </script>
 </DirectoryLayout>

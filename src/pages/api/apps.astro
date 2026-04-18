@@ -1,0 +1,28 @@
+---
+export const prerender = false;
+
+import AppDirectoryCard from '@/components/directory/AppDirectoryCard.astro';
+import { supabase } from '@/lib/supabase';
+import type { ShowcaseApp } from '@/types/showcase-app';
+
+const limit = 20;
+const offset = parseInt(Astro.url.searchParams.get('offset') || '0', 10);
+
+const { data: appsData, error } = await supabase.rpc('get_showcase_apps', {
+  p_limit: limit,
+  p_offset: offset
+});
+
+if (error) {
+  console.error('Failed to fetch apps:', error.message);
+}
+
+const apps = (appsData ?? []) as ShowcaseApp[];
+const hasMore = apps.length === limit;
+---
+
+{apps.map((app) => (
+  <AppDirectoryCard {...app} />
+))}
+
+{!hasMore && <div id="end-of-apps" class="hidden"></div>}
