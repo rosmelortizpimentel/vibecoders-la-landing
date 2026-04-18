@@ -44,6 +44,7 @@ interface Props {
   resources: Resource[];
   timestamps: Timestamp[];
   durationMinutes?: number;
+  notesHtml?: string;
 }
 
 const {
@@ -58,6 +59,7 @@ const {
   resources,
   timestamps,
   durationMinutes,
+  notesHtml,
 } = Astro.props;
 
 const formattedDate = recordedAt.toLocaleDateString('es-ES', {
@@ -193,7 +195,7 @@ const hasVideo = Boolean(videoUrl || videoEmbedId);
 
           <!-- Resources -->
           {resources.length > 0 && (
-            <div>
+            <div class="mb-10">
               <h3 class="font-bold text-sm uppercase tracking-wider text-brand-black mb-4">
                 Recursos
               </h3>
@@ -212,6 +214,16 @@ const hasVideo = Boolean(videoUrl || videoEmbedId);
                   </li>
                 ))}
               </ul>
+            </div>
+          )}
+
+          <!-- Notes -->
+          {notesHtml && (
+            <div>
+              <h3 class="font-bold text-sm uppercase tracking-wider text-brand-black mb-4">
+                Notas
+              </h3>
+              <div class="prose prose-sm max-w-none text-brand-black prose-a:text-brand-blue prose-a:font-bold prose-headings:font-bold" set:html={notesHtml} />
             </div>
           )}
         </div>

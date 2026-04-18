@@ -42,4 +42,5 @@ export interface CharlaDetail {
   speaker_website: string | null;
   speaker_lovable: string | null;
   download_urls: CharlaResource[] | null;
+  resources_html: string | null;
 }
