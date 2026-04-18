@@ -5,6 +5,7 @@ export const prerender = false;
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Badge from '@/components/ui/Badge.astro';
 import Breadcrumbs from '@/components/directory/Breadcrumbs.astro';
+import SpeakerCard from '@/components/editorial/SpeakerCard.astro';
 import { platformCTA } from '@/lib/urls';
 
 // The route param is 'slug' but we're passing the app ID
@@ -158,22 +159,49 @@ const betaCta = platformCTA('app-detail-beta', betaUrl);
 
         <!-- Builder Info + Description -->
         <div class="lg:w-2/3">
-          <!-- Builder card -->
-          <a href={builderUrl} class="block bg-surface-charcoal p-6 mb-6 hover:opacity-80 transition-opacity no-underline">
-            <div class="flex items-center gap-4">
-              <div class="w-12 h-12 rounded-full overflow-hidden bg-brand-black flex items-center justify-center">
-                {app.owner?.avatar_url ? (
-                  <img src={app.owner.avatar_url} alt={app.owner.name} class="w-full h-full object-cover" />
-                ) : (
-                  <span class="text-brand-white font-bold">{app.owner?.name?.charAt(0) || '?'}</span>
-                )}
-              </div>
-              <div>
-                <p class="font-bold text-brand-white">{app.owner?.name}</p>
-                <p class="text-sm" style="color: #888888;">@{app.owner?.username}</p>
-              </div>
+          <!-- Builder cards -->
+          {app.founders && app.founders.length > 0 ? (
+            <div class="flex flex-col gap-4 mb-6">
+              <h2 class="font-bold text-lg text-brand-white">Builders</h2>
+              {app.founders.map((founder: any) => (
+                <div class="bg-surface-charcoal p-6">
+                  <SpeakerCard
+                    speaker={{
+                      name: founder.profile?.name || 'Builder anónimo',
+                      username: founder.profile?.username,
+                      role: founder.profile?.tagline || founder.role || 'Builder',
+                      bio: '', // Not shown here, tagline acts as role
+                      avatarUrl: founder.profile?.avatar_url,
+                      linkedinUrl: founder.profile?.linkedin,
+                      twitterUrl: founder.profile?.twitter,
+                      githubUrl: founder.profile?.github,
+                      youtubeUrl: founder.profile?.youtube,
+                      websiteUrl: founder.profile?.website,
+                      lovableUrl: founder.profile?.lovable
+                    }}
+                    onDark={true}
+                    showBio={false}
+                  />
+                </div>
+              ))}
             </div>
-          </a>
+          ) : (
+            <a href={builderUrl} class="block bg-surface-charcoal p-6 mb-6 hover:opacity-80 transition-opacity no-underline">
+              <div class="flex items-center gap-4">
+                <div class="w-12 h-12 rounded-full overflow-hidden bg-brand-black flex items-center justify-center">
+                  {app.owner?.avatar_url ? (
+                    <img src={app.owner.avatar_url} alt={app.owner.name} class="w-full h-full object-cover" />
+                  ) : (
+                    <span class="text-brand-white font-bold">{app.owner?.name?.charAt(0) || '?'}</span>
+                  )}
+                </div>
+                <div>
+                  <p class="font-bold text-brand-white">{app.owner?.name}</p>
+                  <p class="text-sm" style="color: #888888;">@{app.owner?.username}</p>
+                </div>
+              </div>
+            </a>
+          )}
 
           <!-- Description -->
           {app.description && (
