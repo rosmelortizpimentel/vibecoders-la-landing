@@ -118,11 +118,6 @@ const uniqueFounders = Array.isArray(app.founders)
               {app.status && (
                 <Badge variant="status" value={app.status.name} />
               )}
-              {app.stacks?.map((stack: any) => (
-                <span class="text-xs px-2 py-1 bg-surface-charcoal text-brand-white">
-                  {stack.name}
-                </span>
-              ))}
             </div>
           </div>
 
