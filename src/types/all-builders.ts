@@ -1,5 +1,5 @@
 /**
- * Shape returned by the Supabase RPC `get_verified_founders`.
+ * Shape returned by the public edge function `directory-builders-list`.
  * Used in the /builders directory page.
  */
 export interface AllBuilder {

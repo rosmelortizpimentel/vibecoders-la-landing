@@ -8,37 +8,32 @@ import CharlasHighlight from '@/components/landing/CharlasHighlight.astro';
 import LandingFAQ from '@/components/landing/LandingFAQ.astro';
 import FinalCTA from '@/components/landing/FinalCTA.astro';
 import { communityWhatsAppCTA } from '@/lib/urls';
-import { supabase } from '@/lib/supabase';
+import { fetchLandingApps, fetchLandingBuilders, fetchLandingCharlas } from '@/lib/public-data';
 import type { VerifiedFounder } from '@/types/verified-founder';
 import type { ShowcaseApp } from '@/types/showcase-app';
 import type { LandingCharla } from '@/types/landing-charla';
 
-// Fetch verified founders from Supabase RPC
-const { data: builders, error: buildersError } = await supabase.rpc('get_verified_founders');
+let verifiedFounders: VerifiedFounder[] = [];
+let showcaseApps: ShowcaseApp[] = [];
+let landingCharlas: LandingCharla[] = [];
 
-if (buildersError) {
-  console.error('Failed to fetch verified founders:', buildersError.message);
+try {
+  verifiedFounders = await fetchLandingBuilders();
+} catch (error) {
+  console.error('Failed to fetch landing builders:', error instanceof Error ? error.message : error);
 }
 
-const verifiedFounders = (builders ?? []) as VerifiedFounder[];
-
-// Fetch showcase apps from Supabase RPC
-const { data: appsData, error: appsError } = await supabase.rpc('get_showcase_apps');
-
-if (appsError) {
-  console.error('Failed to fetch showcase apps:', appsError.message);
+try {
+  showcaseApps = await fetchLandingApps();
+} catch (error) {
+  console.error('Failed to fetch landing apps:', error instanceof Error ? error.message : error);
 }
 
-const showcaseApps = (appsData ?? []) as ShowcaseApp[];
-
-// Fetch landing charlas from Supabase RPC
-const { data: charlasData, error: charlasError } = await supabase.rpc('get_landing_charlas');
-
-if (charlasError) {
-  console.error('Failed to fetch landing charlas:', charlasError.message);
+try {
+  landingCharlas = await fetchLandingCharlas();
+} catch (error) {
+  console.error('Failed to fetch landing charlas:', error instanceof Error ? error.message : error);
 }
-
-const landingCharlas = (charlasData ?? []) as LandingCharla[];
 
 const heroCTA = communityWhatsAppCTA();
 const finalCTA = communityWhatsAppCTA();

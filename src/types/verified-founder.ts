@@ -1,5 +1,5 @@
 /**
- * Shape returned by the Supabase RPC `get_verified_founders`.
+ * Shape returned by the public edge function `landing-builders-list`.
  * Used in the landing page BuildersMarquee section.
  */
 export interface VerifiedFounder {

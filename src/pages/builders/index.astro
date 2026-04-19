@@ -1,22 +1,18 @@
 ---
 import DirectoryLayout from '@/layouts/DirectoryLayout.astro';
 import BuilderDirectoryCard from '@/components/directory/BuilderDirectoryCard.astro';
-import { supabase } from '@/lib/supabase';
+import { fetchDirectoryBuilders } from '@/lib/public-data';
 import type { AllBuilder } from '@/types/all-builders';
 
 const limit = 20;
 
-// Fetch verified builders from Supabase
-const { data: buildersData, error } = await supabase.rpc('get_verified_founders', {
-  p_limit: limit,
-  p_offset: 0
-});
+let builders: AllBuilder[] = [];
 
-if (error) {
-  console.error('Failed to fetch builders:', error.message);
+try {
+  builders = await fetchDirectoryBuilders(limit, 0);
+} catch (error) {
+  console.error('Failed to fetch builders:', error instanceof Error ? error.message : error);
 }
-
-const builders = (buildersData ?? []) as AllBuilder[];
 const hasMore = builders.length === limit;
 
 const breadcrumbs = [

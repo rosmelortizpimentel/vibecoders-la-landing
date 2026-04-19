@@ -1,7 +1,7 @@
 ---
 import DirectoryLayout from '@/layouts/DirectoryLayout.astro';
 import PublicCharlaCard from '@/components/editorial/PublicCharlaCard.astro';
-import { supabase } from '@/lib/supabase';
+import { fetchDirectoryCharlas } from '@/lib/public-data';
 import type { LandingCharla } from '@/types/landing-charla';
 
 const breadcrumbs = [
@@ -9,13 +9,13 @@ const breadcrumbs = [
   { label: 'Charlas' },
 ];
 
-const { data, error } = await supabase.rpc('get_public_charlas');
+let charlas: LandingCharla[] = [];
 
-if (error) {
-  console.error('Failed to fetch public charlas:', error.message);
+try {
+  charlas = await fetchDirectoryCharlas();
+} catch (error) {
+  console.error('Failed to fetch public charlas:', error instanceof Error ? error.message : error);
 }
-
-const charlas = (data ?? []) as LandingCharla[];
 ---
 
 <DirectoryLayout

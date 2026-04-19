@@ -7,39 +7,21 @@ import Badge from '@/components/ui/Badge.astro';
 import Breadcrumbs from '@/components/directory/Breadcrumbs.astro';
 import SpeakerCard from '@/components/editorial/SpeakerCard.astro';
 import { platformCTA } from '@/lib/urls';
+import { fetchPublicAppDetail, type PublicAppDetail } from '@/lib/public-data';
 
 // The route param is 'slug' but we're passing the app ID
 const appIdParam = Astro.params.slug || '';
 
-const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
+let appData: PublicAppDetail | null = null;
 
-// Fetch app detail from edge function
-const edgeFunctionUrl = `${supabaseUrl}/functions/v1/get-app-detail?app_id=${encodeURIComponent(appIdParam)}`;
-const response = await fetch(edgeFunctionUrl, {
-  headers: {
-    'Authorization': `Bearer ${supabaseAnonKey}`,
-    'apikey': supabaseAnonKey,
-  },
-});
-
-let appData;
 try {
-  appData = await response.json();
-} catch (e) {
-  console.error('Failed to parse response:', e);
-}
-
-if (!response.ok || !appData?.id) {
+  appData = await fetchPublicAppDetail(appIdParam);
+} catch (error) {
+  console.error('Redirecting due to:', error instanceof Error ? error.message : error);
   return Astro.redirect('/apps');
 }
 
-console.log('Checking redirect condition:', !response.ok, !appData?.id);
-
-console.log('Checking redirect condition:', !response.ok, !appData?.id);
-
-if (!response.ok || !appData?.id) {
-  console.error('Redirecting due to:', response.status, appData);
+if (!appData) {
   return Astro.redirect('/apps');
 }
 
@@ -66,9 +48,9 @@ const builderUrl = platformCTA('app-detail-builder', `/@${app.owner?.username}`)
 const betaCta = 'https://app.vibecoders.la/public-beta-testing';
 
 const uniqueFounders = Array.isArray(app.founders)
-  ? app.founders.filter((founder: any, index: number, founders: any[]) => {
+  ? app.founders.filter((founder, index, founders) => {
       const founderId = founder.user_id ?? founder.profile?.id ?? founder.profile?.username;
-      return founders.findIndex((candidate: any) => {
+      return founders.findIndex((candidate) => {
         const candidateId = candidate.user_id ?? candidate.profile?.id ?? candidate.profile?.username;
         return candidateId === founderId;
       }) === index;

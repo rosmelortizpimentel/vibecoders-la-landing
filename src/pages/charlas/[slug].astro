@@ -5,7 +5,7 @@ import CharlaLayout from '@/layouts/CharlaLayout.astro';
 import VideoEmbed from '@/components/editorial/VideoEmbed.astro';
 import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
-import { supabase } from '@/lib/supabase';
+import { fetchPublicCharlaDetail } from '@/lib/public-data';
 import type { CharlaDetail } from '@/types/landing-charla';
 
 const slug = Astro.params.slug ?? '';
@@ -21,14 +21,12 @@ if (charlaMdx) {
   const rendered = await render(charlaMdx);
   Content = rendered.Content;
 } else {
-  const { data, error } = await supabase.rpc('get_charla_detail', { p_identifier: slug });
-
-  if (error) {
-    console.error('Failed to fetch charla detail:', error.message);
+  try {
+    charlaDb = await fetchPublicCharlaDetail(slug);
+  } catch (error) {
+    console.error('Failed to fetch charla detail:', error instanceof Error ? error.message : error);
     return Astro.redirect('/charlas');
   }
-
-  charlaDb = ((data ?? [])[0] ?? null) as CharlaDetail | null;
 
   if (!charlaDb) {
     return Astro.redirect('/charlas');

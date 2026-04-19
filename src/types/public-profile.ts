@@ -1,5 +1,5 @@
 /**
- * Shape returned by Supabase Edge Function `get-public-profile`.
+ * Shape returned by Supabase Edge Function `public-builder-profile`.
  */
 export interface PublicProfile {
   success: boolean;
@@ -29,7 +29,6 @@ export interface PublicProfile {
     instagram: string | null;
     youtube: string | null;
     tiktok: string | null;
-    email_public: string;
     apps: ProfileApp[];
     tester_apps: TesterContribution[];
     talks: TalkContribution[];

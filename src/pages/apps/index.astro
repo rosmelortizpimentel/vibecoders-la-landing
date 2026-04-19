@@ -2,22 +2,18 @@
 import DirectoryLayout from '@/layouts/DirectoryLayout.astro';
 import AppDirectoryCard from '@/components/directory/AppDirectoryCard.astro';
 import FilterBar from '@/components/directory/FilterBar.astro';
-import { supabase } from '@/lib/supabase';
+import { fetchDirectoryApps } from '@/lib/public-data';
 import type { ShowcaseApp } from '@/types/showcase-app';
 
 const limit = 20;
 
-// Fetch showcase apps from Supabase RPC
-const { data: appsData, error } = await supabase.rpc('get_showcase_apps', {
-  p_limit: limit,
-  p_offset: 0
-});
+let apps: ShowcaseApp[] = [];
 
-if (error) {
-  console.error('Failed to fetch showcase apps:', error.message);
+try {
+  apps = await fetchDirectoryApps(limit, 0);
+} catch (error) {
+  console.error('Failed to fetch showcase apps:', error instanceof Error ? error.message : error);
 }
-
-const apps = (appsData ?? []) as ShowcaseApp[];
 const hasMore = apps.length === limit;
 
 // Build filter pills from data

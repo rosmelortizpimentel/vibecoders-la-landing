@@ -1,6 +1,6 @@
 /**
- * Shape returned by the Supabase RPC `get_showcase_apps`.
- * Used in the landing page AppsShowcase section.
+ * Shape returned by the public edge functions `landing-apps-list` and `directory-apps-list`.
+ * Used in the landing page AppsShowcase section and apps directory.
  */
 export interface ShowcaseApp {
   id: string;

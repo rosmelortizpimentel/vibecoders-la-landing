@@ -5,11 +5,11 @@ export const prerender = false;
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Badge from '@/components/ui/Badge.astro';
 import SocialLinks from '@/components/ui/SocialLinks.astro';
-import ShareProfile from '@/components/ui/ShareProfile.astro';
 import Breadcrumbs from '@/components/directory/Breadcrumbs.astro';
 import { platformCTA } from '@/lib/urls';
 import { SITE_URL } from '@/lib/constants';
 import type { PublicProfile } from '@/types/public-profile';
+import { fetchPublicBuilderProfile } from '@/lib/public-data';
 
 interface Props {
   username: string;
@@ -18,32 +18,25 @@ interface Props {
 const { username } = Astro.params;
 const usernameParam = username || '';
 
-const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
+let profileData: PublicProfile | null = null;
 
-// Fetch profile directly via HTTP
-const edgeFunctionUrl = `${supabaseUrl}/functions/v1/get-public-profile?username=${encodeURIComponent(usernameParam)}`;
-const response = await fetch(edgeFunctionUrl, {
-  headers: {
-    'Authorization': `Bearer ${supabaseAnonKey}`,
-    'apikey': supabaseAnonKey,
-  },
-});
-
-let profileData;
 try {
-  profileData = await response.json();
-} catch (e) {
-  console.error('Failed to parse response:', e);
-}
+  const profile = await fetchPublicBuilderProfile(usernameParam);
 
-if (!response.ok || !profileData?.success) {
-  console.error('API error:', response.status, profileData);
+  profileData = {
+    success: true,
+    profile,
+  };
+} catch (error) {
+  console.error('API error:', error instanceof Error ? error.message : error);
   return Astro.redirect('/builders');
 }
 
-const profileResponse = profileData as PublicProfile;
-const p = profileResponse.profile;
+if (!profileData) {
+  return Astro.redirect('/builders');
+}
+
+const p = profileData.profile;
 
 // Derived fields
 const isVerified = p.apps.some((app) => app.is_verified);
