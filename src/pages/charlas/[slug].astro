@@ -42,6 +42,7 @@ if (charlaMdx) {
     title={charlaDb.title}
     tagline={charlaDb.tagline ?? charlaDb.description ?? ''}
     sessionNumber={charlaDb.session_number}
+    ogImage={charlaDb.banner_url ?? undefined}
     speaker={{
       name: charlaDb.speaker_name ?? 'Speaker invitado',
       username: charlaDb.speaker_username ?? undefined,

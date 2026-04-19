@@ -37,6 +37,7 @@ interface Props {
   tagline: string;
   sessionNumber: number;
   speaker: Speaker;
+  ogImage?: string;
   recordedAt: Date;
   videoUrl?: string;
   videoEmbedId?: string;
@@ -52,6 +53,7 @@ const {
   tagline,
   sessionNumber,
   speaker,
+  ogImage,
   recordedAt,
   videoUrl,
   videoEmbedId,
@@ -93,7 +95,7 @@ const breadcrumbs = [
 const hasVideo = Boolean(videoUrl || videoEmbedId);
 ---
 
-<BaseLayout title={`${title} | Charlas | VibeCoders`} description={tagline}>
+<BaseLayout title={`${title} | Charlas | VibeCoders`} description={tagline} ogImage={ogImage}>
   <!-- Breadcrumbs -->
   <div class="bg-brand-white max-w-[1440px] mx-auto px-6 pt-6">
     <Breadcrumbs items={breadcrumbs} />
