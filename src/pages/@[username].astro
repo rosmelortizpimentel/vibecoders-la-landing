@@ -1,0 +1,246 @@
+---
+// Disable static generation - this page is SSR
+export const prerender = false;
+
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Badge from '@/components/ui/Badge.astro';
+import SocialLinks from '@/components/ui/SocialLinks.astro';
+import ShareProfile from '@/components/ui/ShareProfile.astro';
+import Breadcrumbs from '@/components/directory/Breadcrumbs.astro';
+import { platformCTA } from '@/lib/urls';
+import { SITE_URL } from '@/lib/constants';
+import type { PublicProfile } from '@/types/public-profile';
+
+interface Props {
+  username: string;
+}
+
+const { username } = Astro.params;
+const usernameParam = username || '';
+
+const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
+
+// Fetch profile directly via HTTP
+const edgeFunctionUrl = `${supabaseUrl}/functions/v1/get-public-profile?username=${encodeURIComponent(usernameParam)}`;
+const response = await fetch(edgeFunctionUrl, {
+  headers: {
+    'Authorization': `Bearer ${supabaseAnonKey}`,
+    'apikey': supabaseAnonKey,
+  },
+});
+
+let profileData;
+try {
+  profileData = await response.json();
+} catch (e) {
+  console.error('Failed to parse response:', e);
+}
+
+if (!response.ok || !profileData?.success) {
+  console.error('API error:', response.status, profileData);
+  return Astro.redirect('/builders');
+}
+
+const profileResponse = profileData as PublicProfile;
+const p = profileResponse.profile;
+
+// Derived fields
+const isVerified = p.apps.some((app) => app.is_verified);
+const isPioneer = p.is_pioneer;
+
+const initial = p.name.charAt(0).toUpperCase();
+const breadcrumbs = [
+  { label: 'Inicio', href: '/' },
+  { label: 'Builders', href: '/builders' },
+  { label: p.name },
+];
+
+const builderOgImage = p.avatar_url ?? `${SITE_URL}/logo-yellow.jpg`;
+---
+
+<BaseLayout 
+  title={`${p.name} | Builders | VibeCoders`} 
+  description={p.tagline ?? undefined}
+  ogImage={builderOgImage}
+>
+  <!-- Breadcrumbs -->
+  <div class="bg-brand-white max-w-[1440px] mx-auto px-6 pt-6">
+    <Breadcrumbs items={breadcrumbs} />
+  </div>
+
+  <!-- Dark Hero -->
+  <section class="py-12 md:py-20 relative" style="background-color: #2d0566;">
+    <div class="max-w-[1440px] mx-auto px-6 relative z-10">
+      <div class="flex flex-col md:flex-row md:items-center gap-8">
+        <!-- Avatar -->
+        <div class="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden bg-surface-charcoal flex items-center justify-center shrink-0 border-4" style="border-color: {p.accent_color || '#000000'};">
+          {p.avatar_url ? (
+            <img
+              src={p.avatar_url}
+              alt={p.name}
+              width="128"
+              height="128"
+              class="w-full h-full object-cover"
+            />
+          ) : (
+            <span class="text-brand-white font-bold text-4xl">{initial}</span>
+          )}
+        </div>
+
+        <!-- Info -->
+        <div class="flex-1">
+          <div class="flex flex-wrap items-center justify-between gap-4 mb-3">
+            <div class="flex flex-wrap items-center gap-3">
+              <h1 class="font-bold text-[56px] leading-[0.95] text-brand-white">
+                {p.name}
+              </h1>
+              {isVerified && (
+                <span class="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 bg-brand-black text-brand-yellow border border-brand-yellow inline-flex items-center gap-1.5">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                  Perfil Verificado
+                </span>
+              )}
+              {isPioneer && (
+                <Badge variant="tier" value="BUILDER FUNDADOR" class="cursor-help" />
+              )}
+            </div>
+            
+            <!-- Share Profile -->
+            <div class="shrink-0 mt-2 md:mt-0">
+              <ShareProfile url={Astro.url.href} title={p.name} text={p.tagline ?? ''} />
+            </div>
+          </div>
+
+          <p class="text-base leading-relaxed mb-4" style="color: #D9D9D6;">{p.tagline ?? ''}</p>
+
+          {p.location && (
+            <p class="text-sm mb-4 flex items-center gap-2" style="color: #D9D9D6;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+              <span>{p.location}</span>
+            </p>
+          )}
+
+          <!-- Social Links -->
+          <SocialLinks
+            socials={{
+              twitter: p.twitter,
+              github: p.github,
+              linkedin: p.linkedin,
+              youtube: p.youtube,
+              instagram: p.instagram,
+              website: p.website,
+            }}
+            onDark={true}
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Light Content -->
+  <section class="bg-brand-white py-12">
+    <div class="max-w-[1440px] mx-auto px-6">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        <!-- Bio + CTA -->
+        <div class="lg:col-span-1">
+          <h2 class="font-bold text-xl text-brand-black mb-4">Sobre {p.name.split(' ')[0]}</h2>
+          <p class="text-sm leading-relaxed text-brand-black mb-8">{p.bio ?? ''}</p>
+
+          <!-- Primary CTA -->
+          {p.booking_url && (
+            <a
+              href={p.booking_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="bg-brand-black text-brand-white rounded-none px-[15px] py-[10px] border border-brand-black font-bold text-sm inline-block hover:opacity-70 no-underline"
+            >
+              {p.booking_button_text || 'Agendar llamada'}
+            </a>
+          )}
+        </div>
+
+        <!-- Apps grid -->
+        <div class="lg:col-span-2">
+          {p.apps.length > 0 ? (
+            <>
+              <h2 class="font-bold text-xl text-brand-black mb-6">
+                Apps de {p.name.split(' ')[0]}
+              </h2>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {p.apps.map((app) => (
+                  <a
+                    href={`/apps/${app.id}`}
+                    class="bg-surface-silver p-4 hover:shadow-soft transition-shadow no-underline flex flex-col gap-4"
+                  >
+                    <div class="flex items-start gap-3">
+                      <div class="w-10 h-10 overflow-hidden bg-surface-charcoal flex items-center justify-center shrink-0">
+                        {app.logo_url ? (
+                          <img
+                            src={app.logo_url}
+                            alt={app.name}
+                            width="40"
+                            height="40"
+                            class="w-full h-full object-contain"
+                            loading="lazy"
+                          />
+                        ) : (
+                          <span class="text-brand-white font-bold text-sm">
+                            {app.name.charAt(0).toUpperCase()}
+                          </span>
+                        )}
+                      </div>
+                      <div class="min-w-0 flex-1">
+                        <div class="flex items-start justify-between gap-3">
+                          <div class="min-w-0">
+                            <p class="font-bold text-sm text-brand-black leading-tight truncate">{app.name}</p>
+                            <p class="text-xs mt-0.5 line-clamp-2" style="color: #888888;">{app.tagline ?? ''}</p>
+                          </div>
+                          {app.is_verified && (
+                            <span
+                              class="text-[10px] font-bold uppercase tracking-wider px-2 py-1 bg-brand-black text-brand-white inline-flex items-center gap-1 shrink-0"
+                              title="El owner ha validado ser el builder de esta aplicación"
+                              aria-label="App Verificada. El owner ha validado ser el builder de esta aplicación"
+                            >
+                              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                              </svg>
+                              App Verificada
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="flex flex-wrap gap-2">
+                      <Badge variant="status" value={app.status.name} />
+                      {app.beta_active && (
+                        <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-1 bg-brand-white text-brand-black border border-brand-black inline-flex items-center">
+                          Open for Testing
+                        </span>
+                      )}
+                      {app.open_to_partnerships && (
+                        <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-1 bg-brand-white text-brand-black border border-brand-black inline-flex items-center">
+                          Open to Partnerships
+                        </span>
+                      )}
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </>
+          ) : (
+            <div class="bg-surface-silver p-8 text-center">
+              <p class="text-sm" style="color: #888888;">Este builder aún no tiene apps publicadas.</p>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

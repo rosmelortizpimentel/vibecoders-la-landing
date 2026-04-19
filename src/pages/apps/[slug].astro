@@ -61,7 +61,7 @@ const testers = hasTestersCount ? app.testers_count : 3;
 
 const initial = app.name.charAt(0).toUpperCase();
 
-const builderUrl = platformCTA('app-detail-builder', `/builders/${app.owner?.username}`);
+const builderUrl = platformCTA('app-detail-builder', `/@${app.owner?.username}`);
 
 const betaUrl = app.beta_link || app.url;
 const betaCta = platformCTA('app-detail-beta', betaUrl);

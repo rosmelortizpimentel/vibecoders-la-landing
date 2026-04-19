@@ -52,7 +52,7 @@ const locationLabel = formatLocation(city);
   class="relative flex flex-col md:flex-row items-stretch bg-brand-white border border-brand-black p-6 md:p-8 hover:shadow-soft transition-shadow gap-6 md:gap-8 group"
 >
   <!-- Full card click overlay (z-10) -->
-  <a href={`/builders/${username}`} class="absolute inset-0 z-10" aria-label={`Ver perfil de ${display_name}`}></a>
+  <a href={`/@${username}`} class="absolute inset-0 z-10" aria-label={`Ver perfil de ${display_name}`}></a>
 
   <div class="relative z-20 w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden bg-[#3D5AFE] flex items-center justify-center shrink-0">
     {avatar_url ? (
