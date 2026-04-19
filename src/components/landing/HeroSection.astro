@@ -14,9 +14,20 @@ const stats = [
 ];
 ---
 
-<section class="bg-brand-black min-h-screen flex items-center justify-center px-6 py-12 md:py-20">
-  <div class="max-w-[1440px] mx-auto w-full">
-    <div class="max-w-4xl mx-auto text-center">
+<section class="bg-brand-black min-h-screen flex items-center px-6 py-12 md:py-20 overflow-hidden relative">
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute inset-y-0 right-0 w-full md:w-1/2 lg:w-[48%] flex items-center justify-end">
+      <img
+        src="/images/hero/vibecoder-sheep-laptop.png"
+        alt=""
+        aria-hidden="true"
+        class="w-[420px] max-w-[80vw] md:w-[520px] lg:w-[640px] opacity-25 md:opacity-40 object-contain object-right"
+      />
+    </div>
+  </div>
+
+  <div class="max-w-[1440px] mx-auto w-full relative z-10">
+    <div class="max-w-4xl text-center md:text-left">
       <!-- H1 -->
       <h1
         class="font-bold leading-[0.95] text-brand-white
@@ -28,12 +39,12 @@ const stats = [
       </h1>
 
       <!-- Subtitle -->
-      <p class="text-sm text-text-muted max-w-xl mx-auto mb-10 leading-relaxed">
+      <p class="text-sm text-text-muted max-w-xl md:mx-0 mx-auto mb-10 leading-relaxed">
         La comunidad hispanohablante de builders que construyen productos con IA.
       </p>
 
       <!-- CTA row -->
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+      <div class="flex flex-col sm:flex-row items-center md:items-start justify-center md:justify-start gap-4 mb-16">
         <CTAButton
           href={heroCTA}
           variant="super-primary"
@@ -48,9 +59,9 @@ const stats = [
       </div>
 
       <!-- Stats row -->
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-16">
+      <div class="flex flex-col sm:flex-row items-center md:items-start justify-center md:justify-start gap-8 sm:gap-16">
         {stats.map((stat) => (
-          <div class="text-center">
+          <div class="text-center md:text-left">
             <p class="text-[32px] font-bold leading-[0.95] text-brand-white">
               {stat.number}
             </p>
