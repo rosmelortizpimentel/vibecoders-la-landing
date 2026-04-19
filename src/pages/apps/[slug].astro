@@ -63,8 +63,7 @@ const initial = app.name.charAt(0).toUpperCase();
 
 const builderUrl = platformCTA('app-detail-builder', `/@${app.owner?.username}`);
 
-const betaUrl = app.beta_link || app.url;
-const betaCta = platformCTA('app-detail-beta', betaUrl);
+const betaCta = 'https://app.vibecoders.la/public-beta-testing';
 
 const uniqueFounders = Array.isArray(app.founders)
   ? app.founders.filter((founder: any, index: number, founders: any[]) => {
@@ -131,7 +130,7 @@ const uniqueFounders = Array.isArray(app.founders)
             >
               Visitar App
             </a>
-            {app.beta_active && app.beta_link && (
+            {app.beta_active && (
               <a
                 href={betaCta}
                 target="_blank"
@@ -268,18 +267,6 @@ const uniqueFounders = Array.isArray(app.founders)
               <span class="text-sm text-brand-white">{stack.name}</span>
             </div>
           ))}
-        </div>
-      </div>
-    </section>
-  )}
-
-  <!-- Beta Instructions -->
-  {app.beta_active && app.beta_instructions && (
-    <section class="bg-brand-black py-12">
-      <div class="max-w-[1440px] mx-auto px-6">
-        <h2 class="font-bold text-xl text-brand-white mb-6">Cómo probar la beta</h2>
-        <div class="bg-surface-charcoal p-6">
-          <pre class="text-sm whitespace-pre-wrap" style="color: #D9D9D6;">{app.beta_instructions}</pre>
         </div>
       </div>
     </section>
