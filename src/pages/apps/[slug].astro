@@ -65,6 +65,16 @@ const builderUrl = platformCTA('app-detail-builder', `/builders/${app.owner?.use
 
 const betaUrl = app.beta_link || app.url;
 const betaCta = platformCTA('app-detail-beta', betaUrl);
+
+const uniqueFounders = Array.isArray(app.founders)
+  ? app.founders.filter((founder: any, index: number, founders: any[]) => {
+      const founderId = founder.user_id ?? founder.profile?.id ?? founder.profile?.username;
+      return founders.findIndex((candidate: any) => {
+        const candidateId = candidate.user_id ?? candidate.profile?.id ?? candidate.profile?.username;
+        return candidateId === founderId;
+      }) === index;
+    })
+  : [];
 ---
 
 <BaseLayout title={`${app.name} | Apps | VibeCoders`} description={app.tagline ?? undefined}>
@@ -160,10 +170,10 @@ const betaCta = platformCTA('app-detail-beta', betaUrl);
         <!-- Builder Info + Description -->
         <div class="lg:w-2/3">
           <!-- Builder cards -->
-          {app.founders && app.founders.length > 0 ? (
+          {uniqueFounders.length > 0 ? (
             <div class="flex flex-col gap-4 mb-6">
               <h2 class="font-bold text-lg text-brand-white">Builders</h2>
-              {app.founders.map((founder: any) => (
+              {uniqueFounders.map((founder: any) => (
                 <div class="bg-surface-charcoal p-6">
                   <SpeakerCard
                     speaker={{
