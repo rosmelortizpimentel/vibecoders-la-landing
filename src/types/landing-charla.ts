@@ -25,6 +25,7 @@ export interface CharlaDetail {
   description: string | null;
   tagline: string | null;
   banner_url: string | null;
+  youtube_cover_url: string | null;
   scheduled_at: string;
   duration_minutes: number | null;
   luma_url: string | null;
