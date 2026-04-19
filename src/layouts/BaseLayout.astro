@@ -10,7 +10,7 @@ interface Props {
   ogImage?: string;
 }
 
-const BRAND_LOGO_URL = `${SITE_URL}/logo-yellow.jpg`;
+const BRAND_LOGO_URL = `${SITE_URL}/logo-yellow.png`;
 
 const {
   title,
@@ -50,9 +50,11 @@ const canonicalURL = new URL(Astro.url.pathname, SITE_URL);
     <meta name="twitter:image:alt" content={title} />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/jpeg" href="/logo-yellow.jpg" />
-    <link rel="shortcut icon" href="/logo-yellow.jpg" />
-    <link rel="apple-touch-icon" href="/logo-yellow.jpg" />
+    <link rel="icon" type="image/png" href="/logo-yellow.png" />
+    <link rel="shortcut icon" href="/logo-yellow.png" />
+    <link rel="apple-touch-icon" href="/logo-yellow.png" />
+
+    <script src="https://cdn.vibecoders.la/v1/sdk.js" data-project-id="33894c54-64bf-42e6-8108-07dd301eb8df" data-services="analytics"></script>
 
     <!-- Google Fonts preconnect (Space Grotesk placeholder) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
