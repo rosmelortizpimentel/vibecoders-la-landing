@@ -163,6 +163,76 @@ const builderOgImage = p.avatar_url ?? `${SITE_URL}/logo-yellow.jpg`;
               {p.booking_button_text || 'Agendar llamada'}
             </a>
           )}
+
+          {(p.tester_apps.length > 0 || p.talks.length > 0) && (
+            <div class="mt-10 space-y-8">
+              {p.tester_apps.length > 0 && (
+                <div>
+                  <h3 class="font-bold text-lg text-brand-black mb-4">Tester oficial</h3>
+                  <div class="space-y-3">
+                    {p.tester_apps.map((app) => (
+                      <a
+                        href={`/apps/${app.id}`}
+                        class="block bg-surface-silver p-4 hover:shadow-soft transition-shadow no-underline"
+                      >
+                        <div class="flex items-start gap-3">
+                          <div class="w-10 h-10 overflow-hidden bg-surface-charcoal flex items-center justify-center shrink-0">
+                            {app.logo_url ? (
+                              <img
+                                src={app.logo_url}
+                                alt={app.name}
+                                width="40"
+                                height="40"
+                                class="w-full h-full object-contain"
+                                loading="lazy"
+                              />
+                            ) : (
+                              <span class="text-brand-white font-bold text-sm">{app.name.charAt(0).toUpperCase()}</span>
+                            )}
+                          </div>
+                          <div class="min-w-0 flex-1">
+                            <div class="flex flex-wrap items-center gap-2 mb-1">
+                              <p class="font-bold text-sm text-brand-black leading-tight">{app.name}</p>
+                              <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-1 bg-brand-black text-brand-white inline-flex items-center">
+                                Tester Oficial
+                              </span>
+                            </div>
+                            {app.tagline && (
+                              <p class="text-xs leading-relaxed" style="color: #888888;">{app.tagline}</p>
+                            )}
+                          </div>
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {p.talks.length > 0 && (
+                <div>
+                  <h3 class="font-bold text-lg text-brand-black mb-4">Ponente</h3>
+                  <div class="space-y-3">
+                    {p.talks.map((talk) => (
+                      <a
+                        href={talk.slug ? `/charlas/${talk.slug}` : '/charlas'}
+                        class="block bg-surface-silver p-4 hover:shadow-soft transition-shadow no-underline"
+                      >
+                        <div class="flex flex-wrap items-center gap-2 mb-1">
+                          <p class="font-bold text-sm text-brand-black leading-tight">{talk.title}</p>
+                          <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-1 bg-brand-black text-brand-white inline-flex items-center">
+                            Ponente
+                          </span>
+                        </div>
+                        {talk.tagline && (
+                          <p class="text-xs leading-relaxed" style="color: #888888;">{talk.tagline}</p>
+                        )}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
         <!-- Apps grid -->

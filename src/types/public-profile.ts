@@ -31,7 +31,23 @@ export interface PublicProfile {
     tiktok: string | null;
     email_public: string;
     apps: ProfileApp[];
+    tester_apps: TesterContribution[];
+    talks: TalkContribution[];
   };
+}
+
+export interface TesterContribution {
+  id: string;
+  name: string;
+  tagline: string | null;
+  logo_url: string | null;
+}
+
+export interface TalkContribution {
+  id: string;
+  title: string;
+  tagline: string | null;
+  slug: string | null;
 }
 
 export interface ProfileApp {
