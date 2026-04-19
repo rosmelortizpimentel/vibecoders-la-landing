@@ -127,38 +127,17 @@ const builderOgImage = p.avatar_url ?? `${SITE_URL}/logo-yellow.jpg`;
           )}
 
           <!-- Social Links -->
-          <div class="flex flex-wrap gap-3">
-            {p.twitter && (
-              <a href={p.twitter} target="_blank" rel="noopener noreferrer" class="text-xs px-2 py-1 bg-surface-charcoal text-brand-white hover:opacity-70 no-underline">
-                Twitter
-              </a>
-            )}
-            {p.github && (
-              <a href={p.github} target="_blank" rel="noopener noreferrer" class="text-xs px-2 py-1 bg-surface-charcoal text-brand-white hover:opacity-70 no-underline">
-                GitHub
-              </a>
-            )}
-            {p.linkedin && (
-              <a href={p.linkedin} target="_blank" rel="noopener noreferrer" class="text-xs px-2 py-1 bg-surface-charcoal text-brand-white hover:opacity-70 no-underline">
-                LinkedIn
-              </a>
-            )}
-            {p.youtube && (
-              <a href={p.youtube} target="_blank" rel="noopener noreferrer" class="text-xs px-2 py-1 bg-surface-charcoal text-brand-white hover:opacity-70 no-underline">
-                YouTube
-              </a>
-            )}
-            {p.lovable && (
-              <a href={p.lovable} target="_blank" rel="noopener noreferrer" class="text-xs px-2 py-1 bg-surface-charcoal text-brand-white hover:opacity-70 no-underline">
-                Lovable
-              </a>
-            )}
-            {p.website && (
-              <a href={p.website} target="_blank" rel="noopener noreferrer" class="text-xs px-2 py-1 bg-surface-charcoal text-brand-white hover:opacity-70 no-underline">
-                Website
-              </a>
-            )}
-          </div>
+          <SocialLinks
+            socials={{
+              twitter: p.twitter,
+              github: p.github,
+              linkedin: p.linkedin,
+              youtube: p.youtube,
+              instagram: p.instagram,
+              website: p.website,
+            }}
+            onDark={true}
+          />
         </div>
       </div>
     </div>
