@@ -218,7 +218,7 @@ const builderOgImage = p.avatar_url ?? `${SITE_URL}/logo-yellow.jpg`;
                     </div>
 
                     <div class="flex flex-wrap gap-2">
-                      <Badge variant="status" value={app.status.name} />
+                      {app.status?.name && <Badge variant="status" value={app.status.name} />}
                       {app.beta_active && (
                         <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-1 bg-brand-white text-brand-black border border-brand-black inline-flex items-center">
                           Open for Testing

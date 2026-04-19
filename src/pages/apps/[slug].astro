@@ -115,7 +115,7 @@ const uniqueFounders = Array.isArray(app.founders)
               {app.category && (
                 <Badge variant="category" value={app.category.name} />
               )}
-              {app.status && (
+              {app.status?.name && (
                 <Badge variant="status" value={app.status.name} />
               )}
             </div>

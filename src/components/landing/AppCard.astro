@@ -39,9 +39,11 @@ const initial = app_name.charAt(0).toUpperCase();
     </div>
 
     <div class="mt-auto pt-4 flex items-center gap-4">
-      <div class="shrink-0">
-        <Badge variant="status" value={status.name} />
-      </div>
+      {status?.name && (
+        <div class="shrink-0">
+          <Badge variant="status" value={status.name} />
+        </div>
+      )}
       <p class="text-[12px]" style="color: #888888;">
         por <span class="font-bold" style="color: #D9D9D6;">{founder_display_name}</span>
       </p>
