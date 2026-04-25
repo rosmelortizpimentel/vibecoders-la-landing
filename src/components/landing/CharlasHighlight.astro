@@ -105,7 +105,9 @@ function getRelativeLabel(dateString: string, isPast: boolean) {
             <p class="text-sm font-bold text-brand-white tracking-tight capitalize">
               {formatFullDate(charla.scheduled_at)}
             </p>
-            <Badge variant="event" value={getRelativeLabel(charla.scheduled_at, charla.is_past)} class="shrink-0" />
+            <div class="js-event-status" data-date={charla.scheduled_at} data-past={charla.is_past.toString()}>
+              <Badge variant="event" value={getRelativeLabel(charla.scheduled_at, charla.is_past)} class="js-badge-value shrink-0" />
+            </div>
           </div>
           <div class="flex flex-wrap gap-2 mt-3">
             {getScheduleChips(charla.scheduled_at).map((chip) => (
@@ -178,3 +180,47 @@ function getRelativeLabel(dateString: string, isPast: boolean) {
     />
   </div>
 </SectionWrapper>
+
+<script>
+  function updateEventBadges() {
+    const badges = document.querySelectorAll('.js-event-status');
+    const now = new Date();
+
+    badges.forEach(wrapper => {
+      const dateStr = (wrapper as HTMLElement).dataset.date;
+      const isPastInitial = (wrapper as HTMLElement).dataset.past === 'true';
+      const badgeText = wrapper.querySelector('.js-badge-value') as HTMLElement;
+      
+      if (!dateStr || !badgeText) return;
+
+      const target = new Date(dateStr);
+      const diffMs = target.getTime() - now.getTime();
+      const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+      const hasActuallyPassed = diffMs < 0;
+
+      let label = 'PRÓXIMA';
+      
+      if (isPastInitial || hasActuallyPassed) {
+        label = 'PASADA';
+        // Force past style if it was not already past
+        if (!isPastInitial) {
+          badgeText.style.backgroundColor = '#FFFFFF';
+          badgeText.style.color = '#000000';
+          badgeText.style.border = '1px solid #000000';
+        }
+      } else if (diffDays <= 1) {
+        label = 'MAÑANA';
+      } else if (diffDays < 7) {
+        label = `EN ${diffDays} DÍAS`;
+      } else if (diffDays <= 8) {
+        label = 'EN UNA SEMANA';
+      }
+
+      badgeText.textContent = label;
+    });
+  }
+
+  // Run immediately and after any potential client-side navigation
+  updateEventBadges();
+  document.addEventListener('astro:after-swap', updateEventBadges);
+</script>
